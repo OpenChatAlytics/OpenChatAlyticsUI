@@ -1,5 +1,5 @@
 # ChatAlyticsUI
-[![Build Status](https://travis-ci.org/psastras/OpenChatAlytics/OpenChatAlyticsUI.svg?branch=master)](https://travis-ci.org/OpenChatAlytics/OpenChatAlyticsUI)
+[![Build Status](https://travis-ci.org/OpenChatAlytics/OpenChatAlyticsUI.svg?branch=master)](https://travis-ci.org/OpenChatAlytics/OpenChatAlyticsUI)
 [![Coverage Status](https://coveralls.io/repos/github/OpenChatAlytics/OpenChatAlyticsUI/badge.svg?branch=master)](https://coveralls.io/github/OpenChatAlytics/OpenChatAlyticsUI?branch=master)
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/OpenChatAlytics?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
