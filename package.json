@@ -7,7 +7,7 @@
     "name": "search",
     "script": "server/index.js",
     "watch": true,
-    "ignore_watch": ["client", ".gitignore", ".git", "node_modules"]
+    "ignore_watch": ["client", ".gitignore", ".git", "node_modules", "__tests__"]
   }],
   "scripts": {
     "start": "pm2 start package.json --no-daemon",

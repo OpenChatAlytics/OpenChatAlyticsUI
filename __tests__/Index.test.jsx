@@ -9,18 +9,10 @@ var Index = require('../client/components/Index/Index.jsx').default;
 describe('IndexComponent', () => {
 
   it('should render', () => {
-    var items = [1, 2];
-
-    var componentInstance = TestUtils.renderIntoDocument(<Index items={items} />);
-    var indexItems = TestUtils.scryRenderedDOMComponentsWithTag(componentInstance, 'li');
-
-    expect(indexItems.length).toEqual(items.length);
-  });
-
-  it('should render empty list', () => {
     var componentInstance = TestUtils.renderIntoDocument(<Index />);
+    var indexItems = TestUtils.scryRenderedDOMComponentsWithTag(componentInstance, 'h1');
 
-    expect(componentInstance.refs.empty.textContent).toEqual('Index is empty.');
+    expect(indexItems).not.toBeNull();
   });
 
 });
