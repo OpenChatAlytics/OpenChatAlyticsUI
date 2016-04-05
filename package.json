@@ -3,11 +3,17 @@
   "version": "0.0.0",
   "description": "UI for realtime platform for processing Slack and HipChat messages",
   "main": "index.js",
+  "apps" : [{
+    "name": "search",
+    "script": "server/index.js",
+    "watch": true,
+    "ignore_watch": ["client", ".gitignore", ".git", "node_modules"]
+  }],
   "scripts": {
-    "start": "node index",
+    "start": "pm2 start package.json --no-daemon",
     "test": "jest",
     "coverage": "jest --coverage",
-    "dist": "cross-env NODE_ENV=production webpack -p --progress",
+    "dist": "cross-env NODE_ENV=production webpack -p --progress --config server/webpack.config.js",
     "postinstall": "npm run dist"
   },
   "repository": {
@@ -29,15 +35,29 @@
   },
   "homepage": "https://github.com/psastras/ChatAlyticsUI",
   "dependencies": {
+    "ansi-to-html": "^0.4.1",
+    "babel-cli": "^6.5.2",
     "babel-polyfill": "6.3.14",
     "babel-runtime": "6.3.19",
+    "babel-register": "^6.7.2",
     "compression": "1.6.1",
     "cross-env": "1.0.7",
     "ejs": "2.4.1",
     "express": "4.13.4",
     "express-ejs-layouts": "2.0.0",
+    "font-awesome": "^4.5.0",
+    "log4js": "^0.6.33",
+    "marked": "^0.3.5",
+    "morgan": "^1.7.0",
+    "pm2": "^1.0.2",
     "react": "0.14.6",
+    "react-addons-css-transition-group": "0.14.6",
+    "react-addons-pure-render-mixin": "0.14.6",
     "react-dom": "0.14.6",
+    "react-markdown": "^2.1.0",
+    "react-router": "^2.0.1",
+    "route-parser": "^0.0.5",
+    "spinkit": "^1.2.5",
     "webpack": "1.12.12"
   },
   "devDependencies": {
