@@ -1,11 +1,12 @@
 # ChatAlyticsUI
-[![Build Status](https://travis-ci.org/psastras/ChatAlyticsUI.svg?branch=master)](https://travis-ci.org/psastras/ChatAlyticsUI) [![Coverage Status](https://coveralls.io/repos/github/psastras/ChatAlyticsUI/badge.svg?branch=master)](https://coveralls.io/github/psastras/ChatAlyticsUI?branch=master)
+[![Build Status](https://travis-ci.org/psastras/OpenChatAlytics/OpenChatAlyticsUI.svg?branch=master)](https://travis-ci.org/OpenChatAlytics/OpenChatAlyticsUI)
+[![Coverage Status](https://coveralls.io/repos/github/OpenChatAlytics/OpenChatAlyticsUI/badge.svg?branch=master)](https://coveralls.io/github/OpenChatAlytics/OpenChatAlyticsUI?branch=master)
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/psastras/ChatAlyticsUI?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/OpenChatAlytics?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 > UI for realtime platform for processing Slack and HipChat messages.  
 
-Note that this UI is dependent on (and built on top of) the [ChatAlytics](https://github.com/gneokleo/ChatAlytics) platform.
+Note that this UI is dependent on (and built on top of) the [ChatAlytics](https://github.com/OpenChatAlytics/ChatAlytics) platform.
 
 ## Installation instructions
 
