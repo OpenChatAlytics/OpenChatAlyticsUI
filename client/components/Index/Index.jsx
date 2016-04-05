@@ -25,7 +25,7 @@ class IndexComponent extends Component {
   }
 
   componentWillUnmount() {
-    MainStore.unlisten(this.onChange.bind(this));
+    MainStore.unlisten(this.onChange);
   }
   
   onChange(state) {
