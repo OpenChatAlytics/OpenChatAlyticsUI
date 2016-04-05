@@ -6,7 +6,7 @@ after_success: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coverall
 notifications:
   webhooks:
     urls:
-      - https://webhooks.gitter.im/e/3d00307e393fdd8f3e6d
+      - https://webhooks.gitter.im/e/6b3fb81aa31d88bf5cb3
     on_success: change  # options: [always|never|change] default: always
     on_failure: always  # options: [always|never|change] default: always
     on_start: never     # options: [always|never|change] default: always
