@@ -1,0 +1,16 @@
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('NotoSans'), url(fonts/NotoSans-Regular-webfont.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Fjalla One';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Fjalla-one'), url(fonts/Fjalla-one.woff) format('woff');
+}
+
+$font-sans: 'Noto Sans', Helvetica, sans-serif;
+$font-heading: 'Fjalla One', Helvetica, sans-serif;

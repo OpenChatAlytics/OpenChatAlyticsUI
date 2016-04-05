@@ -35,7 +35,7 @@ class IndexComponent extends Component {
   render() {
     return (
       <section>
-        <h1>Index</h1>
+        <h1>ChatAlytics</h1>
         <ul>
           {this.state.locations.map((location, i) => {
             return (
