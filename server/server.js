@@ -1,19 +1,29 @@
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
+import fs from 'fs';
+import path from 'path';
+import express from 'express';
+import compress from 'compression';
+import layouts from 'express-ejs-layouts';
+import morgan from 'morgan';
+import log4js from 'log4js';
 
-var express = require('express');
-var app = express();
+log4js.configure({
+  appenders: [
+    { type: 'console' }
+  ],
+  replaceConsole: true
+});
+let logger = log4js.getLogger();
 
-var compress = require('compression');
-var layouts = require('express-ejs-layouts');
+let app = express();
 
 app.set('layout');
 app.set('view engine', 'ejs');
 app.set('view options', {layout: 'layout'});
 app.set('views', path.join(process.cwd(), '/server/views'));
 
+app.use(morgan('combined'));
 app.use(compress());
 app.use(layouts);
 app.use('/client', express.static(path.join(process.cwd(), '/client')));
@@ -30,22 +40,22 @@ if (env.production) {
   });
 }
 
-app.get('/*', function(req, res) {
+app.get('/*', (req, res) => {
   res.render('index', {
     env: env
   });
 });
 
-var port = Number(process.env.PORT || 3001);
-app.listen(port, function () {
+let port = Number(process.env.PORT || 3001);
+app.listen(port, () => {
   console.log('server running at localhost:3001, go refresh and see magic');
 });
 
 if (env.production === false) {
-  var webpack = require('webpack');
-  var WebpackDevServer = require('webpack-dev-server');
+  let webpack = require('webpack');
+  let WebpackDevServer = require('webpack-dev-server');
 
-  var webpackDevConfig = require('./webpack.config.development');
+  let webpackDevConfig = require('./webpack.config.development');
 
   new WebpackDevServer(webpack(webpackDevConfig), {
     publicPath: '/client/',
@@ -58,7 +68,7 @@ if (env.production === false) {
       'Access-Control-Allow-Origin': 'http://localhost:3001',
       'Access-Control-Allow-Headers': 'X-Requested-With'
     }
-  }).listen(3000, 'localhost', function (err) {
+  }).listen(3000, 'localhost', (err) => {
     if (err) {
       console.log(err);
     }
