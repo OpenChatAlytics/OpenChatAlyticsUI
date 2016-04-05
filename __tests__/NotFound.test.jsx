@@ -1,10 +1,10 @@
-jest.dontMock('./NotFound.jsx');
+jest.dontMock('../client/components/NotFound/NotFound.jsx');
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 
-const NotFound = require('./NotFound.jsx').default;
+const NotFound = require('../client/components/NotFound/NotFound.jsx').default;
 
 describe('NotFoundComponent', () => {
 

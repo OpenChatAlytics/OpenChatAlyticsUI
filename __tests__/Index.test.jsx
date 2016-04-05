@@ -1,10 +1,10 @@
-jest.dontMock('./Index.jsx');
+jest.dontMock('../client/components/Index/Index.jsx');
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 
-var Index = require('./Index.jsx').default;
+var Index = require('../client/components/Index/Index.jsx').default;
 
 describe('IndexComponent', () => {
 
