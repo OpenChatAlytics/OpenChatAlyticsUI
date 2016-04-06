@@ -35,9 +35,9 @@ class IndexComponent extends Component {
   render() {
     return (
       <div id="content">
-        <h1>OpenChatAlytics</h1>
-        <p>ChatAlytics is a realtime platform for processing HipChat and Slack messages using Storm as the processing framework.</p>
-        <p><a href="https://github.com/OpenChatAlytics">https://github.com/OpenChatAlytics</a></p>
+        <h1>Open | ChatAlytics</h1>
+        <p><a href="https://github.com/OpenChatAlytics">ChatAlytics</a> is a realtime platform for processing <a href="https://hipchat.com/">HipChat</a> and <a href="https://slack.com">Slack</a> messages using Storm as the processing framework.</p>
+        <hr />
       </div>
     );
   }

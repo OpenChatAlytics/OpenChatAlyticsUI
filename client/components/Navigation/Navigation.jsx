@@ -87,7 +87,7 @@ class SmallNavigationComponent extends Component {
   render() {
     return (
       <div className="navigation navigation-small">
-        <h2><i className="fa fa-line-chart fa-2x"></i></h2>
+        <img src={require('../../images/logo.png')} alt="logo" className="logo" />
         <ul>
           <li><Link to={`/`}><i className="fa fa-home fa-2x"></i></Link></li>
           <li><Link to={`/chatalytics`}><i className="fa fa-bar-chart fa-2x"></i></Link></li>
@@ -130,7 +130,7 @@ class MediumNavigationComponent extends Component {
   render() {
     return (
       <div className="navigation navigation-medium">
-        <h2><i className="fa fa-line-chart fa-2x"></i></h2>
+        <img src={require('../../images/logo.png')} alt="logo" className="logo" />
         <ul>
           <li><Link to={`/`} className={this.props.path === "/" ? "active" : ""}>Home</Link></li>
           <li><Link to={`/chatalytics`} className={this.props.path === "/chatalytics" ? "active" : ""}>Chatalytics</Link></li>
@@ -172,7 +172,7 @@ class LargeNavigationComponent extends Component {
   render() {
     return (
       <div className="navigation navigation-large">
-        <h2><i className="fa fa-line-chart fa-2x"></i></h2>
+        <img src={require('../../images/logo.png')} alt="logo" className="logo" />
         <ul>
           <li><Link to={`/`} className={this.props.path === "/" ? "active" : ""}>Home</Link></li>
           <li><Link to={`/chatalytics`} className={this.props.path === "/chatalytics" ? "active" : ""}>Chatalytics</Link></li>
