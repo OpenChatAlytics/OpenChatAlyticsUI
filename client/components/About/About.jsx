@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 class AboutComponent extends Component {
   render() {
     return (
-      <section>
+      <div id="content">
         <h1>About</h1>
-      </section>
+      </div>
     );
   }
 }
