@@ -1,4 +1,4 @@
-# ChatAlyticsUI
+# OpenChatAlyticsUI
 [![Build Status](https://travis-ci.org/OpenChatAlytics/OpenChatAlyticsUI.svg?branch=master)](https://travis-ci.org/OpenChatAlytics/OpenChatAlyticsUI)
 [![Coverage Status](https://coveralls.io/repos/github/OpenChatAlytics/OpenChatAlyticsUI/badge.svg?branch=master)](https://coveralls.io/github/OpenChatAlytics/OpenChatAlyticsUI?branch=master)
 
@@ -24,7 +24,7 @@ Once dependencies have been installed, run
 npm run start
 ```
 
-Then go to [localhost:3001](http://localhost:3001).  Note that ChatAlyticsUI expects Chatalytics Web to be running on [localhost:8080](http://localhost:8080) by default.
+Then go to [localhost:3001](http://localhost:3001).  Note that OpenChatAlyticsUI expects OpenChatalytics Web to be running on [localhost:8080](http://localhost:8080) by default.
 
 ## Docker
 
