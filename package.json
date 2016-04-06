@@ -59,6 +59,7 @@
     "react-markdown": "^2.1.0",
     "react-router": "^2.0.1",
     "route-parser": "^0.0.5",
+    "react-easy-transition": "0.0.2",
     "spinkit": "^1.2.5",
     "webpack": "1.12.12"
   },

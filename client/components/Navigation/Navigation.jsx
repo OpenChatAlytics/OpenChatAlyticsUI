@@ -22,11 +22,19 @@ class NavigationComponent extends Component {
   componentDidMount() {
     MainStore.listen(this.onChange.bind(this));
     window.addEventListener('resize', this.handleResize.bind(this));
+    this.historyListener = browserHistory.listen(this.routeChanged.bind(this));
   }
 
   componentWillUnmount() {
+    this.historyListener();
     window.removeEventListener('resize', this.handleResize);
     MainStore.unlisten(this.onChange);
+  }
+
+  routeChanged(e) {
+    let state = this.state;
+    state.path = e.pathname;
+    this.setState(state);
   }
 
   onChange(state) {
@@ -39,11 +47,11 @@ class NavigationComponent extends Component {
 
   render() {
     if (this.state.windowWidth < 600) {
-      return <SmallNavigationComponent />;
+      return <SmallNavigationComponent path={this.state.path} />;
     } else if (this.state.windowWidth < 980) {
-      return <MediumNavigationComponent />;
+      return <MediumNavigationComponent path={this.state.path} />;
     } else {
-      return <LargeNavigationComponent />;
+      return <LargeNavigationComponent path={this.state.path} />;
     }
   }
 
@@ -124,9 +132,9 @@ class MediumNavigationComponent extends Component {
       <div className="navigation navigation-medium">
         <h2><i className="fa fa-line-chart fa-2x"></i></h2>
         <ul>
-          <li><Link to={`/`}>Home</Link></li>
-          <li><Link to={`/chatalytics`}>Chatalytics</Link></li>
-          <li><Link to={`/about`}>About</Link></li>
+          <li><Link to={`/`} className={this.props.path === "/" ? "active" : ""}>Home</Link></li>
+          <li><Link to={`/chatalytics`} className={this.props.path === "/chatalytics" ? "active" : ""}>Chatalytics</Link></li>
+          <li><Link to={`/about`} className={this.props.path === "/about" ? "active" : ""}>About</Link></li>
           <li><a href="https://github.com/OpenChatAlytics">GitHub</a></li>
         </ul>
       </div>
@@ -166,9 +174,9 @@ class LargeNavigationComponent extends Component {
       <div className="navigation navigation-large">
         <h2><i className="fa fa-line-chart fa-2x"></i></h2>
         <ul>
-          <li><Link to={`/`}>Home</Link></li>
-          <li><Link to={`/chatalytics`}>Chatalytics</Link></li>
-          <li><Link to={`/about`}>About</Link></li>
+          <li><Link to={`/`} className={this.props.path === "/" ? "active" : ""}>Home</Link></li>
+          <li><Link to={`/chatalytics`} className={this.props.path === "/chatalytics" ? "active" : ""}>Chatalytics</Link></li>
+          <li><Link to={`/about`} className={this.props.path === "/about" ? "active" : ""}>About</Link></li>
           <li><a href="https://github.com/OpenChatAlytics">GitHub</a></li>
         </ul>
       </div>
