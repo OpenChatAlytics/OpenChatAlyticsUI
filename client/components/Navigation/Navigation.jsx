@@ -9,6 +9,7 @@ class NavigationComponent extends Component {
   constructor() {
     super();
     this.state = MainStore.getState();
+    this.state.windowWidth = window.innerWidth;
   }
 
   static getStores(props) {
@@ -42,13 +43,15 @@ class NavigationComponent extends Component {
   }
 
   handleResize(e) {
-    this.setState({ windowWidth: window.innerWidth });
+    let state = this.state;
+    state.windowWidth = window.innerWidth;
+    this.setState(state);
   }
 
   render() {
-    if (this.state.windowWidth < 600) {
+    if (this.state.windowWidth < 700) {
       return <SmallNavigationComponent path={this.state.path} />;
-    } else if (this.state.windowWidth < 980) {
+    } else if (this.state.windowWidth < 1200) {
       return <MediumNavigationComponent path={this.state.path} />;
     } else {
       return <LargeNavigationComponent path={this.state.path} />;
