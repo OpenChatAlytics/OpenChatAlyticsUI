@@ -1,16 +1,23 @@
 @font-face {
-  font-family: 'Noto Sans';
+  font-family: 'Liberation Sans';
   font-style: normal;
   font-weight: 400;
-  src: local('NotoSans'), url(fonts/NotoSans-Regular-webfont.woff) format('woff');
+  src: local('LiberationSans'), url(fonts/LiberationSans.woff) format('woff');
 }
 
 @font-face {
-  font-family: 'Fjalla One';
+  font-family: 'Raleway';
   font-style: normal;
   font-weight: 400;
-  src: local('Fjalla-one'), url(fonts/Fjalla-one.woff) format('woff');
+  src: local('Fjalla-one'), url(fonts/Raleway.woff) format('woff');
 }
 
-$font-sans: 'Noto Sans', Helvetica, sans-serif;
-$font-heading: 'Fjalla One', Helvetica, sans-serif;
+@font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Quicksand'), url(fonts/Quicksand.woff) format('woff');
+}
+
+$font-sans: 'Quicksand', Helvetica, sans-serif;
+$font-heading: 'Quicksand', Helvetica, sans-serif;

@@ -3,7 +3,7 @@ import connectToStores from 'alt-utils/lib/connectToStores';
 import MainStore from '../../stores/MainStore';
 import MainActions from '../../actions/MainActions';
 
-class IndexComponent extends Component {
+class TwoColumnComponent extends Component {
   
   constructor() {
     super();
@@ -20,8 +20,6 @@ class IndexComponent extends Component {
 
   componentDidMount() {
     MainStore.listen(this.onChange.bind(this));
-    
-    MainActions.fetchLocations();
   }
 
   componentWillUnmount() {
@@ -34,15 +32,14 @@ class IndexComponent extends Component {
   
   render() {
     return (
-      <div id="content">
-        <h1>OpenChatAlytics</h1>
-        <p>ChatAlytics is a realtime platform for processing HipChat and Slack messages using Storm as the processing framework.</p>
-        <p><a href="https://github.com/OpenChatAlytics">https://github.com/OpenChatAlytics</a></p>
+      <div style={{ display: 'flex', height: '100%' }}>
+          {this.props.left}
+          {this.props.right}
       </div>
     );
   }
 }
 
-IndexComponent = connectToStores(IndexComponent)
+TwoColumnComponent = connectToStores(TwoColumnComponent)
 
-export default IndexComponent;
+export default TwoColumnComponent;
