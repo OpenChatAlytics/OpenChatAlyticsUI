@@ -21,7 +21,7 @@ export default {
           { id: 11, name: 'Paris' },
           { id: 12, name: 'San Francisco' }
         ]);
-      }, 250);
+      }, 3000);
     });
   }
 };

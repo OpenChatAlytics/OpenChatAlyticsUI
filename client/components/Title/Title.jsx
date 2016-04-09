@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import connectToStores from 'alt-utils/lib/connectToStores';
 import { Parallax } from 'react-parallax';
+import MainActions from '../../actions/MainActions';
 
 class TitleComponent extends Component {
 
   constructor() {
     super();
+    
+    // populates the main store which triggers renders on dependent components
+    MainActions.fetchLocations();
   }
 
   render() {
