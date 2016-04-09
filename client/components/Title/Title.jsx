@@ -10,24 +10,26 @@ class TitleComponent extends Component {
 
   render() {
     return (
-      <div id="title">
-        <div style={{ padding: '2em' }}>
-          <div><h1>Open | ChatAlytics</h1></div>
-          <table>
-            <tbody>
-              <tr>
-                <td>35237</td><td>Messages Processed</td>
-              </tr>
-              <tr>
-                <td>2315</td><td>Words Analyzed</td>
-              </tr>
-              <tr>
-                <td>53</td><td>Unique Users</td>
-              </tr>
-            </tbody>
-          </table>
+      <Parallax bgImage={require('images/bg.jpg') } strength={400}>
+        <div id="title">
+          <div style={{ padding: '2em' }}>
+            <div><h1>Open | ChatAlytics</h1></div>
+            <table>
+              <tbody>
+                <tr>
+                  <td>35237</td><td>Messages Processed</td>
+                </tr>
+                <tr>
+                  <td>2315</td><td>Words Analyzed</td>
+                </tr>
+                <tr>
+                  <td>53</td><td>Unique Users</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      </Parallax>
     );
   }
 }

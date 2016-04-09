@@ -36,8 +36,8 @@ h2 {
 
 body, html {
   background: $black;
-  background-image: url('../images/bg.jpg');
-  background-size: cover;
+  // background-image: url('../images/bg.jpg');
+  // background-size: cover;
   font-family: $font-sans;
   padding: 0;
   margin: 0;
@@ -92,7 +92,7 @@ td {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to bottom, rgba(0,0,0,0) 40%, $black 90%);
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 10%, $black 90%);
   color: $white;
   td {
     color: $white;
