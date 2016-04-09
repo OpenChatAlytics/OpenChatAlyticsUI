@@ -57,6 +57,7 @@
     "react-addons-pure-render-mixin": "0.14.6",
     "react-dom": "0.14.6",
     "react-markdown": "^2.1.0",
+    "react-parallax": "^0.4.2",
     "react-router": "^2.0.1",
     "route-parser": "^0.0.5",
     "react-easy-transition": "0.0.2",

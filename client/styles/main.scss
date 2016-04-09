@@ -25,11 +25,19 @@ h1 {
   font-family: $font-heading;
   padding-bottom: 0.25em;
   text-transform: uppercase;
-  border-bottom: 1px solid $black;
+}
+
+h2 {
+  font-size: 2.5em;
+  font-family: $font-heading;
+  padding-bottom: 0.25em;
+  text-transform: uppercase;
 }
 
 body, html {
-  background: $white;
+  background: $black;
+  background-image: url('../images/bg.jpg');
+  background-size: cover;
   font-family: $font-sans;
   padding: 0;
   margin: 0;
@@ -45,6 +53,7 @@ hr {
 }
 
 p {
+  margin: 0em 0em 1em;
   font-size: 1.3em;
   line-height: 1.5em;
 }
@@ -58,7 +67,34 @@ a {
   }
 }
 
-#content {
-  max-width: 980px;
+td {
+  padding-right: 1em;
+}
+
+.chatalytics {
+  background: $white;
   padding: 2em;
+}
+
+#content {
+  background: $white;
+  padding: 2em;
+}
+
+#about {
+  background: $black;
+  padding: 2em;
+  color: $white;
+}
+
+#title {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 40%, $black 90%);
+  color: $white;
+  td {
+    color: $white;
+  }
 }

@@ -19,5 +19,13 @@
   src: local('Quicksand'), url(fonts/Quicksand.woff) format('woff');
 }
 
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Montserrat'), url(fonts/Montserrat.woff) format('woff');
+}
+
+
 $font-sans: 'Quicksand', Helvetica, sans-serif;
 $font-heading: 'Quicksand', Helvetica, sans-serif;

@@ -14,10 +14,6 @@ import NotFound from 'components/NotFound/NotFound';
 
 render((
   <Router history={browserHistory}>
-    <Route component={TwoColumn}>
-      <Route path="/" components={{ left: Navigation, right: Index }} />
-      <Route path="/about" components={{ left: Navigation, right: About }} />
-      <Route path="/*" components={{ left: Navigation, right: NotFound }} />
-    </Route>
+      <Route path="/*" component={Index} />
   </Router>
 ), document.getElementById('js-main'));

@@ -33,16 +33,13 @@ class TwoColumnComponent extends Component {
 
   render() {
     return (
-      <div style={{ display: 'flex', height: '100%' }}>
-        {this.props.left}
-        <EasyTransition
-          path={location.pathname}
-          initialStyle={{ opacity: 0, transform: 'translateY(5px)' }}
-          transition="opacity 0.25s ease-in-out, transform 0.15s ease-out"
-          finalStyle={{ opacity: 1, transform: 'translateY(0px)' }}
-          >
+      <div style={{ display: 'flex', flexFlow: 'row wrap' }}>
+        <div style={{ paddingRight: '2em', flex: '0 0 20em ' }}>
+          {this.props.left}
+        </div>
+        <div style={{ flex: '1 0' }}>
           {this.props.right}
-        </EasyTransition>
+        </div>
       </div>
     );
   }
