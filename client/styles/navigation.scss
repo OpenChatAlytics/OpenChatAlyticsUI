@@ -2,41 +2,41 @@
 @import "fonts/fonts.scss";
 
 .navigation {
-  background: $purple;
+  background: $base;
   color: $white;
   height: auto;
   text-align: right;
   text-transform: uppercase;
   font-size: 1.25em;
-  
+
   h1 {
     font-size: 5.5em;
   }
-  
+
   a {
     color: $white;
     text-decoration: none;
     font-family: $font-sans;
-    
+
     &:hover {
       text-decoration: underline;
     }
   }
-  
+
   ul {
     list-style: none;
     padding: 0em;
     margin: 1.5em 0em;
-    
+
     li {
       padding: 0.5em 0em;
     }
   }
-  
+
   .active {
     text-decoration: underline;
   }
-  
+
   .logo {
     width: 3em;
   }
@@ -51,7 +51,7 @@
 .navigation-medium {
   width: 150px;
   padding: 2em 1em;
-  
+
   h1 {
     font-size: 6.75em;
   }
