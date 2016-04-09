@@ -7,7 +7,6 @@ import { render } from 'react-dom';
 import { Router, Route, Link, browserHistory } from 'react-router'
 
 import TwoColumn from 'components/Layouts/TwoColumn';
-import Navigation from 'components/Navigation/Navigation';
 import Index from 'components/Index/Index';
 import About from 'components/About/About';
 import NotFound from 'components/NotFound/NotFound';

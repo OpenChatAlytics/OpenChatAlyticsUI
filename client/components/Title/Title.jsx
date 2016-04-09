@@ -11,18 +11,20 @@ class TitleComponent extends Component {
   render() {
     return (
       <div id="title">
-        <div style={{ padding: '2em'}}>
+        <div style={{ padding: '2em' }}>
           <div><h1>Open | ChatAlytics</h1></div>
           <table>
-            <tr>
-              <td>35237</td><td>Messages Processed</td>
-            </tr>
-            <tr>
-              <td>2315</td><td>Words Analyzed</td>
-            </tr>
-            <tr>
-              <td>53</td><td>Unique Users</td>
-            </tr>
+            <tbody>
+              <tr>
+                <td>35237</td><td>Messages Processed</td>
+              </tr>
+              <tr>
+                <td>2315</td><td>Words Analyzed</td>
+              </tr>
+              <tr>
+                <td>53</td><td>Unique Users</td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>

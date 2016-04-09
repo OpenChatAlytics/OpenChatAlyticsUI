@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TwoColumn from 'components/Layouts/TwoColumn';
+import ThreeColumn from 'components/Layouts/ThreeColumn';
 
 class MessagesComponent extends Component {
 
@@ -10,12 +11,10 @@ class MessagesComponent extends Component {
   render() {
     return (
       <div className="chatalytics">
-        <TwoColumn left={<h2>ChatAlytics</h2>}
-          right={
-            <p>
-              <a href="https://github.com/OpenChatAlytics">ChatAlytics</a> is a realtime platform for processing <a href="https://hipchat.com/">HipChat</a> and <a href="https://slack.com">Slack</a> messages using Storm as the processing framework.
-            </p>
-          } />
+        <TwoColumn left={<h2>Messages</h2>}
+                   right={<ThreeColumn left={<div><h3>Statistic A</h3><p>Short statistic description here</p><table><tbody><tr><td>35237</td><td>Messages Processed</td></tr><tr><td>2315</td><td>Words Analyzed</td></tr><tr><td>53</td><td>Unique Users</td></tr></tbody></table></div>}
+                                       mid={<div><h3>Statistic B</h3><p>Short statistic description here</p><table><tbody><tr><td>35237</td><td>Messages Processed</td></tr><tr><td>2315</td><td>Words Analyzed</td></tr><tr><td>53</td><td>Unique Users</td></tr></tbody></table></div>} 
+                                       right={<div><h3>Statistic C</h3><p>Short statistic description here</p><table><tbody><tr><td>35237</td><td>Messages Processed</td></tr><tr><td>2315</td><td>Words Analyzed</td></tr><tr><td>53</td><td>Unique Users</td></tr></tbody></table></div>} />}/>
       </div>
     );
   }

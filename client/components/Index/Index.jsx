@@ -39,6 +39,8 @@ class IndexComponent extends Component {
         <Title />
         <About />
         <Messages />
+        <Messages />
+        <Messages />
       </div>
     );
   }
