@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores';
 import { Parallax } from 'react-parallax';
 import MainActions from '../../actions/MainActions';
 

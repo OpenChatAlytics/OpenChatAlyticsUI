@@ -6,7 +6,7 @@ class AboutComponent extends Component {
   render() {
     return (
       <div id="about">
-        <TwoColumn left={<h2>About</h2>}
+        <TwoColumn left={<h2>About <i className="fa fa-info-circle"></i></h2>}
           right={
             <div>
               <p>

@@ -5,7 +5,7 @@ class FooterComponent extends Component {
   render() {
     return (
       <div id="footer">
-        <TwoColumn left={<h2>Explore</h2>}
+        <TwoColumn left={<h2>Explore <i className="fa fa-github"></i></h2>}
           right={
             <div>
               <p>

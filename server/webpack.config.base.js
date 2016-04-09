@@ -54,8 +54,15 @@ module.exports = {
         test: /\.scss$/, loader: 'style!css!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded'
       },
       {
-        test: /\.(jpg|png|woff|woff2|eot|ttf|svg|sqlite|ico|json)/,
+        test: /\.(woff|woff2|eot|ttf|svg|sqlite|ico|json)/,
         loader: 'file'
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loaders: [
+            'file?hash=sha512&digest=hex&name=[hash].[ext]',
+            'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false&progressive=true'
+        ]
       }
     ],
 
