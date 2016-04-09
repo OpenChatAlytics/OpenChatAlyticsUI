@@ -4,6 +4,7 @@ import MainStore from '../../stores/MainStore';
 import MainActions from '../../actions/MainActions';
 import Title from '../Title/Title';
 import About from '../About/About';
+import Footer from '../Footer/Footer';
 import Messages from '../Chatalytics/Messages';
 
 class IndexComponent extends Component {
@@ -41,6 +42,7 @@ class IndexComponent extends Component {
         <Messages />
         <Messages />
         <Messages />
+        <Footer />
       </div>
     );
   }
