@@ -10,7 +10,7 @@ class TitleComponent extends Component {
 
   render() {
     return (
-      <Parallax bgImage={require('images/bg.jpg') } strength={400}>
+      <Parallax bgImage={require('images/bg2.jpg') } strength={400}>
         <div id="title">
           <div style={{ padding: '2em', display: 'flex' }}>
             <div style={{ marginRight: '2em' }}>
