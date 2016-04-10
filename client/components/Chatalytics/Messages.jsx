@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import TwoColumn from 'components/Layouts/TwoColumn';
-import ThreeColumn from 'components/Layouts/ThreeColumn';
+import TwoColumn from '../Layouts/TwoColumn';
+import ThreeColumn from '../Layouts/ThreeColumn';
 import LazyLoad from 'react-lazy-load';
 import MainStore from '../../stores/MainStore';
 import MainActions from '../../actions/MainActions';

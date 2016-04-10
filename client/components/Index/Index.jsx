@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import connectToStores from 'alt-utils/lib/connectToStores';
 import MainStore from '../../stores/MainStore';
 import MainActions from '../../actions/MainActions';
-import Navigation from './Navigation';
 import Title from '../Title/Title';
 import About from '../About/About';
 import Footer from '../Footer/Footer';

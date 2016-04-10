@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TwoColumn from 'components/Layouts/TwoColumn';
+import TwoColumn from '../Layouts/TwoColumn';
 
 class AboutComponent extends Component {
 

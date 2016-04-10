@@ -107,12 +107,19 @@
 
       "<rootDir>/node_modules/core-js"
     ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
     "modulePathIgnorePatterns": [
       "<rootDir>/node_modules/"
     ],
     "testFileExtensions": [
       "test.js",
       "test.jsx"
-    ]
+    ],
+    "moduleNameMapper": {
+      "^[./a-zA-Z0-9$_-]+\\.(jpg|jpeg|ico|png)$": "__tests__/StaticImageStub.js"
+    }
   }
 }
