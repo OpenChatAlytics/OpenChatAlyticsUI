@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import connectToStores from 'alt-utils/lib/connectToStores';
 import MainStore from '../../stores/MainStore';
 import MainActions from '../../actions/MainActions';
+import Title from '../Title/Title';
+import About from '../About/About';
+import Footer from '../Footer/Footer';
+import Messages from '../Chatalytics/Messages';
 
 class IndexComponent extends Component {
   
@@ -20,8 +24,6 @@ class IndexComponent extends Component {
 
   componentDidMount() {
     MainStore.listen(this.onChange.bind(this));
-    
-    MainActions.fetchLocations();
   }
 
   componentWillUnmount() {
@@ -34,10 +36,13 @@ class IndexComponent extends Component {
   
   render() {
     return (
-      <div id="content">
-        <h1>Open | ChatAlytics</h1>
-        <p><a href="https://github.com/OpenChatAlytics">ChatAlytics</a> is a realtime platform for processing <a href="https://hipchat.com/">HipChat</a> and <a href="https://slack.com">Slack</a> messages using Storm as the processing framework.</p>
-        <hr />
+      <div>
+        <Title />
+        <About />
+        <Messages />
+        <Messages />
+        <Messages />
+        <Footer />
       </div>
     );
   }
