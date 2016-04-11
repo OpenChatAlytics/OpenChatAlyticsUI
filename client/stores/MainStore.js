@@ -3,27 +3,25 @@ import MainActions from '../actions/MainActions';
 
 class MainStore {
   constructor() {
-    this.locations = [];
+    this.trendingTopics = null;
     this.errorMessage = null;
     this.bindListeners({
-      handleUpdateLocations: MainActions.UPDATE_LOCATIONS,
-      handleFetchLocations: MainActions.FETCH_LOCATIONS,
-      handleLocationsFailed: MainActions.LOCATIONS_FAILED
+      handleUpdateTrendingTopics: MainActions.UPDATE_TRENDING_TOPICS,
+      handleFetchTrendingTopics: MainActions.FETCH_TRENDING_TOPICS,
+      handleTrendingTopicsFailed: MainActions.TRENDING_TOPICS_FAILED
     });
   }
   
-  handleUpdateLocations(locations) {
-    this.locations = locations;
+  handleUpdateTrendingTopics(trendingTopics) {
+    this.trendingTopics = trendingTopics;
     this.errorMessage = null;
   }
   
-  handleFetchLocations() {
-    // reset the array while we're fetching new locations so React can
-    // be smart and render a spinner for us since the data is empty.
-    this.locations = [];
+  handleFetchTrendingTopics() {
+    this.trendingTopics = null;
   }
 
-  handleLocationsFailed(errorMessage) {
+  handleTrendingTopicsFailed(errorMessage) {
     this.errorMessage = errorMessage;
   }
 }

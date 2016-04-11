@@ -1,4 +1,24 @@
+import request from 'superagent';
+//http -f POST localhost:3001/api/web/trending\?maxResults\=200 starttime=2016-01-01 endtime=2016-12-12
 export default {
+  
+  fetchTrendingTopics(args = {}) {
+    return new Promise((resolve, reject) => {
+       request
+          .post('/api/web/trending?maxResults=100')
+          .type('form')
+          .send({ starttime: '2016-01-01', endtime: '2016-12-12' })
+          .end((err, res) => {
+            if (err) {
+              console.error(err);
+              reject(err);
+            } else {
+              resolve(JSON.parse(res.text));
+            } 
+          });
+    });
+  },
+  
   fetch: function () {
     // returning a Promise because that is what fetch does.
     return new Promise(function (resolve, reject) {
