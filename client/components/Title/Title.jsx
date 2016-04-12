@@ -10,7 +10,7 @@ class TitleComponent extends Component {
     super();
 
     // populates the main store which triggers renders on dependent components
-    MainActions.fetchLocations();
+    MainActions.fetchTrendingTopics();
   }
 
   render() {
