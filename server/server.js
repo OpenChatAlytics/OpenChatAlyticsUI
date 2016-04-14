@@ -7,6 +7,18 @@ import compress from 'compression';
 import layouts from 'express-ejs-layouts';
 import morgan from 'morgan';
 import log4js from 'log4js';
+import YamlLoader from 'yaml-config-loader';
+import request from 'request';
+
+let yamlLoader = new YamlLoader();
+yamlLoader.add(path.join(__dirname, 'defaults.config.yaml'), { filterKeys: true });
+
+let defaultConfig = {};
+yamlLoader.load((error, config) => {
+  console.log("Loaded Yaml Configuration"); 
+  console.log(config);
+  defaultConfig = config;
+});
 
 log4js.configure({
   appenders: [
@@ -39,6 +51,15 @@ if (env.production) {
     assets: JSON.parse(fs.readFileSync(path.join(process.cwd(), 'assets.json')))
   });
 }
+
+app.use("/api/web/", (req, res) => {
+    let url = defaultConfig.dependencies.chatalyticswebUrl + req.url;
+    if(req.method == "GET") {
+        req.pipe(request(url)).pipe(res);
+    } else {
+        req.pipe(request[req.method.toLowerCase()]({url: url, json: req.body})).pipe(res);
+    }
+});
 
 app.get('/*', (req, res) => {
   res.render('index', {

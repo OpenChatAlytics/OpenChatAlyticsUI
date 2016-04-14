@@ -5,6 +5,7 @@ import LazyLoad from 'react-lazy-load';
 import MainStore from '../../stores/MainStore';
 import MainActions from '../../actions/MainActions';
 import EasyTransition from 'react-easy-transition'
+import Reactable from 'react-table';
 
 class MessagesComponent extends Component {
 
@@ -85,7 +86,7 @@ class AsyncComponent extends Component {
         initialStyle={{ opacity: 0 }}
         transition="opacity 1s ease-in"
         finalStyle={{ opacity: 1 }}>
-        {this.state.locations.length ? this.props.loaded : this.props.loading}
+        {this.state.trendingTopics ? <TableComponent items={this.state.trendingTopics} /> : <SpinnerComponent />}
       </EasyTransition>);
   }
 }
@@ -99,13 +100,20 @@ class TableComponent extends Component {
   }
 
   render() {
+    let data = Object.entries(this.props.items).map((entry) => {
+      return { name: entry[0], count: entry[1] };
+    });
     return (
       <EasyTransition
         path={location.pathname}
         initialStyle={{ opacity: 0 }}
         transition="opacity 1s ease-in"
         finalStyle={{ opacity: 1 }}>
-        <table><tbody><tr><td>35237</td><td>Messages Processed</td></tr><tr><td>2315</td><td>Words Analyzed</td></tr><tr><td>53</td><td>Unique Users</td></tr></tbody></table>
+        <table><tbody>
+        {Object.entries(this.props.items).map((entry, i) => {
+          return <tr key={i}><td>{entry[0]}</td><td>{entry[1]}</td></tr>;
+        })}
+        </tbody></table>
       </EasyTransition>
     );
   }

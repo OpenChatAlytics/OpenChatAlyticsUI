@@ -3,26 +3,26 @@ import MainSource from '../sources/MainSource'
 
 class MainActions {
   
-  fetchLocations() {
+  fetchTrendingTopics() {
     return (dispatch) => {
       // we dispatch an event here so we can have "loading" state.
       dispatch();
-      MainSource.fetch()
-        .then((locations) => {
+      MainSource.fetchTrendingTopics()
+        .then((topics) => {
           // we can access other actions within our action through `this.actions`
-          this.updateLocations(locations);
+          this.updateTrendingTopics(topics);
         })
         .catch((errorMessage) => {
-          this.locationsFailed(errorMessage);
+          this.trendingTopicsFailed(errorMessage);
         });
       }
   }
   
-  updateLocations(locations) {
-    return locations;
+  updateTrendingTopics(topics) {
+    return topics;
   }
   
-  locationsFailed(errorMessage) {
+  trendingTopicsFailed(errorMessage) {
     return errorMessage;
   }
 }

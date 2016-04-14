@@ -1,6 +1,7 @@
 # OpenChatAlyticsUI
 [![Build Status](https://travis-ci.org/OpenChatAlytics/OpenChatAlyticsUI.svg?branch=master)](https://travis-ci.org/OpenChatAlytics/OpenChatAlyticsUI)
 [![Coverage Status](https://coveralls.io/repos/github/OpenChatAlytics/OpenChatAlyticsUI/badge.svg?branch=master)](https://coveralls.io/github/OpenChatAlytics/OpenChatAlyticsUI?branch=master)
+[![Apache 2.0 Licensed](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/OpenChatAlytics/OpenChatAlyticsUI/blob/master/LICENSE.txt)
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/OpenChatAlytics?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -8,7 +9,7 @@
 
 Note that this UI is dependent on (and built on top of) the [ChatAlytics](https://github.com/OpenChatAlytics/ChatAlytics) platform.
 
-## Installation instructions
+## Build instructions
 
 Make sure you are running a recent version of `node` (node 5+).
 
@@ -28,7 +29,7 @@ Then go to [localhost:3001](http://localhost:3001).  Note that OpenChatAlyticsUI
 
 ## Docker
 
-This project supports Docker via the provided Dockerfile.  Assuming you have Docker installed, build the Docker image via
+This project supports Docker via the provided Dockerfile or by pulling the latest build from DockerHub.  Assuming you have Docker installed, build the Docker image via
 
 ```
 docker build -t chatalytics-ui .
@@ -38,25 +39,22 @@ Then start the image and bind port 3001
 ```
 docker run -p 3001:3001 -it --rm --name chatalytics-ui chatalytics-ui
 ```
-And go to [localhost:3001](http://localhost:3001).
+And go to [localhost:3001](http://localhost:3001).  Note that if you are running on Windows / OSX you must use the IP of the Docker machine instead.  This
+can usually be found by running `boot2docker ip`.
 
-### Sinopia
+If you don't want to build the image, the latest build is always available on [DockerHub](https://hub.docker.com/r/openchatalytics/openchatalyticsui/).
 
-Note that if you're building the Docker image constantly, we recommend installing a local npm registry cache like Sinopia to prevent constantly fetching from npm
-
+First, pull the latest image:
 ```
-# installation and starting (application will create default
-# config in config.yaml you can edit later)
-$ npm install -g sinopia
-$ sinopia
-
-# npm configuration
-$ npm set registry http://localhost:4873/
-
-# if you use HTTPS, add an appropriate CA information
-# ("null" means get CA list from OS)
-$ npm set ca null
+docker pull openchatalytics/openchatalyticsui
 ```
+
+Then run the image and bind port 3001 to a host port
+```
+docker run -p 3001:3001 openchatalytics/openchatalyticsui
+```
+And go to [localhost:3001](http://localhost:3001).  Note that if you are running on Windows / OSX you must use the IP of the Docker machine instead.  This
+can usually be found by running `boot2docker ip`.
 
 ## Authors
 
