@@ -76,6 +76,14 @@ td {
   padding: 2em;
 }
 
+#attribution {
+  color: $lightgray;
+  font-size: 0.9em;
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+}
+
 #navigation {
   position: fixed;
   top: 0px;
@@ -105,7 +113,7 @@ td {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to bottom, rgba(0,0,0,0) 40%, $black 100%);
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 30%, $black 100%);
   color: $white;
   td {
     color: $white;
