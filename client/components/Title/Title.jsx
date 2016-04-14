@@ -15,7 +15,8 @@ class TitleComponent extends Component {
 
   render() {
     return (
-      <Parallax bgImage={require('images/bg2.jpg') } strength={400}>
+      <Parallax bgImage={require('images/bg3.jpg') } strength={600}>
+        <div id="attribution"><a href="https://www.flickr.com/photos/28541561@N04/24974331285/in/photolist-quWXSU-qPDfC1-qLHc1S-qz6pAh-E3TYAH-yytE2e-D38Ub7-zHf1LS">Lone Tree, Lake Wanaka, New Zealand</a> by <a href="https://www.flickr.com/photos/28541561@N04/">Yani Dubin</a><br />Licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/2.0/">CC 2.0</a></div>
         <div id="title">
           <div style={{ padding: '2em', display: 'flex' }}>
             <div style={{ marginRight: '2em' }}>
