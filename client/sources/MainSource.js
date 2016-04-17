@@ -1,10 +1,14 @@
 import request from 'superagent';
 //http -f POST localhost:3001/api/web/trending\?maxResults\=200 starttime=2016-01-01 endtime=2016-12-12
+
+const requestTimeoutMs = 5000;
+
 export default {
-  
+
   fetchTrendingTopics(args = {}) {
     return new Promise((resolve, reject) => {
        request
+          .timeout(requestTimeoutMs)
           .post('/api/web/trending?maxResults=100')
           .type('form')
           .send({ starttime: '2016-01-01', endtime: '2016-12-12' })

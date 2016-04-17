@@ -8,16 +8,15 @@ import Footer from '../Footer/Footer';
 import Messages from '../Chatalytics/Messages';
 
 class IndexComponent extends Component {
-  
   constructor() {
     super();
     this.state = MainStore.getState();
   }
-  
+
   static getStores(props) {
     return [MainStore]
   }
-  
+
   static getPropsFromStores(props) {
     return MainStore.getState()
   }
@@ -29,7 +28,7 @@ class IndexComponent extends Component {
   componentWillUnmount() {
     MainStore.unlisten(this.onChange);
   }
-  
+
   onChange(state) {
     this.setState(state);
   }
