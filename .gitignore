@@ -1,6 +1,7 @@
 node_modules
-npm-debug.log
+npm-debug.log.*
 .idea/
 coverage/
 dist
 assets.json
+.#*
