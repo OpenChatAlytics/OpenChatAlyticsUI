@@ -10,6 +10,10 @@ import log4js from 'log4js';
 import YamlLoader from 'yaml-config-loader';
 import request from 'request';
 
+process.on('uncaughtException', function(err) {
+  console.error('Caught exception: ' + err);
+});
+
 let yamlLoader = new YamlLoader();
 yamlLoader.add(path.join(__dirname, 'defaults.config.yaml'), { filterKeys: true });
 
