@@ -3,7 +3,9 @@ import ReactHighcharts from 'react-highcharts';
 var Highcharts = require('highcharts');
 import { Parallax } from 'react-parallax';
 import MainActions from '../../actions/MainActions';
+import MainStore from '../../stores/MainStore';
 
+let series = null;
 class TitleComponent extends Component {
 
   constructor() {
@@ -12,6 +14,23 @@ class TitleComponent extends Component {
     // populates the main store which triggers renders on dependent components
     MainActions.fetchTrendingTopics();
     MainActions.subscribeEvents();
+
+    this.state = MainStore.getState();
+  }
+
+  componentDidMount() {
+    MainStore.listen(this.onChange.bind(this));
+  }
+
+  componentWillUnmount() {
+    MainStore.unlisten(this.onChange);
+  }
+
+  onChange(state) {
+    this.setState(state);
+    if (series !== null && state.event !== null) {
+      series.addPoint([(new Date()).getTime(), state.event.message_summary['1MinuteRate']], true, true);
+    }
   }
 
   render() {
@@ -58,15 +77,8 @@ TitleComponent.defaultProps = {
       backgroundColor: null,
       animation: Highcharts.svg, // don't animate in old IE
       events: {
-        load: function() {
-
-          // set up the updating of the chart each second
-          var series = this.series[0];
-          setInterval(function() {
-            var x = (new Date()).getTime(), // current time
-              y = Math.random();
-            series.addPoint([x, y], true, true);
-          }, 1000);
+        load: function () {
+          series = this.series[0];
         }
       }
     },

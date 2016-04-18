@@ -1,5 +1,7 @@
 'use strict';
 
+import EventBus from './events.js';
+
 import fs from 'fs';
 import path from 'path';
 import express from 'express';
@@ -23,10 +25,12 @@ let yamlLoader = new YamlLoader();
 yamlLoader.add(path.join(__dirname, 'defaults.config.yaml'), { filterKeys: true });
 
 let defaultConfig = {};
+let eventBus = null;
 yamlLoader.load((error, config) => {
   console.log("Loaded Yaml Configuration");
   console.log(config);
   defaultConfig = config;
+  eventBus = new EventBus(config);
 });
 
 log4js.configure({
@@ -60,13 +64,15 @@ if (env.production) {
 }
 
 app.ws("/api/events/", (ws, req) => {
-  let eventStreamUrl = defaultConfig.dependencies.chatalyticsEventUrl;
-  console.info(`Connecting to event stream: ${eventStreamUrl}`);
-  let eventSocket = new WebSocket(`${eventStreamUrl}/api/v0/events`)
-  eventSocket.onmessage = (event) => {
-    ws.send(event.data);
-  };
+  eventBus.addSubscriber((data) => {
+    // todo: this might be leaking subscribers
+    if (ws.readyState == 1) {
+      ws.send(JSON.stringify(data));
+    }
+    
+  }).bind(this);
 });
+
 app.use("/api/web/", (req, res) => {
   let url = defaultConfig.dependencies.chatalyticswebUrl + req.url;
   if (req.method == "GET") {

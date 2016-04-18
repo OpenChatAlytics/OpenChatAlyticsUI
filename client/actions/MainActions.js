@@ -7,8 +7,12 @@ class MainActions {
   subscribeEvents() {
     return (dispatch) => {
       dispatch();
-      MainSource.subscribeEvents();
+      MainSource.subscribeEvents(this.updateEvents);
     }
+  }
+  
+  updateEvents(event) {
+    return event;
   }
 
   fetchTrendingTopics() {
