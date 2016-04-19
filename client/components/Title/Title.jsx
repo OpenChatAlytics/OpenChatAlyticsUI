@@ -16,6 +16,14 @@ class TitleComponent extends Component {
     MainActions.subscribeEvents();
 
     this.state = MainStore.getState();
+    
+    // set up the graph render loop, this should be no less than ~1s otherwise the graph renderer tends
+    // to bug out
+    this.graphUpdate = setInterval(() => {
+      if (series !== null && this.state.event !== null) {
+         series.addPoint([(new Date()).getTime(), this.state.event.message_meter['1MinuteRate']], true, true);
+      }
+    }, 1500);
   }
 
   componentDidMount() {
@@ -28,12 +36,35 @@ class TitleComponent extends Component {
 
   onChange(state) {
     this.setState(state);
-    if (series !== null && state.event !== null) {
-      series.addPoint([(new Date()).getTime(), state.event.message_summary['1MinuteRate']], true, true);
-    }
   }
 
   render() {
+    
+    // todo: clean this up
+    let timeDiff = 0;
+    let unit = "minute";
+    if (this.state.event) {
+      timeDiff = ((new Date()).getTime() - this.state.event.start_time) / 1000 / 60;
+      if (timeDiff < 5) {
+        unit = "5 minutes";
+      } else if (timeDiff < 15) {
+        unit = "15 minutes";
+      } else if (timeDiff < 30) {
+        unit = "30 minutes";
+      } else if (timeDiff < 60) {
+        unit = "hour";
+      } else if (timeDiff < 60 * 24) {
+        unit = "day";
+      } else if (timeDiff < 60 * 24 * 7) {
+        unit = "week";
+      } else if (timeDiff < 60 * 24 * 7 * 4) {
+        unit = "month";
+      } else if (timeDiff < 60 * 24 * 7 * 4 * 12) {
+        unit = "year";
+      } else {
+        unit = "";
+      }
+    }
     return (
       <Parallax bgImage={require('images/bg3.jpg') } strength={600}>
         <div id="attribution"><a href="https://www.flickr.com/photos/28541561@N04/24974331285/in/photolist-quWXSU-qPDfC1-qLHc1S-qz6pAh-E3TYAH-yytE2e-D38Ub7-zHf1LS">Lone Tree, Lake Wanaka, New Zealand</a> by <a href="https://www.flickr.com/photos/28541561@N04/">Yani Dubin</a><br />Licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/2.0/">CC 2.0</a></div>
@@ -45,10 +76,11 @@ class TitleComponent extends Component {
             <div>
               <div><h1>Open | ChatAlytics</h1></div>
               <ReactHighcharts config={this.props.config} isPureConfig={true}></ReactHighcharts>
+              <p>In the past {unit}</p>
               <table>
                 <tbody>
                   <tr>
-                    <td>35237</td><td>Messages Processed</td>
+                    <td width={100}>{this.state.event ? this.state.event.message_count : 0}</td><td>Messages Processed </td>
                   </tr>
                   <tr>
                     <td>2315</td><td>Words Analyzed</td>
@@ -77,7 +109,7 @@ TitleComponent.defaultProps = {
       backgroundColor: null,
       animation: Highcharts.svg, // don't animate in old IE
       events: {
-        load: function () {
+        load: function() {
           series = this.series[0];
         }
       }
@@ -87,26 +119,15 @@ TitleComponent.defaultProps = {
     yAxis: { visible: false },
     credits: { enabled: false },
     legend: { enabled: false },
-    plotOptions: {
-      line: {
-        marker: {
-          symbol: 'diamond'
-        }
-      }
-    },
+    plotOptions: { line: { marker: { symbol: 'diamond' } } },
     series: [{
-      name: 'Random data',
+      name: 'Messages / s',
       data: (function() {
-        // generate an array of random data
-        var data = [],
-          time = (new Date()).getTime(),
-          i;
-
-        for (i = -19; i <= 0; i += 1) {
-          data.push({
-            x: time + i * 1000,
-            y: Math.random()
-          });
+        // generate an array of random data, todo: this should be prebuffered from the server
+        let data = [];
+        let time = (new Date()).getTime();
+        for (let i = -19; i <= 0; i++) {
+          data.push({ x: time + i * 1000, y: 0 });
         }
         return data;
       } ())

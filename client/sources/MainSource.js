@@ -26,7 +26,6 @@ export default {
   },
   
   subscribeEvents(callback, args = {}) {
-    console.log(`ws://localhost:3001/${ApiConstants.resources.events}`);
     let eventSocket = new WebSocket(`ws://localhost:3001/${ApiConstants.resources.events}`)
     eventSocket.onmessage = (event) => {
       callback(JSON.parse(event.data));
