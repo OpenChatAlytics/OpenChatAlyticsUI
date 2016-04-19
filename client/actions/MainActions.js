@@ -1,8 +1,20 @@
 import alt from '../alt';
-import MainSource from '../sources/MainSource'
+import MainSource from '../sources/MainSource';
 
 class MainActions {
+
+  // Subscribes to the web event stream
+  subscribeEvents() {
+    return (dispatch) => {
+      dispatch();
+      MainSource.subscribeEvents(this.updateEvents);
+    }
+  }
   
+  updateEvents(event) {
+    return event;
+  }
+
   fetchTrendingTopics() {
     return (dispatch) => {
       // we dispatch an event here so we can have "loading" state.
@@ -17,11 +29,11 @@ class MainActions {
         });
       }
   }
-  
+
   updateTrendingTopics(topics) {
     return topics;
   }
-  
+
   trendingTopicsFailed(errorMessage) {
     return errorMessage;
   }

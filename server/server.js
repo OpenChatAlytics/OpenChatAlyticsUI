@@ -1,5 +1,7 @@
 'use strict';
 
+import EventBus from './events.js';
+
 import fs from 'fs';
 import path from 'path';
 import express from 'express';
@@ -9,6 +11,15 @@ import morgan from 'morgan';
 import log4js from 'log4js';
 import YamlLoader from 'yaml-config-loader';
 import request from 'request';
+import ExpressWs from 'express-ws';
+import WebSocket from 'ws';
+
+let app = express();
+let expressWs = ExpressWs(app);
+
+process.on('uncaughtException', function (err) {
+  console.error('Caught exception: ' + err);
+});
 
 process.on('uncaughtException', function(err) {
   console.error('Caught exception: ' + err);
@@ -18,10 +29,12 @@ let yamlLoader = new YamlLoader();
 yamlLoader.add(path.join(__dirname, 'defaults.config.yaml'), { filterKeys: true });
 
 let defaultConfig = {};
+let eventBus = null;
 yamlLoader.load((error, config) => {
-  console.log("Loaded Yaml Configuration"); 
+  console.log("Loaded Yaml Configuration");
   console.log(config);
   defaultConfig = config;
+  eventBus = new EventBus(config);
 });
 
 log4js.configure({
@@ -32,11 +45,9 @@ log4js.configure({
 });
 let logger = log4js.getLogger();
 
-let app = express();
-
 app.set('layout');
 app.set('view engine', 'ejs');
-app.set('view options', {layout: 'layout'});
+app.set('view options', { layout: 'layout' });
 app.set('views', path.join(process.cwd(), '/server/views'));
 
 app.use(morgan('combined'));
@@ -56,13 +67,23 @@ if (env.production) {
   });
 }
 
-app.use("/api/web/", (req, res) => {
-    let url = defaultConfig.dependencies.chatalyticswebUrl + req.url;
-    if(req.method == "GET") {
-        req.pipe(request(url)).pipe(res);
-    } else {
-        req.pipe(request[req.method.toLowerCase()]({url: url, json: req.body})).pipe(res);
+app.ws("/api/events/", (ws, req) => {
+  eventBus.addSubscriber((data) => {
+    // todo: this might be leaking subscribers
+    if (ws.readyState == 1) {
+      ws.send(JSON.stringify(data));
     }
+    
+  }).bind(this);
+});
+
+app.use("/api/web/", (req, res) => {
+  let url = defaultConfig.dependencies.chatalyticswebUrl + req.url;
+  if (req.method == "GET") {
+    req.pipe(request(url)).pipe(res);
+  } else {
+    req.pipe(request[req.method.toLowerCase()]({ url: url, json: req.body })).pipe(res);
+  }
 });
 
 app.get('/*', (req, res) => {

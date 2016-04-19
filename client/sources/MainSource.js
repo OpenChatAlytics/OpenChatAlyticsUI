@@ -1,4 +1,6 @@
+import ApiConstants from './ApiConstants.js'
 import request from 'superagent';
+
 //http -f POST localhost:3001/api/web/trending\?maxResults\=200 starttime=2016-01-01 endtime=2016-12-12
 
 const requestTimeoutMs = 5000;
@@ -23,6 +25,13 @@ export default {
     });
   },
   
+  subscribeEvents(callback, args = {}) {
+    let eventSocket = new WebSocket(`ws://localhost:3001/${ApiConstants.resources.events}`)
+    eventSocket.onmessage = (event) => {
+      callback(JSON.parse(event.data));
+    };
+  },
+
   fetch: function () {
     // returning a Promise because that is what fetch does.
     return new Promise(function (resolve, reject) {
