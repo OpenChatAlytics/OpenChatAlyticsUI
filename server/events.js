@@ -16,13 +16,16 @@ export default class EventBus {
     
     setInterval(() => {
       if (!this.socket || this.socket.readyState !== 1) {
+        if (this.socket) {
+          this.socket.close();
+        }
         console.info("Connecting to ChatAlytics Web event stream");
         this.socket = new WebSocket(`${config.dependencies.chatalyticsEventUrl}/api/v0/events`);
         this.socket.onmessage = (event) => {
           this.onEventReceived(event);
         };
       }
-    }, 1000);
+    }, 3000);
   }
 
   onEventReceived(event) {
