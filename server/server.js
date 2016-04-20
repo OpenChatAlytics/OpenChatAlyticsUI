@@ -21,10 +21,6 @@ process.on('uncaughtException', function (err) {
   console.error('Caught exception: ' + err);
 });
 
-process.on('uncaughtException', function(err) {
-  console.error('Caught exception: ' + err);
-});
-
 let yamlLoader = new YamlLoader();
 yamlLoader.add(path.join(__dirname, 'defaults.config.yaml'), { filterKeys: true });
 

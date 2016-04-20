@@ -83,10 +83,10 @@ class TitleComponent extends Component {
                     <td width={100}>{this.state.event ? this.state.event.message_count : 0}</td><td>Messages Processed </td>
                   </tr>
                   <tr>
-                    <td>2315</td><td>Words Analyzed</td>
+                    <td>{this.state.event ? this.state.event.active_room_count : 0}</td><td>Active Rooms</td>
                   </tr>
                   <tr>
-                    <td>53</td><td>Unique Users</td>
+                    <td>{this.state.event ? this.state.event.active_user_count : 0}</td><td>Active Users</td>
                   </tr>
                 </tbody>
               </table>

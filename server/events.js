@@ -9,7 +9,9 @@ export default class EventBus {
     this.state = {
       message_meter: new Measured.Meter(),
       message_count: new Measured.Counter(),
-      start_time: (new Date()).getTime()
+      start_time: (new Date()).getTime(),
+      active_rooms: new Set(),
+      active_users: new Set()
     }
     
     setInterval(() => {
@@ -29,7 +31,9 @@ export default class EventBus {
     this.subscribers.forEach((subscriber) => {
         subscriber({ message_meter: this.state.message_meter.toJSON(),
                      message_count: this.state.message_count.toJSON(),
-                     start_time: this.state.start_time });
+                     start_time: this.state.start_time,
+                     active_room_count: this.state.active_rooms.size,
+                     active_user_count: this.state.active_users.size });
       });
   }
 
@@ -43,6 +47,8 @@ export default class EventBus {
       let occurrences = message.event.occurrences || 1;
       this.state.message_meter.mark(occurrences);
       this.state.message_count.inc(occurrences);
+      this.state.active_rooms.add(message.event.roomName);
+      this.state.active_users.add(message.event.username);
     }
   }
 }

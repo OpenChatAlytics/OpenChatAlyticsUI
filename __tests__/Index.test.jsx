@@ -3,6 +3,9 @@ jest.mock('../client/stores/MainStore.js');
 jest.mock('../client/images/logo.png');
 jest.mock('../client/images/bg2.jpg');
 
+jest.mock('../client/sources/MainSource.js');
+jest.mock('../client/actions/MainActions.js');
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
