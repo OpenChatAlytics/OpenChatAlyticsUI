@@ -48,7 +48,7 @@ export default class EventBus {
       this.state.message_meter.mark(occurrences);
       this.state.message_count.inc(occurrences);
       this.state.active_rooms.add(message.event.roomName);
-      this.state.active_users.add(message.event.username)
+      this.state.active_users.add(message.event.username);
     }
   }
 }
