@@ -34,6 +34,10 @@ h2 {
   text-transform: uppercase;
 }
 
+h3 {
+  padding: 0em 0em 1em 0em;
+}
+
 body, html {
   background: $black;
   // background-image: url('../images/bg.jpg');
@@ -69,6 +73,11 @@ a {
 
 td {
   padding-right: 1em;
+}
+
+th {
+  text-align: left;
+  padding-bottom: 0.5em;
 }
 
 .chatalytics {

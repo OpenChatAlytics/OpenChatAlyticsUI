@@ -7,10 +7,10 @@ const requestTimeoutMs = 5000;
 
 export default {
 
-  fetchTrendingTopics(query = { starttime: '2016-01-01', endtime: '2016-12-12' }) {
+  fetchTrendingTopics(query = { n: 15, starttime: '2016-01-01', endtime: '2016-12-12' }) {
     return new Promise((resolve, reject) => {
        request
-          .get(ApiConstants.resources.entities)
+          .get(ApiConstants.resources.trending)
           .query(query)
           .end((err, res) => {
             if (err) {

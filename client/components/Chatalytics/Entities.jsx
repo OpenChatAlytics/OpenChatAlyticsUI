@@ -4,6 +4,7 @@ import Highcharts from 'highcharts';
 import MainStore from '../../stores/MainStore';
 import MainActions from '../../actions/MainActions';
 import AsyncComponent from './Async';
+import TableComponent from './Table';
 
 export default class EntitiesComponent extends Component {
 
@@ -39,20 +40,6 @@ class EntitiesSummaryComponent extends Component {
 
 }
 
-class TableComponent extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div>
-        <h3>Trending Topics {this.state.trendingTopics}</h3>
-      </div>
-    );
-  }
-}
-
 class EntitiesStatisticsComponent extends Component {
 
   constructor() {
@@ -77,12 +64,19 @@ class EntitiesStatisticsComponent extends Component {
   }
 
   render() {
-    console.log(this.state.trendingTopics);
     return (
-      <AsyncComponent isLoaded={this.isLoaded.bind(this) } 
-                      loaded={ <h3>sdf</h3>  }
-                      />
+      <AsyncComponent isLoaded={this.isLoaded.bind(this) }
+        loaded={
+          <div>
+            <h3>Trending Topics</h3>
+            <p>What are people talking about?</p>
+            <TableComponent columns={['key', 'value']}
+              aliases={['Topics', 'Score']}
+              data={ this.state.trendingTopics } />
+          </div>  }
+        />
     );
   }
 
 }
+

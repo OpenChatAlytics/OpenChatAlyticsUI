@@ -13,20 +13,22 @@ class MainStore {
       handleSubscribeEvents: MainActions.SUBSCRIBE_EVENTS,
     });
   }
-  
+
   handleUpdateEvents(event) {
     this.event = event;
   }
-  
+
   handleSubscribeEvents() {
     this.event = null;
   }
-  
+
   handleUpdateTrendingTopics(trendingTopics) {
-    this.trendingTopics = trendingTopics;
+    this.trendingTopics = Object.keys(trendingTopics).map((key) => {
+      return { key: key, value: trendingTopics[key] };
+    });
     this.errorMessage = null;
   }
-  
+
   handleFetchTrendingTopics() {
     this.trendingTopics = null;
   }
