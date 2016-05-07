@@ -14,6 +14,7 @@ class TitleComponent extends Component {
 
     // populates the main store which triggers renders on dependent components
     MainActions.fetchTrendingTopics();
+    MainActions.fetchTrendingTopicsOverTime();
     MainActions.subscribeEvents();
 
     this.state = MainStore.getState();

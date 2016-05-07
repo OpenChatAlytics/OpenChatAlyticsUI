@@ -7,8 +7,6 @@ export default class TableComponent extends Component {
   }
 
   render() {
-    console.log(">>>");
-    console.log(this.props.data);
     if (this.props.data === null || this.props.columns === null) return <div></div>
     return (
       <table>

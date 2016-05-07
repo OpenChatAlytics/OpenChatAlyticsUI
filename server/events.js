@@ -14,18 +14,18 @@ export default class EventBus {
       active_users: new Set()
     }
     
-    setInterval(() => {
-      if (!this.socket || this.socket.readyState !== 1) {
-        if (this.socket) {
-          this.socket.close();
-        }
-        console.info("Connecting to ChatAlytics Web event stream");
-        this.socket = new WebSocket(`${config.dependencies.chatalyticsEventUrl}/api/v0/events`);
-        this.socket.onmessage = (event) => {
-          this.onEventReceived(event);
-        };
-      }
-    }, 3000);
+    // setInterval(() => {
+    //   if (!this.socket || this.socket.readyState !== 1) {
+    //     if (this.socket) {
+    //       this.socket.close();
+    //     }
+    //     console.info("Connecting to ChatAlytics Web event stream");
+    //     this.socket = new WebSocket(`${config.dependencies.chatalyticsEventUrl}/api/v0/events`);
+    //     this.socket.onmessage = (event) => {
+    //       this.onEventReceived(event);
+    //     };
+    //   }
+    // }, 3000);
   }
 
   onEventReceived(event) {

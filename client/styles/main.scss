@@ -35,7 +35,18 @@ h2 {
 }
 
 h3 {
-  padding: 0em 0em 1em 0em;
+  padding: 1em 0em;
+  font-size: 1.5em;
+}
+
+h4 {
+  padding: 1em 0em;
+  font-size: 1.2em;
+}
+
+h5 {
+  padding: 1em 0em;
+  font-size: 0.9em;
 }
 
 body, html {
@@ -69,6 +80,10 @@ a {
   &:hover {
     text-decoration: underline;
   }
+}
+
+table {
+  width: 100%;
 }
 
 td {
