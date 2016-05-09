@@ -69,14 +69,9 @@ class MainStore {
             return {
               label: datasets[key].label,
               fill: true,
-              borderWidth: 2,
-              pointRadius: 0,
               tension: 0,
-              pointStyle: 'rect',
-              pointBackgroundColor: Colors.d3c20b[i],
-              pointFillColor: Colors.d3c20b[i],
-              backgroundColor: Color(Colors.d3c20b[i]).whiten(0.25).hexString(),
-              borderColor: Colors.d3c20b[i],
+              pointBackgroundColor: Colors.zeileis[i],
+              backgroundColor: Colors.zeileis[i],
               data: datasets[key].data
             }
           })

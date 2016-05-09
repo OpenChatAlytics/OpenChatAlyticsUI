@@ -40,6 +40,7 @@ class MainActions {
     return (dispatch) => {
       dispatch();
       
+      // todo: fix this
       Promise.all([
           MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-01-01', endtime: '2016-02-01' }), 
           MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-02-01', endtime: '2016-03-01' }), 
