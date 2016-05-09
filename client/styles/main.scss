@@ -34,6 +34,21 @@ h2 {
   text-transform: uppercase;
 }
 
+h3 {
+  padding: 1em 0em;
+  font-size: 1.5em;
+}
+
+h4 {
+  padding: 1em 0em;
+  font-size: 1.2em;
+}
+
+h5 {
+  padding: 1em 0em;
+  font-size: 0.9em;
+}
+
 body, html {
   background: $black;
   // background-image: url('../images/bg.jpg');
@@ -67,8 +82,17 @@ a {
   }
 }
 
+table {
+  width: 100%;
+}
+
 td {
   padding-right: 1em;
+}
+
+th {
+  text-align: left;
+  padding-bottom: 0.5em;
 }
 
 .chatalytics {

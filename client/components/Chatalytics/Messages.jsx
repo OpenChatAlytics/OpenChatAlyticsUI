@@ -4,7 +4,7 @@ import ThreeColumn from '../Layouts/ThreeColumn';
 import LazyLoad from 'react-lazy-load';
 import MainStore from '../../stores/MainStore';
 import MainActions from '../../actions/MainActions';
-import EasyTransition from 'react-easy-transition'
+import EasyTransition from 'react-easy-transition';
 import Reactable from 'react-table';
 
 class MessagesComponent extends Component {

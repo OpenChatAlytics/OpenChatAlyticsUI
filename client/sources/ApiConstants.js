@@ -5,6 +5,7 @@
 export default {
     resources: {
         events: 'api/events',
-        trending: 'api/entities'
+        trending: '/api/web/api/v0/entities/trending',
+        entities: '/api/web/api/v0/entities'
     }
 }

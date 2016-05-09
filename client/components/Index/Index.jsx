@@ -6,6 +6,7 @@ import Title from '../Title/Title';
 import About from '../About/About';
 import Footer from '../Footer/Footer';
 import Messages from '../Chatalytics/Messages';
+import Entities from '../Chatalytics/Entities';
 
 class IndexComponent extends Component {
   constructor() {
@@ -38,9 +39,7 @@ class IndexComponent extends Component {
       <div>
         <Title />
         <About />
-        <Messages />
-        <Messages />
-        <Messages />
+        <Entities />
         <Footer />
       </div>
     );

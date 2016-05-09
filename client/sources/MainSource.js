@@ -7,13 +7,11 @@ const requestTimeoutMs = 5000;
 
 export default {
 
-  fetchTrendingTopics(args = {}) {
+  fetchTrendingTopics(query = { n: 15, starttime: '2016-01-01', endtime: '2016-12-12' }) {
     return new Promise((resolve, reject) => {
        request
-          .timeout(requestTimeoutMs)
-          .post('/api/web/trending?maxResults=100')
-          .type('form')
-          .send({ starttime: '2016-01-01', endtime: '2016-12-12' })
+          .get(ApiConstants.resources.trending)
+          .query(query)
           .end((err, res) => {
             if (err) {
               console.error(err);
