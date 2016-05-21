@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import TwoColumn from '../Layouts/TwoColumn';
 import TwoColumnFixed from '../Layouts/TwoColumnFixed';
 import Highcharts from 'highcharts';
@@ -7,6 +8,7 @@ import MainActions from '../../actions/MainActions';
 import AsyncComponent from './Async';
 import TableComponent from './Table';
 import ChartJS, { Line, Bubble } from 'react-chartjs';
+import Viva from 'vivagraphjs';
 
 export default class EntitiesComponent extends Component {
 
@@ -23,17 +25,16 @@ export default class EntitiesComponent extends Component {
           topics during the past year as well as the evolution of these topics over each month.</p>
         <TwoColumnFixed leftWidth='300px' left={<EntitiesStatisticsComponent />}
           right={<EntitiesTimeChart />} />
-
         <h3>Similarity</h3>
         <p>Entities are similar if they were mentioned by the same user or in the same room.
-          We show this similarity as a matrix S, where entities A, B are similar if the value in row A, column B is large.   If A, B is zero, the entities are
-          completely disimilar.  We then sort the similarity matrix by the second eigenvector of the Lapacian, which has the effect of
+          We show this similarity as a matrix S, where entities A, B are similar if the value in row A, column B is large.If A, B is zero, the entities are
+          completely disimilar.We then sort the similarity matrix by the second eigenvector of the Lapacian, which has the effect of
           grouping similar clusters of entities together.
         </p>
         <TwoColumnFixed leftWidth='50%' left={<EntitiesSimilarityChart />}
           right={<EntitiesSimilarityChart />} />
         <h3>Similarity Graph</h3>
-        <p>We can also visualize similarity as a graph by drawing an edge if two entities are similar (a similarity matrix is essentially an adjacency matrix).</p> 
+        <p>We can also visualize similarity as a graph by drawing an edge if two entities are similar (a similarity matrix is essentially an adjacency matrix).</p>
       </div>
     );
   }
@@ -57,7 +58,6 @@ class EntitiesSummaryComponent extends Component {
       </div>
     );
   }
-
 }
 
 class EntitiesStatisticsComponent extends Component {
@@ -123,8 +123,8 @@ class EntitiesTimeChart extends Component {
 
   render() {
     if (typeof Chart !== 'undefined') {
-      Chart.defaults.global.defaultFontFamily = 'Quicksand';
-      Chart.defaults.global.defaultFontSize = 14;
+      Chart.defaults.global.defaultFontFamily = 'PTMono';
+      Chart.defaults.global.defaultFontSize = 12;
       Chart.defaults.global.responsive = true;
       Chart.defaults.global.legend.position = 'bottom';
       // Chart.defaults.global.maintainAspectRatio = false;
@@ -132,14 +132,14 @@ class EntitiesTimeChart extends Component {
     let options = {
       responsive: true,
       tooltips: {
-        mode: 'label',
+        mode: 'single',
       },
       hover: {
-        mode: 'label'
+        mode: 'dataset'
       },
       elements: {
-        point: { 
-          radius: 0
+        point: {
+          radius: 2
         }
       },
       scales: {
@@ -150,7 +150,7 @@ class EntitiesTimeChart extends Component {
           }
         }],
         yAxes: [{
-          stacked: true,
+          stacked: false,
           scaleLabel: {
             display: true,
             labelString: 'Number Mentions'
@@ -169,6 +169,55 @@ class EntitiesTimeChart extends Component {
       </div>
     );
   }
+}
+
+class EntitiesGraphComponent extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = MainStore.getState();
+  }
+
+  componentWillUnmount() {
+    MainStore.unlisten(this.onChange);
+  }
+
+  onChange(state) {
+    if (state.similarities != null) {
+      let similarities = state.similarities.clone();
+      let container = ReactDOM.findDOMNode(this);
+      var graph = Viva.Graph.graph();
+      console.log(similarities.datasets[0].data[0]);
+      similarities.datasets[0].data.forEach((data) => {
+        if (data.r > 0.05) {
+          graph.addLink(data.x, data.y);
+        }
+      })
+      // graph.addLink("foo", "asd");
+
+      var graphics = Viva.Graph.View.svgGraphics();
+
+      // specify where it should be rendered:
+      var renderer = Viva.Graph.View.renderer(graph, {
+        graphics: graphics,
+        container: container
+      });
+      renderer.run();
+    }
+    this.setState(state);
+  }
+
+  componentDidMount() {
+    MainStore.listen(this.onChange.bind(this));
+
+  }
+
+  render() {
+    return (
+      <div style={{ width: '100%', height: '300' }} />
+    );
+  }
+
 }
 
 
@@ -192,18 +241,19 @@ class EntitiesSimilarityChart extends Component {
   }
 
   isLoaded(state) {
-    return state.trendingTopicsOverTime != null;
+    return state.similarities != null;
   }
 
   render() {
     if (typeof Chart !== 'undefined') {
-      Chart.defaults.global.defaultFontFamily = 'Quicksand';
-      Chart.defaults.global.defaultFontSize = 14;
+      Chart.defaults.global.defaultFontFamily = 'PTMono';
+      Chart.defaults.global.defaultFontSize = 12;
       Chart.defaults.global.responsive = true;
       Chart.defaults.global.legend.position = 'bottom';
       // Chart.defaults.global.maintainAspectRatio = false;
     }
-    let labels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    let labels = this.state.similarities ? this.state.similarities.clone().labels : [];
     let options = {
       responsive: true,
       tooltips: {
@@ -214,7 +264,7 @@ class EntitiesSimilarityChart extends Component {
       },
       elements: {
         point: {
-          backgroundColor: 'rgba(65, 128, 255, 0.5)',
+          backgroundColor: 'rgba(65, 128, 255, 0.05)',
           hitRadius: 1,
           hoverRadius: 4,
           hoverBorderWidth: 1,
@@ -258,28 +308,19 @@ class EntitiesSimilarityChart extends Component {
         display: false
       }
     }
-    let data = {
-      datasets: [{
-        data: [
-          { x: 0, y: 0, r: 50 },
-          { x: 0, y: 1, },
-          { x: 1, y: 0 }, 
-          { x: 1, y: 1 },
-          { x: 2, y: 1, r: 76}]
-      }],
-      labels: ['label1', 'label2', 'label3', 'label4']
-    };
 
-    return (
-      <div>
-        <h4>Similarity by User</h4>
-        <AsyncComponent isLoaded={this.isLoaded.bind(this) }
-          loaded={ this.state.trendingTopicsOverTime ?
-            <Bubble ref="chart" data={ data }
-              width={100} height={100}
-              options={ options } />
-            : <div />} />
-      </div>
-    );
+    return (<div />)
+
+    // return (
+    //   <div>
+    //     <h4>Similarity by User</h4>
+    //     <AsyncComponent isLoaded={this.isLoaded.bind(this) }
+    //       loaded={ this.state.similarities ?
+    //         <Bubble ref="chart" data={ this.state.similarities.clone() }
+    //           width={100} height={100}
+    //           options={ options } />
+    //         : <div />} />
+    //   </div>
+    // );
   }
 }

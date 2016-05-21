@@ -5,5 +5,27 @@
   src: local('Quicksand'), url(fonts/Quicksand.woff) format('woff');
 }
 
-$font-sans: 'Quicksand', Helvetica, sans-serif;
-$font-heading: 'Quicksand', Helvetica, sans-serif;
+@font-face {
+  font-family: 'Monteserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: local('monteserrat'), url(fonts/monteserrat.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'PTMono';
+  font-style: normal;
+  font-weight: 400;
+  src: local('pt-mono'), url(fonts/pt-mono.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  src: local('raleway'), url(fonts/raleway.woff) format('woff');
+}
+
+$font-sans: 'Raleway', Helvetica, sans-serif;
+$font-heading: 'Monteserrat', Helvetica, sans-serif;
+$font-mono: 'PTMono', Consolas, monospace;

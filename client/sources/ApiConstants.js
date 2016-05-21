@@ -5,7 +5,9 @@
 export default {
     resources: {
         events: 'api/events',
-        trending: '/api/web/api/v0/entities/trending',
-        entities: '/api/web/api/v0/entities'
+        trendingEmojis: '/api/web/api/v0/emojis/trending',
+        trendingEntities: '/api/web/api/v0/entities/trending',
+        entities: '/api/web/api/v0/entities',
+        similarities: '/api/web/api/v0/entities/similarities'
     }
 }

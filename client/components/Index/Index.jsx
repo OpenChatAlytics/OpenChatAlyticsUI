@@ -7,6 +7,7 @@ import About from '../About/About';
 import Footer from '../Footer/Footer';
 import Messages from '../Chatalytics/Messages';
 import Entities from '../Chatalytics/Entities';
+import Emojis from '../Chatalytics/Emojis';
 
 class IndexComponent extends Component {
   constructor() {
@@ -40,6 +41,7 @@ class IndexComponent extends Component {
         <Title />
         <About />
         <Entities />
+        <Emojis />
         <Footer />
       </div>
     );

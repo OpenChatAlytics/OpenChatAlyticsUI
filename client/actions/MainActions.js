@@ -11,7 +11,7 @@ class MainActions {
       MainSource.subscribeEvents(this.updateEvents);
     }
   }
-  
+
   updateEvents(event) {
     return event;
   }
@@ -20,7 +20,7 @@ class MainActions {
     return (dispatch) => {
       // we dispatch an event here so we can have "loading" state.
       dispatch();
-      
+
       MainSource.fetchTrendingTopics()
         .then((topics) => {
           // we can access other actions within our action through `this.actions`
@@ -29,48 +29,158 @@ class MainActions {
         .catch((errorMessage) => {
           this.trendingTopicsFailed(errorMessage);
         });
-      }
+    }
   }
 
   updateTrendingTopics(topics) {
     return topics;
   }
   
-  fetchTrendingTopicsOverTime() {
+  fetchTrendingEmojis() {
     return (dispatch) => {
       dispatch();
       
-      // todo: fix this
-      Promise.all([
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-01-01', endtime: '2016-02-01' }), 
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-02-01', endtime: '2016-03-01' }), 
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-03-01', endtime: '2016-04-01' }),
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-04-01', endtime: '2016-05-01' }),
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-05-01', endtime: '2016-06-01' }),
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-06-01', endtime: '2016-07-01' }),
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-07-01', endtime: '2016-08-01' }),
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-08-01', endtime: '2016-09-01' }),
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-09-01', endtime: '2016-10-01' }),
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-10-01', endtime: '2016-11-01' }),
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-11-01', endtime: '2016-12-01' }),
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-12-01', endtime: '2017-01-01' })
-        ]).then((topics) => { 
-        this.updateTrendingTopicsOverTime({ topics: topics, times: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] });
+      MainSource.fetchTrendingEmojis()
+        .then((emojis) => {
+          this.updateTrendingEmojis(emojis);
+        })
+        .catch((errorMessage) => {
+          this.trendingEmojisFailed(errorMessage);
+        });
+    }
+  }
+  
+  updateTrendingEmojis(emojis) {
+    return emojis;
+  }
+
+  updateSimilarities(similarities) {
+    return similarities;
+  }
+
+  fetchSimilarities() {
+    return (dispatch) => {
+      dispatch();
+
+      MainSource.fetchSimilarities()
+        .then((similarities) => {
+          this.updateSimilarities(similarities);
+        })
+        .catch((errorMessage) => {
+          this.fetchSimilaritiesFailed(errorMessage);
+        });
+    }
+  }
+
+  fetchTrendingTopicsOverTime(args = {
+    startDate: moment().subtract(12, 'months').format('YYYY-MM-DD'),
+    endDate: moment().format('YYYY-MM-DD')
+  }) {
+    return (dispatch) => {
+      dispatch();
+
+      let startDate = moment(args.startDate);
+      let endDate = moment(startDate);
+      endDate.add(1, 'months');
+
+      let dates = [];
+      while (startDate < moment(args.endDate)) {
+        dates.push({
+          realDate: moment(startDate),
+          startDate: startDate.format('YYYY-MM-DD'),
+          endDate: endDate.format('YYYY-MM-DD')
+        })
+        startDate.add(1, 'months');
+        endDate.add(1, 'months');
+      }
+
+      let requests = dates.map((times) => {
+        return new Promise((resolve) => resolve(MainSource.fetchTrendingTopics({
+          n: 15,
+          starttime: times.startDate,
+          endtime: times.endDate
+        })));
+      });
+      
+      let labels = dates.map(date => {
+        return date.realDate.format('MMMM')
+      })
+
+      Promise.all(requests).then((topics) => {
+        this.updateTrendingTopicsOverTime({ topics: topics, times: labels });
       }).catch((errorMessage) => {
         this.trendingTopicsOverTimeFailed(errorMessage);
       });
     }
   }
-  
+
   updateTrendingTopicsOverTime(topicsOverTime) {
     return topicsOverTime;
+  }
+  
+  fetchTrendingEmojisOverTime(args = {
+    startDate: moment().subtract(12, 'months').format('YYYY-MM-DD'),
+    endDate: moment().format('YYYY-MM-DD')
+  }) {
+    return (dispatch) => {
+      dispatch();
+
+      let startDate = moment(args.startDate);
+      let endDate = moment(startDate);
+      endDate.add(1, 'months');
+
+      let dates = [];
+      while (startDate < moment(args.endDate)) {
+        dates.push({
+          realDate: moment(startDate),
+          startDate: startDate.format('YYYY-MM-DD'),
+          endDate: endDate.format('YYYY-MM-DD')
+        })
+        startDate.add(1, 'months');
+        endDate.add(1, 'months');
+      }
+
+      let requests = dates.map((times) => {
+        return new Promise((resolve) => resolve(MainSource.fetchTrendingEmojis({
+          n: 15,
+          starttime: times.startDate,
+          endtime: times.endDate
+        })));
+      });
+      
+      let labels = dates.map(date => {
+        return date.realDate.format('MMMM')
+      })
+
+      Promise.all(requests).then((emojis) => {
+        this.updateTrendingEmojisOverTime({ emojis: emojis, times: labels });
+      }).catch((errorMessage) => {
+        this.trendingEmojisOverTimeFailed(errorMessage);
+      });
+    }
+  }
+
+  updateTrendingEmojisOverTime(emojisOverTime) {
+    return emojisOverTime;
   }
 
   trendingTopicsFailed(errorMessage) {
     return errorMessage;
   }
   
+  trendingEmojisFailed(errorMessage) {
+    return errorMessage;
+  }
+
   trendingTopicsOverTimeFailed(errorMessage) {
+    return errorMessage;
+  }
+  
+  trendingEmojisOverTimeFailed(errorMessage) {
+    return errorMessage;
+  }
+  
+  fetchSimilaritiesFailed(errorMessage) {
     return errorMessage;
   }
 }
