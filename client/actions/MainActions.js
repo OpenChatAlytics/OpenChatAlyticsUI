@@ -35,11 +35,11 @@ class MainActions {
   updateTrendingTopics(topics) {
     return topics;
   }
-  
+
   fetchTrendingEmojis() {
     return (dispatch) => {
       dispatch();
-      
+
       MainSource.fetchTrendingEmojis()
         .then((emojis) => {
           this.updateTrendingEmojis(emojis);
@@ -49,7 +49,7 @@ class MainActions {
         });
     }
   }
-  
+
   updateTrendingEmojis(emojis) {
     return emojis;
   }
@@ -101,7 +101,7 @@ class MainActions {
           endtime: times.endDate
         })));
       });
-      
+
       let labels = dates.map(date => {
         return date.realDate.format('MMMM')
       })
@@ -117,7 +117,7 @@ class MainActions {
   updateTrendingTopicsOverTime(topicsOverTime) {
     return topicsOverTime;
   }
-  
+
   fetchTrendingEmojisOverTime(args = {
     startDate: moment().subtract(12, 'months').format('YYYY-MM-DD'),
     endDate: moment().format('YYYY-MM-DD')
@@ -147,7 +147,7 @@ class MainActions {
           endtime: times.endDate
         })));
       });
-      
+
       let labels = dates.map(date => {
         return date.realDate.format('MMMM')
       })
@@ -164,10 +164,76 @@ class MainActions {
     return emojisOverTime;
   }
 
+  fetchActiveEmojisByUser() {
+    return (dispatch) => {
+      dispatch();
+
+      MainSource.fetchActiveEmojisByUser()
+        .then((topics) => {
+          this.updateActiveEmojisByUser(topics);
+        })
+        .catch((errorMessage) => {
+          this.activeEmojisByUserFailed(errorMessage);
+        });
+    }
+  }
+
+  updateActiveEmojisByUser(activeEmojisUser) {
+    return activeEmojisUser;
+  }
+
+  activeEmojisByUserFailed(errorMessage) {
+    return errorMessage;
+  }
+
+  fetchActiveEmojisByRoom() {
+    return (dispatch) => {
+      dispatch();
+
+      MainSource.fetchActiveEmojisByRoom()
+        .then((topics) => {
+          this.updateActiveEmojisByRoom(topics);
+        })
+        .catch((errorMessage) => {
+          this.activeEmojisByRoomFailed(errorMessage);
+        });
+    }
+  }
+
+  updateActiveEmojisByRoom(activeEmojisRoom) {
+    return activeEmojisRoom;
+  }
+
+  activeEmojisByRoomFailed(errorMessage) {
+    return errorMessage;
+  }
+
+  fetchAllEmojis() {
+    return (dispatch) => {
+      dispatch();
+
+      MainSource.fetchAllEmojis()
+        .then((topics) => {
+          this.updateAllEmojis(topics);
+        })
+        .catch((errorMessage) => {
+          this.allEmojisFailed(errorMessage);
+        });
+    }
+  }
+
+  updateAllEmojis(allEmojis) {
+    return allEmojis;
+  }
+
+  allEmojisFailed(errorMessage) {
+    return errorMessage;
+  }
+
   trendingTopicsFailed(errorMessage) {
     return errorMessage;
   }
-  
+
   trendingEmojisFailed(errorMessage) {
     return errorMessage;
   }
@@ -175,11 +241,11 @@ class MainActions {
   trendingTopicsOverTimeFailed(errorMessage) {
     return errorMessage;
   }
-  
+
   trendingEmojisOverTimeFailed(errorMessage) {
     return errorMessage;
   }
-  
+
   fetchSimilaritiesFailed(errorMessage) {
     return errorMessage;
   }

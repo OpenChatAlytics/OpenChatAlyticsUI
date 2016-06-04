@@ -8,6 +8,7 @@ import MainActions from '../../actions/MainActions';
 import AsyncComponent from './Async';
 import TableComponent from './Table';
 import ChartJS, { Line, Bubble, Bar } from 'react-chartjs';
+import _ from 'lodash';
 
 export default class EmojisComponent extends Component {
 
@@ -20,33 +21,59 @@ export default class EmojisComponent extends Component {
       <div className="chatalytics" id="emojis">
         <EmojisSummaryComponent />
         <h3>Trending</h3>
-        <p>Trending emojis represent the most popular emojis in use.</p>
+        <p>The most popular emojis by usage over the past year.</p>
         <TwoColumnFixed leftWidth='300px' left={<EmojisStatisticsComponent />}
           right={<EmojisTimeChart />} />
         <h3>User</h3>
-        <p>The top emoji users.</p>
+        <p>The most prolific emoji users by total number of emojis used.</p>
         <EmojisPerUserComponent />
         <h3>Room</h3>
-        <p>Emoji spam.</p>
+        <p>These rooms are mostly emojis at this point.</p>
+        <EmojisPerRoomComponent />
       </div>
     );
   }
-
 }
 
 class EmojisSummaryComponent extends Component {
 
   constructor() {
     super();
+    this.state = MainStore.getState();
+  }
+
+  componentDidMount() {
+    MainStore.listen(this.onChange.bind(this));
+  }
+
+  componentWillUnmount() {
+    MainStore.unlisten(this.onChange);
+  }
+
+  onChange(state) {
+    this.setState(state);
+  }
+
+  isLoaded(state) {
+    return state.allEmojis != null;
   }
 
   render() {
+    // <p>
+    //   In the past year, over {this.state.allEmojis ? this.state.allEmojis.length : "?"} emojis were used, below is the breakdown of emoji usage by type , user and channel (room).
+    // </p>
     return (
       <div>
         <h2>Emojis</h2>
+        <blockquote>
         <p>
-          : -)
+        The first emoji was created in 1998 or 1999 in Japan by Shigetaka Kurita, who was part of the team working on NTT DoCoMo's i-mode mobile Internet platform. Kurita took inspiration from weather forecasts that used symbols to show weather, Chinese characters and street signs, and from manga that used stock symbols to express emotions, such as lightbulbs signifying inspiration.  The first set of 172 12×12 pixel emoji was created as part of i-mode's messaging features to help facilitate electronic communication, and to serve as a distinguishing feature from other services.Kurita created the first 180 emoji based on the expressions that he observed people making and other things in the city.
         </p>
+        <p>
+        Originally meaning pictograph, the word emoji comes from Japanese e (絵, "picture") + moji (文字, "character"). The apparent resemblance to the English words "emotion" and "emoticon" is just a coincidence.  Today, there are over 1700 standard emoji defined in the Unicode standard.
+        </p>
+        <footer>- <a href="https://en.wikipedia.org/wiki/Emoji">https://en.wikipedia.org/wiki/Emoji</a></footer>
+        </blockquote>
       </div>
     );
   }
@@ -82,7 +109,7 @@ class EmojisStatisticsComponent extends Component {
           <div>
             <h4>Top Emojis Past Year</h4>
             <TableComponent columns={['key', 'value']}
-              aliases={['Emojis', 'Score']}
+              aliases={['Emoji', 'Mentions']}
               data={ this.state.trendingEmojis } />
           </div>  }
         />
@@ -110,7 +137,69 @@ class EmojisPerUserComponent extends Component {
   }
 
   isLoaded(state) {
-    return state.emojisPerUser != null;
+    return state.activeEmojisByUser != null;
+  }
+
+  render() {
+    return (
+      <AsyncComponent isLoaded={this.isLoaded.bind(this) }
+        loaded={ this.state.activeEmojisByUser ?
+          <AwardsComponent data={this.state.activeEmojisByUser } />
+          : <div />} />
+    )
+  }
+}
+
+class EmojisPerRoomComponent extends Component {
+
+  constructor() {
+    super();
+    this.state = MainStore.getState();
+  }
+
+  componentDidMount() {
+    MainStore.listen(this.onChange.bind(this));
+  }
+
+  componentWillUnmount() {
+    MainStore.unlisten(this.onChange);
+  }
+
+  onChange(state) {
+    this.setState(state);
+  }
+
+  isLoaded(state) {
+    return state.activeEmojisByRoom != null;
+  }
+
+  render() {
+    return (
+      <AsyncComponent isLoaded={this.isLoaded.bind(this) }
+        loaded={ this.state.activeEmojisByRoom ?
+          <AwardsComponent data={this.state.activeEmojisByRoom } />
+          : <div />} />
+    )
+  }
+}
+
+// Constructs a top entity visualization
+// assume data in the format 
+// [{
+//   title:
+//   subtitle:
+//   summary:
+//   value:
+//  }, ... ]
+// Will automatically sort results by value.
+class AwardsComponent extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: this.props.data.sort((a, b) => { return b.value - a.value; }),
+      maxValue: _.maxBy(this.props.data, o => o.value).value
+    };
   }
 
   render() {
@@ -121,61 +210,48 @@ class EmojisPerUserComponent extends Component {
             <div>
               <div style={{ float: 'left' }} className="award-one">1st</div>
               <div style={{ float: 'left' }}>
-                <h2>@kbot</h2>
-                <h3>0.378 emojis / message</h3>
+                <h2>{this.state.data[0].title}</h2>
+                <h3>{this.state.data[0].subtitle}</h3>
               </div>
               <div style={{ clear: 'both' }} />
-             </div>   
+            </div>
           </div>
           <div style={{ float: 'left' }}>
             <div>
               <div style={{ float: 'left' }} className="award-two">2nd</div>
               <div style={{ float: 'left' }}>
-                <h2>@kbot</h2>
-                <h3>0.378 emojis / message</h3>
+                <h2>{this.state.data[1].title}</h2>
+                <h3>{this.state.data[1].subtitle}</h3>
               </div>
               <div style={{ clear: 'both' }} />
-             </div>   
+            </div>
           </div>
           <div style={{ float: 'left' }}>
             <div>
               <div style={{ float: 'left' }} className="award-three">3rd</div>
               <div style={{ float: 'left' }}>
-                <h2>@kbot</h2>
-                <h3>0.378 emojis / message</h3>
+                <h2>{this.state.data[2].title}</h2>
+                <h3>{this.state.data[2].subtitle}</h3>
               </div>
               <div style={{ clear: 'both' }} />
-             </div>   
+            </div>
           </div>
           <div style={{ clear: 'both' }} />
         </div>
-        <div className="entity-container">
-          {[0, 1, 2, 3, 4, 5, 6].map((e) => {
-            return <EntityMiniComponent />
-          }) }
-          <div style={{ clear: 'both' }} />
-        </div>
-      </div>
-    )
-  }
-}
-
-class EntityMiniComponent extends Component {
-  constructor() {
-    super();
-  }
-
-  render() {
-    return (
-      <div className="entity-mini">
-        <div className="entity-mini-title"> @psastras</div>
-        <div className="entity-mini-summary">simple_smile foo gianiss cheese</div>
-        <div className="entity-mini-subtitle">0.378 emojis / message</div>
-        <div style={{ width: '7%', background: 'black', height: '5px' }} />
+        {this.state.data.slice(3).map((e, i) => {
+          return (
+            <div key={i} className="entity-mini">
+              <div className="entity-mini-title">{e.title}</div>
+              <div className="entity-mini-summary">{e.summary}</div>
+              <div className="entity-mini-subtitle">{e.subtitle}</div>
+              <div style={{ width: `${e.value / this.state.maxValue * 100}%`, background: 'black', height: '5px' }} />
+            </div>
+          )
+        }) }
+        <div style={{ clear: 'both' }} />
       </div>
     );
   }
-
 }
 
 class EmojisTimeChart extends Component {

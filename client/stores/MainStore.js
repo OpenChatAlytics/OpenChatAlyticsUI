@@ -16,7 +16,7 @@ class MainStore {
       handleUpdateTrendingTopics: MainActions.UPDATE_TRENDING_TOPICS,
       handleFetchTrendingTopics: MainActions.FETCH_TRENDING_TOPICS,
       handleTrendingTopicsFailed: MainActions.TRENDING_TOPICS_FAILED,
-      
+
       handleUpdateTrendingEmojis: MainActions.UPDATE_TRENDING_EMOJIS,
       handleFetchTrendingEmojis: MainActions.FETCH_TRENDING_EMOJIS,
       handleTrendingEmojisFailed: MainActions.TRENDING_EMOJIS_FAILED,
@@ -31,6 +31,18 @@ class MainStore {
 
       handleUpdateEvents: MainActions.UPDATE_EVENTS,
       handleSubscribeEvents: MainActions.SUBSCRIBE_EVENTS,
+
+      handleUpdateActiveEmojisByUser: MainActions.UPDATE_ACTIVE_EMOJIS_BY_USER,
+      handleFetchActiveEmojisByUser: MainActions.FETCH_ACTIVE_EMOJIS_BY_USER,
+      handleActiveEmojisByUserFailed: MainActions.ACTIVE_EMOJIS_BY_USER_FAILED,
+
+      handleUpdateActiveEmojisByRoom: MainActions.UPDATE_ACTIVE_EMOJIS_BY_ROOM,
+      handleFetchActiveEmojisByRoom: MainActions.FETCH_ACTIVE_EMOJIS_BY_ROOM,
+      handleActiveEmojisByRoomFailed: MainActions.ACTIVE_EMOJIS_BY_ROOM_FAILED,
+
+      handleUpdateAllEmojis: MainActions.UPDATE_ALL_EMOJIS,
+      handleFetchAllEmojis: MainActions.FETCH_ALL_EMOJIS,
+      handleAllEmojisFailed: MainActions.ALL_EMOJIS_FAILED,
     });
   }
 
@@ -41,7 +53,7 @@ class MainStore {
   handleSubscribeEvents() {
     this.event = null;
   }
-  
+
   handleUpdateTrendingEmojis(trendingEmojis) {
     this.trendingEmojis = Transforms.mapToArray(trendingEmojis);
     this.errorMessage = null;
@@ -107,16 +119,16 @@ class MainStore {
         if (!datasets[dataset] && numTopics++ < maxTopics) {
           datasets[dataset] = {
             label: dataset,
-            data: [ ],
+            data: [],
             maxVal: timeSlice[dataset]
           }
         }
       });
     });
-    
+
     data.topics.forEach((timeSlice) => {
       Object.keys(datasets).forEach((dataset) => {
-          datasets[dataset].data.push(timeSlice[dataset] || 0);
+        datasets[dataset].data.push(timeSlice[dataset] || 0);
       });
     });
 
@@ -150,7 +162,7 @@ class MainStore {
   handleTrendingTopicsOverTimeFailed(errorMessage) {
     this.errorMessage = errorMessage;
   }
-  
+
   handleUpdateTrendingEmojisOverTime(data) {
     // transform the data into one readable by charting libs
     const maxEmojis = 20;
@@ -161,16 +173,16 @@ class MainStore {
         if (!datasets[dataset] && numEmojis++ < maxEmojis) {
           datasets[dataset] = {
             label: dataset,
-            data: [ ],
+            data: [],
             maxVal: timeSlice[dataset]
           }
         }
       });
     });
-    
+
     data.emojis.forEach((timeSlice) => {
       Object.keys(datasets).forEach((dataset) => {
-          datasets[dataset].data.push(timeSlice[dataset] || 0);
+        datasets[dataset].data.push(timeSlice[dataset] || 0);
       });
     });
 
@@ -202,6 +214,59 @@ class MainStore {
   }
 
   handleTrendingEmojisOverTimeFailed(errorMessage) {
+    this.errorMessage = errorMessage;
+  }
+
+  handleUpdateActiveEmojisByUser(activeEmojisByUser) {
+    let data = Transforms.mapToArray(activeEmojisByUser).map(e => {
+      return {
+        title: `@${e.key}`,
+        subtitle: `${(e.value * 100).toFixed(3)}% of all emojis`,
+        value: e.value
+      }
+    });
+    this.activeEmojisByUser = data;
+    this.errorMessage = null;
+  }
+
+  handleFetchActiveEmojisByUser() {
+    this.activeEmojisByUser = null;
+  }
+
+  handleActiveEmojisByUserFailed(errorMessage) {
+    this.errorMessage = errorMessage;
+  }
+
+  handleUpdateActiveEmojisByRoom(activeEmojisByRoom) {
+    let data = Transforms.mapToArray(activeEmojisByRoom).map(e => {
+      return {
+        title: `#${e.key}`,
+        subtitle: `${(e.value * 100).toFixed(3)}% of all emojis`,
+        value: e.value
+      }
+    });
+    this.activeEmojisByRoom = data;
+    this.errorMessage = null;
+  }
+
+  handleFetchActiveEmojisByRoom() {
+    this.activeEmojisByRoom = null;
+  }
+
+  handleActiveEmojisByRoomFailed(errorMessage) {
+    this.errorMessage = errorMessage;
+  }
+
+  handleUpdateAllEmojis(allEmojis) {
+    this.allEmojis = allEmojis;
+    this.errorMessage = null;
+  }
+
+  handleFetchAllEmojis() {
+    this.allEmojis = null;
+  }
+
+  handleAllEmojisFailed(errorMessage) {
     this.errorMessage = errorMessage;
   }
 }

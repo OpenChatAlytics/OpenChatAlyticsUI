@@ -19,6 +19,9 @@ class TitleComponent extends Component {
     MainActions.fetchTrendingEmojisOverTime();
     MainActions.subscribeEvents();
     MainActions.fetchSimilarities();
+    MainActions.fetchActiveEmojisByUser();
+    MainActions.fetchActiveEmojisByRoom();
+    MainActions.fetchAllEmojis();
 
     this.state = MainStore.getState();
 

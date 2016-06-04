@@ -88,6 +88,11 @@ table {
   width: 100%;
 }
 
+blockquote {
+  margin: 0;
+  padding: 0;
+}
+
 td {
   padding-right: 1em;
   font-family: $font-mono;
@@ -176,7 +181,7 @@ svg {
 
 $award-size: 60px;
 .awards {
-  padding: 1em 0;
+  padding: 1.5em 0;
   
   h1, h2, h3 {
     padding: 0em 0em 0.25em;

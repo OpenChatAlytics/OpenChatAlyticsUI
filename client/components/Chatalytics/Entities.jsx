@@ -187,7 +187,6 @@ class EntitiesGraphComponent extends Component {
       let similarities = state.similarities.clone();
       let container = ReactDOM.findDOMNode(this);
       var graph = Viva.Graph.graph();
-      console.log(similarities.datasets[0].data[0]);
       similarities.datasets[0].data.forEach((data) => {
         if (data.r > 0.05) {
           graph.addLink(data.x, data.y);
