@@ -40,6 +40,7 @@ class IndexComponent extends Component {
       <div>
         <Title />
         <About />
+        <Messages />
         <Entities />
         <Emojis />
         <Footer />
