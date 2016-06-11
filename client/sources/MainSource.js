@@ -109,6 +109,34 @@ export default {
     return fetchActiveEmojis(query);
   },
 
+  fetchEmojiIcons() {
+    return new Promise((resolve, reject) => {
+      request.get(ApiConstants.resources.emojiIcons)
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            reject(err);
+          } else {
+            resolve(JSON.parse(res.text));
+          }
+        });
+    });
+  },
+
+  fetchUserIcons() {
+    return new Promise((resolve, reject) => {
+      request.get(ApiConstants.resources.userIcons)
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            reject(err);
+          } else {
+            resolve(JSON.parse(res.text));
+          }
+        });
+    });
+  },
+
   subscribeEvents(callback, args = {}) {
     let eventSocket = new WebSocket(`ws://localhost:3001/${ApiConstants.resources.events}`)
     eventSocket.onmessage = (event) => {

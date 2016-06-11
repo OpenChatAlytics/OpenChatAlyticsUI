@@ -3,6 +3,7 @@ import MainActions from '../actions/MainActions';
 import Colors from './Colors'
 import Color from 'color';
 import Transforms from './ApiTransformers.js'
+import _ from 'lodash';
 
 class MainStore {
   constructor() {
@@ -43,6 +44,14 @@ class MainStore {
       handleUpdateAllEmojis: MainActions.UPDATE_ALL_EMOJIS,
       handleFetchAllEmojis: MainActions.FETCH_ALL_EMOJIS,
       handleAllEmojisFailed: MainActions.ALL_EMOJIS_FAILED,
+
+      handleUpdateEmojiIcons: MainActions.UPDATE_EMOJI_ICONS,
+      handleFetchEmojiIcons: MainActions.FETCH_EMOJI_ICONS,
+      handleEmojiIconsFailed: MainActions.EMOJI_ICONS_FAILED,
+
+      handleUpdateUserIcons: MainActions.UPDATE_USER_ICONS,
+      handleFetchUserIcons: MainActions.FETCH_USER_ICONS,
+      handleUserIconsFailed: MainActions.USER_ICONS_FAILED,
     });
   }
 
@@ -112,11 +121,11 @@ class MainStore {
   handleUpdateTrendingTopicsOverTime(data) {
     // transform the data into one readable by charting libs
     const maxTopics = 20;
-    let datasets = {}
-    let numTopics = 0;
+    let datasets = {};
+    
     data.topics.forEach((timeSlice) => {
       Object.keys(timeSlice).forEach((dataset) => {
-        if (!datasets[dataset] && numTopics++ < maxTopics) {
+        if (!datasets[dataset]) {
           datasets[dataset] = {
             label: dataset,
             data: [],
@@ -125,6 +134,11 @@ class MainStore {
         }
       });
     });
+    
+    datasets = Transforms.arrayToMap(
+      _.sortBy(Transforms.mapToArray(datasets), 
+               e => -e.value.maxVal).slice(0, maxTopics)
+    );
 
     data.topics.forEach((timeSlice) => {
       Object.keys(datasets).forEach((dataset) => {
@@ -166,11 +180,12 @@ class MainStore {
   handleUpdateTrendingEmojisOverTime(data) {
     // transform the data into one readable by charting libs
     const maxEmojis = 20;
-    let datasets = {}
-    let numEmojis = 0;
+    
+    let datasets = {};
+    
     data.emojis.forEach((timeSlice) => {
       Object.keys(timeSlice).forEach((dataset) => {
-        if (!datasets[dataset] && numEmojis++ < maxEmojis) {
+        if (!datasets[dataset]) {
           datasets[dataset] = {
             label: dataset,
             data: [],
@@ -179,6 +194,11 @@ class MainStore {
         }
       });
     });
+    
+    datasets = Transforms.arrayToMap(
+      _.sortBy(Transforms.mapToArray(datasets), 
+               e => -e.value.maxVal).slice(0, maxEmojis)
+    );
 
     data.emojis.forEach((timeSlice) => {
       Object.keys(datasets).forEach((dataset) => {
@@ -222,7 +242,8 @@ class MainStore {
       return {
         title: `@${e.key}`,
         subtitle: `${(e.value * 100).toFixed(3)}% of all emojis`,
-        value: e.value
+        value: e.value,
+        key: e.key
       }
     });
     this.activeEmojisByUser = data;
@@ -267,6 +288,32 @@ class MainStore {
   }
 
   handleAllEmojisFailed(errorMessage) {
+    this.errorMessage = errorMessage;
+  }
+
+  handleUpdateEmojiIcons(emojiIcons) {
+    this.emojiIcons = emojiIcons;
+    this.errorMessage = null;
+  }
+
+  handleFetchEmojiIcons() {
+    this.emojiIcons = null;
+  }
+
+  handleEmojiIconsFailed(errorMessage) {
+    this.errorMessage = errorMessage;
+  }
+
+  handleUpdateUserIcons(userIcons) {
+    this.userIcons = userIcons;
+    this.errorMessage = null;
+  }
+
+  handleFetchUserIcons() {
+    this.userIcons = null;
+  }
+
+  handleUserIconsFailed(errorMessage) {
     this.errorMessage = errorMessage;
   }
 }

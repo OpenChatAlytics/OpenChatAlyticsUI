@@ -22,6 +22,8 @@ class TitleComponent extends Component {
     MainActions.fetchActiveEmojisByUser();
     MainActions.fetchActiveEmojisByRoom();
     MainActions.fetchAllEmojis();
+    MainActions.fetchEmojiIcons();
+    MainActions.fetchUserIcons();
 
     this.state = MainStore.getState();
 

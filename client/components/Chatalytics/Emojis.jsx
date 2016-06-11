@@ -110,7 +110,13 @@ class EmojisStatisticsComponent extends Component {
             <h4>Top Emojis Past Year</h4>
             <TableComponent columns={['key', 'value']}
               aliases={['Emoji', 'Mentions']}
-              data={ this.state.trendingEmojis } />
+              data={ (this.state.trendingEmojis || []).map(e => { 
+                return {
+                  key: <EmojiComponent name={e.key}/>, 
+                  value: e.value }
+                }
+                ) 
+              } />
           </div>  }
         />
     );
@@ -146,6 +152,78 @@ class EmojisPerUserComponent extends Component {
         loaded={ this.state.activeEmojisByUser ?
           <AwardsComponent data={this.state.activeEmojisByUser } />
           : <div />} />
+    )
+  }
+}
+
+class EmojiComponent extends Component {
+
+  constructor() {
+    super();
+    this.state = MainStore.getState();
+  }
+
+  componentDidMount() {
+    MainStore.listen(this.onChange.bind(this));
+  }
+
+  componentWillUnmount() {
+    MainStore.unlisten(this.onChange);
+  }
+
+  onChange(state) {
+    this.setState(state);
+  }
+
+  isLoaded(state) {
+    return state.emojiIcons != null;
+  }
+
+  render() {
+    return (
+      <div>
+        <AsyncComponent isLoaded={this.isLoaded.bind(this) }
+          loaded={ this.state.emojiIcons ?
+              <div>
+                <img className="emoji" src={this.state.emojiIcons[this.props.name]} />
+                <span>{this.props.name}</span>
+              </div>
+            : <span>{this.props.name}</span>} />
+        
+      </div>
+    )
+  }
+}
+
+class UserComponent extends Component {
+
+  constructor() {
+    super();
+    this.state = MainStore.getState();
+  }
+
+  componentDidMount() {
+    MainStore.listen(this.onChange.bind(this));
+  }
+
+  componentWillUnmount() {
+    MainStore.unlisten(this.onChange);
+  }
+
+  onChange(state) {
+    this.setState(state);
+  }
+
+  isLoaded(state) {
+    return state.userIcons != null;
+  }
+
+  render() {
+    return (
+        <AsyncComponent isLoaded={this.isLoaded.bind(this) }
+          loaded={ this.state.userIcons ?
+              <span><img className="user" src={this.state.userIcons[this.props.name]} />{this.props.title}</span>
+            : <span></span>} />
     )
   }
 }
@@ -210,7 +288,7 @@ class AwardsComponent extends Component {
             <div>
               <div style={{ float: 'left' }} className="award-one">1st</div>
               <div style={{ float: 'left' }}>
-                <h2>{this.state.data[0].title}</h2>
+                <h2><UserComponent name={this.state.data[0].key} title={this.state.data[0].title} /></h2>
                 <h3>{this.state.data[0].subtitle}</h3>
               </div>
               <div style={{ clear: 'both' }} />
@@ -220,7 +298,7 @@ class AwardsComponent extends Component {
             <div>
               <div style={{ float: 'left' }} className="award-two">2nd</div>
               <div style={{ float: 'left' }}>
-                <h2>{this.state.data[1].title}</h2>
+                <h2><UserComponent name={this.state.data[1].key} title={this.state.data[1].title} /></h2>
                 <h3>{this.state.data[1].subtitle}</h3>
               </div>
               <div style={{ clear: 'both' }} />
@@ -230,7 +308,7 @@ class AwardsComponent extends Component {
             <div>
               <div style={{ float: 'left' }} className="award-three">3rd</div>
               <div style={{ float: 'left' }}>
-                <h2>{this.state.data[2].title}</h2>
+                <h2><UserComponent name={this.state.data[2].key} title={this.state.data[2].title} /></h2>
                 <h3>{this.state.data[2].subtitle}</h3>
               </div>
               <div style={{ clear: 'both' }} />
@@ -241,10 +319,16 @@ class AwardsComponent extends Component {
         {this.state.data.slice(3).map((e, i) => {
           return (
             <div key={i} className="entity-mini">
-              <div className="entity-mini-title">{e.title}</div>
-              <div className="entity-mini-summary">{e.summary}</div>
-              <div className="entity-mini-subtitle">{e.subtitle}</div>
-              <div style={{ width: `${e.value / this.state.maxValue * 100}%`, background: 'black', height: '5px' }} />
+              <div style={{ float: "left" }} >
+                <UserComponent name={e.key} />
+              </div>
+              <div style={{ float: "left" }} >
+                <div className="entity-mini-title">{e.title}</div>
+                <div className="entity-mini-summary">{e.summary}</div>
+                <div className="entity-mini-subtitle">{e.subtitle}</div>
+                <div style={{ width: `${e.value / this.state.maxValue * 100}%`, background: 'black', height: '5px' }} />
+              </div>
+              <div style={{ clear: "both" }} />
             </div>
           )
         }) }
@@ -274,7 +358,14 @@ class EmojisTimeChart extends Component {
   }
 
   isLoaded(state) {
-    return state.trendingEmojisOverTime != null;
+    return state.trendingEmojisOverTime != null
+           && state.trendingEmojis != null;
+  }
+  
+  filterData() {
+    let teot = this.state.trendingEmojisOverTime.clone();
+    let emojis = this.state.trendingEmojis; // [ { key: "simple_smile" }, ...]
+    // console.log(teot);
   }
 
   render() {
@@ -318,7 +409,7 @@ class EmojisTimeChart extends Component {
       <div>
         <h4>Top Emojis by Month</h4>
         <AsyncComponent isLoaded={this.isLoaded.bind(this) }
-          loaded={ this.state.trendingEmojisOverTime ?
+          loaded={ this.state.trendingEmojisOverTime && this.state.trendingEmojis ?
             <Line ref="chart" data={this.state.trendingEmojisOverTime.clone() }
               options={ options } />
             : <div />} />

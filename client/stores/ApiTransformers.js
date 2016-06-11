@@ -32,6 +32,27 @@ export default {
       return { key: key, value: map[key] };
     });
   },
+  
+  /**
+   * Given an array of objects, transforms the array to a dictionary.
+   * Expects key, value objects in the array.
+   * 
+   * For example:
+   * [ { key: 'key1', value: 'val1' },
+   *   { key: 'key2', value: 'val2' } ]
+   * 
+   * Will return:
+   * 
+   * {
+   *  key1: 'val1',
+   *  key2: 'val2'
+   * }
+   */
+  arrayToMap(array) {
+    let dict = {};
+    array.forEach(e => dict[e.key] = e.value);
+    return dict;
+  },
 
   /**
    * Normalizes an array of data.

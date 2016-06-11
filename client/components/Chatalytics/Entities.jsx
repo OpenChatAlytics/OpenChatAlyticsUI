@@ -242,6 +242,11 @@ class EntitiesSimilarityChart extends Component {
   isLoaded(state) {
     return state.similarities != null;
   }
+  
+  filterSimilarities(similarities, entities) {
+    // console.log(entities);
+    // console.log(similarities);
+  }
 
   render() {
     if (typeof Chart !== 'undefined') {
@@ -307,7 +312,8 @@ class EntitiesSimilarityChart extends Component {
         display: false
       }
     }
-
+    if (this.state.similarities && this.state.trendingTopics)
+      this.filterSimilarities(this.state.similarities.clone(), this.state.trendingTopics);
     return (<div />)
 
     // return (

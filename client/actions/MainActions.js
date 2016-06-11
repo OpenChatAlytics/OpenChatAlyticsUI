@@ -96,7 +96,7 @@ class MainActions {
 
       let requests = dates.map((times) => {
         return new Promise((resolve) => resolve(MainSource.fetchTrendingTopics({
-          n: 15,
+          n: 25,
           starttime: times.startDate,
           endtime: times.endDate
         })));
@@ -142,7 +142,7 @@ class MainActions {
 
       let requests = dates.map((times) => {
         return new Promise((resolve) => resolve(MainSource.fetchTrendingEmojis({
-          n: 15,
+          n: 25,
           starttime: times.startDate,
           endtime: times.endDate
         })));
@@ -227,6 +227,50 @@ class MainActions {
   }
 
   allEmojisFailed(errorMessage) {
+    return errorMessage;
+  }
+
+  fetchEmojiIcons() {
+    return (dispatch) => {
+      dispatch();
+
+      MainSource.fetchEmojiIcons()
+        .then((icons) => {
+          this.updateEmojiIcons(icons);
+        })
+        .catch((errorMessage) => {
+          this.emojiIconsFailed(errorMessage);
+        });
+    }
+  }
+
+  updateEmojiIcons(icons) {
+    return icons;
+  }
+
+  emojiIconsFailed(errorMessage) {
+    return errorMessage;
+  }
+
+  fetchUserIcons() {
+    return (dispatch) => {
+      dispatch();
+
+      MainSource.fetchUserIcons()
+        .then((icons) => {
+          this.updateUserIcons(icons);
+        })
+        .catch((errorMessage) => {
+          this.userIconsFailed(errorMessage);
+        });
+    }
+  }
+
+  updateUserIcons(icons) {
+    return icons;
+  }
+
+  userIconsFailed(errorMessage) {
     return errorMessage;
   }
 
