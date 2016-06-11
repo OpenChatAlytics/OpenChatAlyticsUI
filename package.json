@@ -63,7 +63,7 @@
     "react": "15.1.0",
     "react-addons-css-transition-group": "15.1.0",
     "react-addons-pure-render-mixin": "15.1.0",
-    "react-chartjs": "git://github.com/venari/react-chartjs.git#chartjs-v2",
+    "react-chartjs": "0.7.3",
     "react-dom": "15.1.0",
     "react-highcharts": "8.3.3",
     "react-lazy-load": "3.0.10",
