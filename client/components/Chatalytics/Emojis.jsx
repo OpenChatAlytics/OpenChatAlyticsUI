@@ -10,60 +10,33 @@ import TableComponent from './Table';
 import AwardsComponent from '../Layouts/Awards';
 import EmojiComponent from '../Layouts/Emoji';
 import ChartJS, { Line, Bubble, Bar } from 'react-chartjs';
+import AltContainer from 'alt-container';
 import _ from 'lodash';
 
 export default class EmojisComponent extends Component {
-
-  constructor() {
-    super();
-  }
-
   render() {
     return (
       <div className="chatalytics" id="emojis">
-        <EmojisSummaryComponent />
-        <h3>Trending</h3>
-        <p>The most popular emojis by usage over the past year.</p>
-        <TwoColumnFixed leftWidth='300px' left={<EmojisStatisticsComponent />}
-          right={<EmojisTimeChart />} />
-        <h3>User</h3>
-        <p>The most prolific emoji users by total number of emojis used.</p>
-        <EmojisPerUserComponent />
-        <h3>Room</h3>
-        <p>These rooms are mostly emojis at this point.</p>
-        <EmojisPerRoomComponent />
+        <AltContainer store={ MainStore }>
+          <EmojisSummaryComponent />
+          <h3>Trending</h3>
+          <p>The most popular emojis by usage over the past year.</p>
+          <TwoColumnFixed leftWidth='300px' left={<EmojisStatisticsComponent />}
+            right={<EmojisTimeChart />} />
+          <h3>User</h3>
+          <p>The most prolific emoji users by total number of emojis used.</p>
+          <EmojisPerUserComponent />
+          <h3>Room</h3>
+          <p>These rooms are mostly emojis at this point.</p>
+          <EmojisPerRoomComponent />
+        </AltContainer>
       </div>
     );
   }
 }
 
 class EmojisSummaryComponent extends Component {
-
-  constructor() {
-    super();
-    this.state = MainStore.getState();
-  }
-
-  componentDidMount() {
-    MainStore.listen(this.onChange.bind(this));
-  }
-
-  componentWillUnmount() {
-    MainStore.unlisten(this.onChange);
-  }
-
-  onChange(state) {
-    this.setState(state);
-  }
-
-  isLoaded(state) {
-    return state.allEmojis != null;
-  }
-
   render() {
-    // <p>
-    //   In the past year, over {this.state.allEmojis ? this.state.allEmojis.length : "?"} emojis were used, below is the breakdown of emoji usage by type , user and channel (room).
-    // </p>
     return (
       <div>
         <h2>Emojis</h2>
@@ -82,145 +55,52 @@ class EmojisSummaryComponent extends Component {
 }
 
 class EmojisStatisticsComponent extends Component {
-
-  constructor() {
-    super();
-    this.state = MainStore.getState();
-  }
-
-  componentDidMount() {
-    MainStore.listen(this.onChange.bind(this));
-  }
-
-  componentWillUnmount() {
-    MainStore.unlisten(this.onChange);
-  }
-
-  onChange(state) {
-    this.setState(state);
-  }
-
-  isLoaded(state) {
-    return state.trendingEmojis != null;
-  }
-
   render() {
     return (
-      <AsyncComponent isLoaded={this.isLoaded.bind(this) }
+      <AsyncComponent isLoaded={ () => this.props.trendingEmojis != null }
         loaded={
           <div>
             <h4>Top Emojis Past Year</h4>
             <TableComponent columns={['key', 'value']}
               aliases={['Emoji', 'Mentions']}
-              data={ (this.state.trendingEmojis || []).map(e => { 
-                return {
-                  key: <EmojiComponent name={e.key}/>, 
-                  value: e.value }
-                }
-                ) 
-              } />
-          </div>  }
-        />
+              data={ (this.props.trendingEmojis || []).map(e => { 
+                          return {
+                            key: <AltContainer store={ MainStore }><EmojiComponent name={e.key}/></AltContainer>, 
+                            value: e.value 
+                          }
+                        }
+                      ) 
+                    } />
+          </div>  
+        }
+      />
     );
   }
 }
 
 class EmojisPerUserComponent extends Component {
-
-  constructor() {
-    super();
-    this.state = MainStore.getState();
-  }
-
-  componentDidMount() {
-    MainStore.listen(this.onChange.bind(this));
-  }
-
-  componentWillUnmount() {
-    MainStore.unlisten(this.onChange);
-  }
-
-  onChange(state) {
-    this.setState(state);
-  }
-
-  isLoaded(state) {
-    return state.activeEmojisByUser != null;
-  }
-
   render() {
     return (
-      <AsyncComponent isLoaded={this.isLoaded.bind(this) }
-        loaded={ this.state.activeEmojisByUser ?
-          <AwardsComponent data={this.state.activeEmojisByUser } />
+      <AsyncComponent isLoaded={ () => this.props.activeEmojisByUser != null }
+        loaded={ this.props.activeEmojisByUser ?
+          <AwardsComponent data={this.props.activeEmojisByUser } />
           : <div />} />
     )
   }
 }
 
 class EmojisPerRoomComponent extends Component {
-
-  constructor() {
-    super();
-    this.state = MainStore.getState();
-  }
-
-  componentDidMount() {
-    MainStore.listen(this.onChange.bind(this));
-  }
-
-  componentWillUnmount() {
-    MainStore.unlisten(this.onChange);
-  }
-
-  onChange(state) {
-    this.setState(state);
-  }
-
-  isLoaded(state) {
-    return state.activeEmojisByRoom != null;
-  }
-
   render() {
     return (
-      <AsyncComponent isLoaded={this.isLoaded.bind(this) }
-        loaded={ this.state.activeEmojisByRoom ?
-          <AwardsComponent data={this.state.activeEmojisByRoom } />
+      <AsyncComponent isLoaded={ () => this.props.activeEmojisByRoom != null }
+        loaded={ this.props.activeEmojisByRoom ?
+          <AwardsComponent data={this.props.activeEmojisByRoom } />
           : <div />} />
     )
   }
 }
 
 class EmojisTimeChart extends Component {
-
-  constructor() {
-    super();
-    this.state = MainStore.getState();
-  }
-
-  componentDidMount() {
-    MainStore.listen(this.onChange.bind(this));
-  }
-
-  componentWillUnmount() {
-    MainStore.unlisten(this.onChange);
-  }
-
-  onChange(state) {
-    this.setState(state);
-  }
-
-  isLoaded(state) {
-    return state.trendingEmojisOverTime != null
-           && state.trendingEmojis != null;
-  }
-  
-  filterData() {
-    let teot = this.state.trendingEmojisOverTime.clone();
-    let emojis = this.state.trendingEmojis; // [ { key: "simple_smile" }, ...]
-    // console.log(teot);
-  }
-
   render() {
     if (typeof Chart !== 'undefined') {
       Chart.defaults.global.defaultFontFamily = 'PTMono';
@@ -261,9 +141,9 @@ class EmojisTimeChart extends Component {
     return (
       <div>
         <h4>Top Emojis by Month</h4>
-        <AsyncComponent isLoaded={this.isLoaded.bind(this) }
-          loaded={ this.state.trendingEmojisOverTime && this.state.trendingEmojis ?
-            <Line ref="chart" data={this.state.trendingEmojisOverTime.clone() }
+        <AsyncComponent isLoaded={ () => this.props.trendingEmojisOverTime != null && this.props.trendingEmojis != null }
+          loaded={ this.props.trendingEmojisOverTime && this.props.trendingEmojis ?
+            <Line ref="chart" data={this.props.trendingEmojisOverTime.clone() }
               options={ options } />
             : <div />} />
       </div>

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores';
 import MainStore from '../../stores/MainStore';
 import MainActions from '../../actions/MainActions';
 import Title from '../Title/Title';
@@ -8,47 +7,21 @@ import Footer from '../Footer/Footer';
 import Messages from '../Chatalytics/Messages';
 import Entities from '../Chatalytics/Entities';
 import Emojis from '../Chatalytics/Emojis';
+import AltContainer from 'alt-container';
 
 class IndexComponent extends Component {
-  constructor() {
-    super();
-    this.state = MainStore.getState();
-  }
-
-  static getStores(props) {
-    return [MainStore]
-  }
-
-  static getPropsFromStores(props) {
-    return MainStore.getState()
-  }
-
-  componentDidMount() {
-    MainStore.listen(this.onChange.bind(this));
-  }
-
-  componentWillUnmount() {
-    MainStore.unlisten(this.onChange);
-  }
-
-  onChange(state) {
-    this.setState(state);
-  }
-  
   render() {
     return (
-      <div>
+      <AltContainer store={ MainStore }>
         <Title />
         <About />
         <Messages />
         <Entities />
         <Emojis />
         <Footer />
-      </div>
+      </AltContainer>
     );
   }
 }
-
-IndexComponent = connectToStores(IndexComponent)
 
 export default IndexComponent;

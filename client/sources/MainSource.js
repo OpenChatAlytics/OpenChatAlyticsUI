@@ -1,7 +1,16 @@
 import ApiConstants from './ApiConstants.js'
 import request from 'superagent';
+import moment from 'moment';
 
 const requestTimeoutMs = 5000;
+
+function getDefaultStartDate() {
+  return moment(new Date()).subtract(1, 'y').format('YYYY-MM-DD');
+}
+
+function getDefaultEndDate() {
+  return moment(new Date()).format('YYYY-MM-DD');
+}
 
 function fetchActiveEmojis(query) {
   return new Promise((resolve, reject) => {
@@ -20,7 +29,9 @@ function fetchActiveEmojis(query) {
 
 export default {
 
-  fetchTrendingTopics(query = { n: 15, starttime: '2016-01-01', endtime: '2016-12-12' }) {
+  fetchTrendingTopics(query = { n: 15, 
+                                starttime: getDefaultStartDate(), 
+                                endtime: getDefaultEndDate() }) {
     return new Promise((resolve, reject) => {
       request
         .get(ApiConstants.resources.trendingEntities)
@@ -36,7 +47,9 @@ export default {
     });
   },
 
-  fetchTrendingEmojis(query = { n: 15, starttime: '2016-01-01', endtime: '2016-12-12' }) {
+  fetchTrendingEmojis(query = { n: 15, 
+                                starttime: getDefaultStartDate(), 
+                                endtime: getDefaultEndDate() }) {
     return new Promise((resolve, reject) => {
       request.get(ApiConstants.resources.trendingEmojis)
         .query(query)
@@ -52,8 +65,8 @@ export default {
   },
 
   fetchSimilarities(query = {
-    starttime: '2016-01-01',
-    endtime: '2016-12-12',
+    starttime: getDefaultStartDate(), 
+    endtime: getDefaultEndDate(),
     firstDim: 'room',
     secondDim: 'entity'
   }) {
@@ -72,8 +85,8 @@ export default {
   },
 
   fetchAllEmojis(query = {
-    starttime: '2016-01-01',
-    endtime: '2016-12-12',
+    starttime: getDefaultStartDate(), 
+    endtime: getDefaultEndDate(),
   }) {
     return new Promise((resolve, reject) => {
       request.get(ApiConstants.resources.allEmojis)
@@ -90,8 +103,8 @@ export default {
   },
 
   fetchActiveEmojisByUser(query = {
-    starttime: '2016-01-01',
-    endtime: '2016-12-12',
+    starttime: getDefaultStartDate(), 
+    endtime: getDefaultEndDate(),
     dimension: 'user',
     method: 'totv',
     n: '32',
@@ -100,8 +113,8 @@ export default {
   },
 
   fetchActiveEmojisByRoom(query = {
-    starttime: '2016-01-01',
-    endtime: '2016-12-12',
+    starttime: getDefaultStartDate(), 
+    endtime: getDefaultEndDate(),
     dimension: 'room',
     method: 'totv',
     n: '32',

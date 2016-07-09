@@ -36,6 +36,7 @@
   "homepage": "https://github.com/psastras/ChatAlyticsUI",
   "dependencies": {
     "alt": "0.18.4",
+    "alt-container": "1.0.2",
     "alt-utils": "1.0.0",
     "babel-cli": "6.5.1",
     "babel-polyfill": "6.3.14",
