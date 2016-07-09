@@ -58,13 +58,29 @@ class MainActions {
     return similarities;
   }
 
+  updateUserSimilarityByEntity(similarities) {
+    return similarities;
+  }
+
+  updateRoomSimilarityByEntity(similarities) {
+    return similarities;
+  }
+
   fetchSimilarities() {
     return (dispatch) => {
       dispatch();
-
-      MainSource.fetchSimilarities()
+      
+      MainSource.fetchUserSimilarityByEntity()
         .then((similarities) => {
-          this.updateSimilarities(similarities);
+          this.updateUserSimilarityByEntity(similarities);
+        })
+        .catch((errorMessage) => {
+          this.fetchSimilaritiesFailed(errorMessage);
+        });
+
+      MainSource.fetchRoomSimilarityByEntity()
+        .then((similarities) => {
+          this.updateRoomSimilarityByEntity(similarities);
         })
         .catch((errorMessage) => {
           this.fetchSimilaritiesFailed(errorMessage);

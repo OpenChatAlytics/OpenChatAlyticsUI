@@ -24,12 +24,18 @@ export default class EntitiesComponent extends Component {
             right={<EntitiesTimeChart />} />
           <h3>Similarity</h3>
           <p>Entities are similar if they were mentioned by the same user or in the same room.
-            We show this similarity as a matrix S, where entities A, B are similar if the value in row A, column B is large.If A, B is zero, the entities are
-            completely disimilar.We then sort the similarity matrix by the second eigenvector of the Lapacian, which has the effect of
+            We show this similarity as a matrix S, where entities A, B are similar if the value in row A, column B is large.  If A, B is zero, the entities are
+            completely disimilar.  We then sort the similarity matrix by the second eigenvector of the Lapacian, which has the effect of
             grouping similar clusters of entities together.
           </p>
-          <TwoColumnFixed leftWidth='50%' left={<EntitiesSimilarityChart />}
-            right={<EntitiesSimilarityChart />} />
+          <p>
+            The more similar two items are, the larger the bubble.  Mouse over a bubble to see which items are being compared.
+          </p>
+          <TwoColumnFixed leftWidth='49%' 
+            left={<EntitiesSimilarityChart 
+              title="User Similarity by Entities Mentioned" similarity={this.props.userSimilarityByEntity} />}
+            right={<EntitiesSimilarityChart 
+              title="Room Similarity by Entities Mentioned" similarity={this.props.roomSimilarityByEntity} />} />
           <h3>Similarity Graph</h3>
           <p>We can also visualize similarity as a graph by drawing an edge if two entities are similar (a similarity matrix is essentially an adjacency matrix).</p>
         </AltContainer>
@@ -70,15 +76,14 @@ class EntitiesStatisticsComponent extends Component {
 
 class EntitiesTimeChart extends Component {
   render() {
-    if (typeof Chart !== 'undefined') {
-      Chart.defaults.global.defaultFontFamily = 'PTMono';
-      Chart.defaults.global.defaultFontSize = 12;
-      Chart.defaults.global.responsive = true;
-      Chart.defaults.global.legend.position = 'bottom';
-      Chart.defaults.global.maintainAspectRatio = false;
-    }
     let options = {
+      defaultFontFamily: 'PTMono',
+      defaultFontSize: 12,
       responsive: true,
+      legend: {
+        position: 'bottom'
+      },
+      maintainAspectRatio: false,
       tooltips: {
         mode: 'single',
       },
@@ -167,49 +172,18 @@ class EntitiesGraphComponent extends Component {
 
 }
 
-
 class EntitiesSimilarityChart extends Component {
-
-  constructor() {
-    super();
-    this.state = MainStore.getState();
-  }
-
-  componentDidMount() {
-    MainStore.listen(this.onChange.bind(this));
-  }
-
-  componentWillUnmount() {
-    MainStore.unlisten(this.onChange);
-  }
-
-  onChange(state) {
-    this.setState(state);
-  }
-
-  isLoaded(state) {
-    return state.similarities != null;
-  }
-  
-  filterSimilarities(similarities, entities) {
-    // console.log(entities);
-    // console.log(similarities);
-  }
-
   render() {
-    if (typeof Chart !== 'undefined') {
-      Chart.defaults.global.defaultFontFamily = 'PTMono';
-      Chart.defaults.global.defaultFontSize = 12;
-      Chart.defaults.global.responsive = true;
-      Chart.defaults.global.legend.position = 'bottom';
-      // Chart.defaults.global.maintainAspectRatio = false;
-    }
-
-    let labels = this.state.similarities ? this.state.similarities.clone().labels : [];
+    let labels = this.props.similarity ? this.props.similarity.clone().labels : [];
     let options = {
+      defaultFontFamily: 'PTMono',
+      defaultFontSize: 12,
       responsive: true,
+      maintainAspectRatio: true,
       tooltips: {
-        mode: 'label',
+         callbacks: {
+            label: (item, data) => { return `${data.labels[item.xLabel]}, ${data.labels[item.yLabel]}`; }
+        }
       },
       hover: {
         mode: 'label'
@@ -219,7 +193,7 @@ class EntitiesSimilarityChart extends Component {
           backgroundColor: 'rgba(65, 128, 255, 0.05)',
           hitRadius: 1,
           hoverRadius: 4,
-          hoverBorderWidth: 1,
+          hoverBorderWidth: 10,
           radius: 10
         }
       },
@@ -260,20 +234,18 @@ class EntitiesSimilarityChart extends Component {
         display: false
       }
     }
-    if (this.state.similarities && this.state.trendingTopics)
-      this.filterSimilarities(this.state.similarities.clone(), this.state.trendingTopics);
-    return (<div />)
 
-    // return (
-    //   <div>
-    //     <h4>Similarity by User</h4>
-    //     <AsyncComponent isLoaded={this.isLoaded.bind(this) }
-    //       loaded={ this.state.similarities ?
-    //         <Bubble ref="chart" data={ this.state.similarities.clone() }
-    //           width={100} height={100}
-    //           options={ options } />
-    //         : <div />} />
-    //   </div>
-    // );
+    return (
+      <div>
+        <h4>{this.props.title}</h4>
+        <div id="chartjs-tooltip"></div>
+        <AsyncComponent isLoaded={ () => this.props.similarity != null }
+          loaded={ this.props.similarity ?
+            <Bubble ref="chart" data={ this.props.similarity.clone() }
+              width={700} height={700}
+              options={ options } />
+            : <div />} />
+      </div>
+    );
   }
 }

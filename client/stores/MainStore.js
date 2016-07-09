@@ -14,6 +14,9 @@ class MainStore {
       handleFetchSimilarities: MainActions.FETCH_SIMILARITIES,
       handleFetchSimilaritiesFailed: MainActions.FETCH_SIMILARITIES_FAILED,
 
+      handleUpdateUserSimilarityByEntity: MainActions.UPDATE_USER_SIMILARITY_BY_ENTITY,
+      handleUpdateRoomSimilarityByEntity: MainActions.UPDATE_ROOM_SIMILARITY_BY_ENTITY,
+
       handleUpdateTrendingTopics: MainActions.UPDATE_TRENDING_TOPICS,
       handleFetchTrendingTopics: MainActions.FETCH_TRENDING_TOPICS,
       handleTrendingTopicsFailed: MainActions.TRENDING_TOPICS_FAILED,
@@ -89,24 +92,21 @@ class MainStore {
     this.errorMessage = errorMessage;
   }
 
+  handleUpdateUserSimilarityByEntity(similarities) {
+    this.userSimilarityByEntity = processSimilarity(similarities);
+  }
+
+  handleUpdateRoomSimilarityByEntity(similarities) {
+    this.roomSimilarityByEntity = processSimilarity(similarities);
+  }
+
   handleUpdateSimilarities(similarities) {
-    const radiusScaleFactor = 1; // scales the radius by the given factor
+    this.similarities = processSimilarity(similarities);
+    this.errorMessage = null;
+  }
 
-    let labels = similarities.labels;
-    let data = Transforms.matrixToArray(similarities.matrix);
-    Transforms.normalizeData(data, (e) => e.r, (e, nv) => e.r = nv * radiusScaleFactor);
-
-    this.similarities = {
-      clone: () => {
-        return {
-          labels: similarities.labels,
-          datasets: [{
-            data: data
-          }]
-        }
-      }
-    };
-
+  handleUpdateUserSimilarityByEntity(similarities) {
+    this.userSimilarityByEntity = processSimilarity(similarities);
     this.errorMessage = null;
   }
 
@@ -122,7 +122,7 @@ class MainStore {
     // transform the data into one readable by charting libs
     const maxTopics = 20;
     let datasets = {};
-    
+
     data.topics.forEach((timeSlice) => {
       Object.keys(timeSlice).forEach((dataset) => {
         if (!datasets[dataset]) {
@@ -134,10 +134,10 @@ class MainStore {
         }
       });
     });
-    
+
     datasets = Transforms.arrayToMap(
-      _.sortBy(Transforms.mapToArray(datasets), 
-               e => -e.value.maxVal).slice(0, maxTopics)
+      _.sortBy(Transforms.mapToArray(datasets),
+        e => -e.value.maxVal).slice(0, maxTopics)
     );
 
     data.topics.forEach((timeSlice) => {
@@ -180,9 +180,9 @@ class MainStore {
   handleUpdateTrendingEmojisOverTime(data) {
     // transform the data into one readable by charting libs
     const maxEmojis = 20;
-    
+
     let datasets = {};
-    
+
     data.emojis.forEach((timeSlice) => {
       Object.keys(timeSlice).forEach((dataset) => {
         if (!datasets[dataset]) {
@@ -194,10 +194,10 @@ class MainStore {
         }
       });
     });
-    
+
     datasets = Transforms.arrayToMap(
-      _.sortBy(Transforms.mapToArray(datasets), 
-               e => -e.value.maxVal).slice(0, maxEmojis)
+      _.sortBy(Transforms.mapToArray(datasets),
+        e => -e.value.maxVal).slice(0, maxEmojis)
     );
 
     data.emojis.forEach((timeSlice) => {
@@ -316,6 +316,53 @@ class MainStore {
   handleUserIconsFailed(errorMessage) {
     this.errorMessage = errorMessage;
   }
+}
+
+function processSimilarity(similarities) {
+  const radiusScaleFactor = 100; // scales the radius by the given factor
+  let labels = similarities.labels;
+  let similarityRowSums = similarities.matrix.map((row, i) => {
+    row[i] = 0;
+    return row.reduce((a, b) => { return a + b; }) - row[i];
+  });
+
+  // sort the row sums and return the sorted row + the index permutation that would yield that sort
+  // order is larger -> smaller
+  let { sorted, perm } = similarityRowSums.map((val, i) => { return { index: i, val: val } })
+    .sort((a, b) => { return b.val - a.val; })
+    .reduce((map, obj) => {
+      map.sorted.push(obj.val);
+      map.perm.push(obj.index);
+      return map;
+    }, { sorted: [], perm: [] });
+  // keep the top n labels
+  let indicesToKeep = perm.slice(0, 50).sort();
+  let filteredLabels = indicesToKeep.map(i => labels[i]);
+  let data = [].concat.apply([], indicesToKeep.map((i, x) => {
+    return indicesToKeep.map((j, y) => {
+      if (x !== y) {
+        return {
+          x: x,
+          y: y,
+          r: similarities.matrix[i][j]
+        }
+      }
+    });
+  })).filter(item => item);
+
+  Transforms.normalizeData(data, (e) => e.r, (e, nv) => e.r = nv * radiusScaleFactor);
+  data = data.filter(item => item.r >= 1);
+
+  return {
+    clone: () => {
+      return {
+        labels: filteredLabels,
+        datasets: [{
+          data: data
+        }]
+      }
+    }
+  };
 }
 
 module.exports = alt.createStore(MainStore, 'MainStore');

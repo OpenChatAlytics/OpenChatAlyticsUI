@@ -102,15 +102,14 @@ class EmojisPerRoomComponent extends Component {
 
 class EmojisTimeChart extends Component {
   render() {
-    if (typeof Chart !== 'undefined') {
-      Chart.defaults.global.defaultFontFamily = 'PTMono';
-      Chart.defaults.global.defaultFontSize = 12;
-      Chart.defaults.global.responsive = true;
-      Chart.defaults.global.legend.position = 'bottom';
-      Chart.defaults.global.maintainAspectRatio = false;
-    }
     let options = {
+      defaultFontFamily: 'PTMono',
+      defaultFontSize: 12,
       responsive: true,
+      legend: {
+        position: 'bottom'
+      },
+      maintainAspectRatio: false,
       tooltips: {
         mode: 'single',
       },

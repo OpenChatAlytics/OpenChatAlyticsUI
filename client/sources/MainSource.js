@@ -27,11 +27,29 @@ function fetchActiveEmojis(query) {
   });
 }
 
+function fetchSimilarities(query) {
+  return new Promise((resolve, reject) => {
+    request.get(ApiConstants.resources.similarities)
+      .query(query)
+      .end((err, res) => {
+        if (err) {
+          console.error(err);
+          reject(err);
+        } else {
+          resolve(JSON.parse(res.text));
+        }
+      });
+  });
+}
+
+
 export default {
 
-  fetchTrendingTopics(query = { n: 15, 
-                                starttime: getDefaultStartDate(), 
-                                endtime: getDefaultEndDate() }) {
+  fetchTrendingTopics(query = {
+    n: 15,
+    starttime: getDefaultStartDate(),
+    endtime: getDefaultEndDate()
+  }) {
     return new Promise((resolve, reject) => {
       request
         .get(ApiConstants.resources.trendingEntities)
@@ -47,9 +65,11 @@ export default {
     });
   },
 
-  fetchTrendingEmojis(query = { n: 15, 
-                                starttime: getDefaultStartDate(), 
-                                endtime: getDefaultEndDate() }) {
+  fetchTrendingEmojis(query = {
+    n: 15,
+    starttime: getDefaultStartDate(),
+    endtime: getDefaultEndDate()
+  }) {
     return new Promise((resolve, reject) => {
       request.get(ApiConstants.resources.trendingEmojis)
         .query(query)
@@ -64,28 +84,32 @@ export default {
     });
   },
 
-  fetchSimilarities(query = {
-    starttime: getDefaultStartDate(), 
+  fetchUserSimilarityByEntity(query = {
+    starttime: getDefaultStartDate(),
     endtime: getDefaultEndDate(),
-    firstDim: 'room',
-    secondDim: 'entity'
   }) {
-    return new Promise((resolve, reject) => {
-      request.get(ApiConstants.resources.similarities)
-        .query(query)
-        .end((err, res) => {
-          if (err) {
-            console.error(err);
-            reject(err);
-          } else {
-            resolve(JSON.parse(res.text));
-          }
-        });
+    return fetchSimilarities({
+      starttime: (query && query.starttime) ? query.starttime : getDefaultStartDate(),
+      endtime: (query && query.endtime) ? query.endtime : getDefaultEndDate(),
+      firstDim: 'user',
+      secondDim: 'entity'
+    });
+  },
+
+  fetchRoomSimilarityByEntity(query = {
+    starttime: getDefaultStartDate(),
+    endtime: getDefaultEndDate(),
+  }) {
+    return fetchSimilarities({
+      starttime: (query && query.starttime) ? query.starttime : getDefaultStartDate(),
+      endtime: (query && query.endtime) ? query.endtime : getDefaultEndDate(),
+      firstDim: 'room',
+      secondDim: 'entity'
     });
   },
 
   fetchAllEmojis(query = {
-    starttime: getDefaultStartDate(), 
+    starttime: getDefaultStartDate(),
     endtime: getDefaultEndDate(),
   }) {
     return new Promise((resolve, reject) => {
@@ -103,7 +127,7 @@ export default {
   },
 
   fetchActiveEmojisByUser(query = {
-    starttime: getDefaultStartDate(), 
+    starttime: getDefaultStartDate(),
     endtime: getDefaultEndDate(),
     dimension: 'user',
     method: 'totv',
@@ -113,7 +137,7 @@ export default {
   },
 
   fetchActiveEmojisByRoom(query = {
-    starttime: getDefaultStartDate(), 
+    starttime: getDefaultStartDate(),
     endtime: getDefaultEndDate(),
     dimension: 'room',
     method: 'totv',
