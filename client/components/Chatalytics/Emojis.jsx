@@ -21,7 +21,7 @@ export default class EmojisComponent extends Component {
           <EmojisSummaryComponent />
           <h3>Trending</h3>
           <p>The most popular emojis by usage over the past year.</p>
-          <TwoColumnFixed leftWidth='300px' left={<EmojisStatisticsComponent />}
+          <TwoColumnFixed leftWidth='25%' left={<EmojisStatisticsComponent />}
             right={<EmojisTimeChart />} />
           <h3>User</h3>
           <p>The most prolific emoji users by total number of emojis used.</p>
@@ -107,7 +107,7 @@ class EmojisTimeChart extends Component {
       Chart.defaults.global.defaultFontSize = 12;
       Chart.defaults.global.responsive = true;
       Chart.defaults.global.legend.position = 'bottom';
-      // Chart.defaults.global.maintainAspectRatio = false;
+      Chart.defaults.global.maintainAspectRatio = false;
     }
     let options = {
       responsive: true,
@@ -144,7 +144,7 @@ class EmojisTimeChart extends Component {
         <AsyncComponent isLoaded={ () => this.props.trendingEmojisOverTime != null && this.props.trendingEmojis != null }
           loaded={ this.props.trendingEmojisOverTime && this.props.trendingEmojis ?
             <Line ref="chart" data={this.props.trendingEmojisOverTime.clone() }
-              options={ options } />
+              options={ options } height="450" />
             : <div />} />
       </div>
     );

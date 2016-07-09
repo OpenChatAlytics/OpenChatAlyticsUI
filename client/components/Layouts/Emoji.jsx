@@ -11,7 +11,7 @@ export default class EmojiComponent extends Component {
               <div>
                 {this.props.emojiIcons.customEmojis[this.props.name] ? 
                   <img className="emoji" src={this.props.emojiIcons.customEmojis[this.props.name]} /> :
-                  this.props.emojiIcons.unicodeEmojis[this.props.name]}
+                  <span className="emoji">{this.props.emojiIcons.unicodeEmojis[this.props.name]}</span>}
                 <span>{this.props.name}</span>
               </div>
             : <span>{this.props.name}</span>} />

@@ -20,7 +20,7 @@ export default class EntitiesComponent extends Component {
           <h3>Trending</h3>
           <p>Trending entities refer to the most popular topics across all chat rooms and all people.We show the most popular
             topics during the past year as well as the evolution of these topics over each month.</p>
-          <TwoColumnFixed leftWidth='350px' left={<EntitiesStatisticsComponent />}
+          <TwoColumnFixed leftWidth='25%' left={<EntitiesStatisticsComponent />}
             right={<EntitiesTimeChart />} />
           <h3>Similarity</h3>
           <p>Entities are similar if they were mentioned by the same user or in the same room.
@@ -75,7 +75,7 @@ class EntitiesTimeChart extends Component {
       Chart.defaults.global.defaultFontSize = 12;
       Chart.defaults.global.responsive = true;
       Chart.defaults.global.legend.position = 'bottom';
-      // Chart.defaults.global.maintainAspectRatio = false;
+      Chart.defaults.global.maintainAspectRatio = false;
     }
     let options = {
       responsive: true,
@@ -112,7 +112,7 @@ class EntitiesTimeChart extends Component {
         <AsyncComponent isLoaded={ () => this.props.trendingTopicsOverTime != null }
           loaded={ this.props.trendingTopicsOverTime ?
             <Line ref="chart" data={this.props.trendingTopicsOverTime.clone() }
-              options={ options } />
+              options={ options } height="450" />
             : <div />} />
       </div>
     );
