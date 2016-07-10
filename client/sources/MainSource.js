@@ -21,15 +21,31 @@ function fetchActiveEmojis(query) {
           console.error(err);
           reject(err);
         } else {
+          console.trace(res);
           resolve(JSON.parse(res.text));
         }
       });
   });
 }
 
-function fetchSimilarities(query) {
+function fetchEntitySimilarities(query) {
   return new Promise((resolve, reject) => {
-    request.get(ApiConstants.resources.similarities)
+    request.get(ApiConstants.resources.entitySimilarities)
+      .query(query)
+      .end((err, res) => {
+        if (err) {
+          console.error(err);
+          reject(err);
+        } else {
+          resolve(JSON.parse(res.text));
+        }
+      });
+  });
+}
+
+function fetchEmojiSimilarities(query) {
+  return new Promise((resolve, reject) => {
+    request.get(ApiConstants.resources.emojiSimilarities)
       .query(query)
       .end((err, res) => {
         if (err) {
@@ -88,7 +104,7 @@ export default {
     starttime: getDefaultStartDate(),
     endtime: getDefaultEndDate(),
   }) {
-    return fetchSimilarities({
+    return fetchEntitySimilarities({
       starttime: (query && query.starttime) ? query.starttime : getDefaultStartDate(),
       endtime: (query && query.endtime) ? query.endtime : getDefaultEndDate(),
       firstDim: 'user',
@@ -100,11 +116,35 @@ export default {
     starttime: getDefaultStartDate(),
     endtime: getDefaultEndDate(),
   }) {
-    return fetchSimilarities({
+    return fetchEntitySimilarities({
       starttime: (query && query.starttime) ? query.starttime : getDefaultStartDate(),
       endtime: (query && query.endtime) ? query.endtime : getDefaultEndDate(),
       firstDim: 'room',
       secondDim: 'entity'
+    });
+  },
+
+  fetchUserSimilarityByEmoji(query = {
+    starttime: getDefaultStartDate(),
+    endtime: getDefaultEndDate(),
+  }) {
+    return fetchEmojiSimilarities({
+      starttime: (query && query.starttime) ? query.starttime : getDefaultStartDate(),
+      endtime: (query && query.endtime) ? query.endtime : getDefaultEndDate(),
+      firstDim: 'user',
+      secondDim: 'emoji'
+    });
+  },
+
+  fetchRoomSimilarityByEmoji(query = {
+    starttime: getDefaultStartDate(),
+    endtime: getDefaultEndDate(),
+  }) {
+    return fetchEmojiSimilarities({
+      starttime: (query && query.starttime) ? query.starttime : getDefaultStartDate(),
+      endtime: (query && query.endtime) ? query.endtime : getDefaultEndDate(),
+      firstDim: 'room',
+      secondDim: 'emoji'
     });
   },
 

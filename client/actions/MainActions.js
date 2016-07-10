@@ -125,6 +125,7 @@ class MainActions {
       Promise.all(requests).then((topics) => {
         this.updateTrendingTopicsOverTime({ topics: topics, times: labels });
       }).catch((errorMessage) => {
+        console.error(errorMessage);
         this.trendingTopicsOverTimeFailed(errorMessage);
       });
     }
@@ -171,6 +172,7 @@ class MainActions {
       Promise.all(requests).then((emojis) => {
         this.updateTrendingEmojisOverTime({ emojis: emojis, times: labels });
       }).catch((errorMessage) => {
+        console.error(errorMessage);
         this.trendingEmojisOverTimeFailed(errorMessage);
       });
     }
@@ -189,6 +191,7 @@ class MainActions {
           this.updateActiveEmojisByUser(topics);
         })
         .catch((errorMessage) => {
+          console.error(errorMessage);
           this.activeEmojisByUserFailed(errorMessage);
         });
     }
@@ -233,6 +236,7 @@ class MainActions {
           this.updateAllEmojis(topics);
         })
         .catch((errorMessage) => {
+          console.error(errorMessage);
           this.allEmojisFailed(errorMessage);
         });
     }
@@ -277,6 +281,7 @@ class MainActions {
           this.updateUserIcons(icons);
         })
         .catch((errorMessage) => {
+          console.error(errorMessage);
           this.userIconsFailed(errorMessage);
         });
     }

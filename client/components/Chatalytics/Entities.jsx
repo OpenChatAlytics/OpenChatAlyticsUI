@@ -7,8 +7,8 @@ import MainStore from '../../stores/MainStore';
 import MainActions from '../../actions/MainActions';
 import AsyncComponent from './Async';
 import TableComponent from './Table';
-import ChartJS, { Line, Bubble } from 'react-chartjs';
-import Viva from 'vivagraphjs';
+import ChartJS, { Line } from 'react-chartjs';
+import SimilarityComponent from './Similarity';
 import AltContainer from 'alt-container';
 
 export default class EntitiesComponent extends Component {
@@ -32,13 +32,11 @@ export default class EntitiesComponent extends Component {
             The more similar two items are, the larger the bubble.  Mouse over a bubble to see which items are being compared.
           </p>
           <TwoColumnFixed leftWidth='49%' 
-            left={<EntitiesSimilarityChart 
+            left={<SimilarityComponent 
               title="User Similarity by Entities Mentioned" similarity={this.props.userSimilarityByEntity} />}
-            right={<EntitiesSimilarityChart 
+            right={<SimilarityComponent 
               title="Room Similarity by Entities Mentioned" similarity={this.props.roomSimilarityByEntity} />} />
-          <h3>Similarity Graph</h3>
-          <p>We can also visualize similarity as a graph by drawing an edge if two entities are similar (a similarity matrix is essentially an adjacency matrix).</p>
-        </AltContainer>
+          </AltContainer>
       </div>
     );
   }
@@ -118,132 +116,6 @@ class EntitiesTimeChart extends Component {
           loaded={ this.props.trendingTopicsOverTime ?
             <Line ref="chart" data={this.props.trendingTopicsOverTime.clone() }
               options={ options } height="450" />
-            : <div />} />
-      </div>
-    );
-  }
-}
-
-class EntitiesGraphComponent extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = MainStore.getState();
-  }
-
-  componentWillUnmount() {
-    MainStore.unlisten(this.onChange);
-  }
-
-  onChange(state) {
-    if (state.similarities != null) {
-      let similarities = state.similarities.clone();
-      let container = ReactDOM.findDOMNode(this);
-      var graph = Viva.Graph.graph();
-      similarities.datasets[0].data.forEach((data) => {
-        if (data.r > 0.05) {
-          graph.addLink(data.x, data.y);
-        }
-      })
-      // graph.addLink("foo", "asd");
-
-      var graphics = Viva.Graph.View.svgGraphics();
-
-      // specify where it should be rendered:
-      var renderer = Viva.Graph.View.renderer(graph, {
-        graphics: graphics,
-        container: container
-      });
-      renderer.run();
-    }
-    this.setState(state);
-  }
-
-  componentDidMount() {
-    MainStore.listen(this.onChange.bind(this));
-
-  }
-
-  render() {
-    return (
-      <div style={{ width: '100%', height: '300' }} />
-    );
-  }
-
-}
-
-class EntitiesSimilarityChart extends Component {
-  render() {
-    let labels = this.props.similarity ? this.props.similarity.clone().labels : [];
-    let options = {
-      defaultFontFamily: 'PTMono',
-      defaultFontSize: 12,
-      responsive: true,
-      maintainAspectRatio: true,
-      tooltips: {
-         callbacks: {
-            label: (item, data) => { return `${data.labels[item.xLabel]}, ${data.labels[item.yLabel]}`; }
-        }
-      },
-      hover: {
-        mode: 'label'
-      },
-      elements: {
-        point: {
-          backgroundColor: 'rgba(65, 128, 255, 0.05)',
-          hitRadius: 1,
-          hoverRadius: 4,
-          hoverBorderWidth: 10,
-          radius: 10
-        }
-      },
-      scales: {
-        xAxes: [{
-          ticks: {
-            min: 0,
-            max: labels.length,
-            stepSize: 1,
-            autoSkip: false,
-            callback: (value) => {
-              return labels[value];
-            }
-          },
-          scaleLabel: {
-            display: false,
-            labelString: 'Entity'
-          }
-        }],
-        yAxes: [{
-          ticks: {
-            reverse: true,
-            min: 0,
-            max: labels.length,
-            stepSize: 1,
-            autoSkip: false,
-            callback: (value) => {
-              return labels[value];
-            }
-          },
-          scaleLabel: {
-            display: false,
-            labelString: 'Entity'
-          }
-        }]
-      },
-      legend: {
-        display: false
-      }
-    }
-
-    return (
-      <div>
-        <h4>{this.props.title}</h4>
-        <div id="chartjs-tooltip"></div>
-        <AsyncComponent isLoaded={ () => this.props.similarity != null }
-          loaded={ this.props.similarity ?
-            <Bubble ref="chart" data={ this.props.similarity.clone() }
-              width={700} height={700}
-              options={ options } />
             : <div />} />
       </div>
     );

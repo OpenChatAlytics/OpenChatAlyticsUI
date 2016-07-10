@@ -12,6 +12,7 @@ import EmojiComponent from '../Layouts/Emoji';
 import ChartJS, { Line, Bubble, Bar } from 'react-chartjs';
 import AltContainer from 'alt-container';
 import _ from 'lodash';
+import SimilarityComponent from './Similarity';
 
 export default class EmojisComponent extends Component {
   render() {
@@ -29,6 +30,12 @@ export default class EmojisComponent extends Component {
           <h3>Room</h3>
           <p>These rooms are mostly emojis at this point.</p>
           <EmojisPerRoomComponent />
+          <h3>Similarity</h3>
+          <TwoColumnFixed leftWidth='49%' 
+            left={<SimilarityComponent 
+              title="User Similarity by Emojis Used" similarity={this.props.userSimilarityByEntity} />}
+            right={<SimilarityComponent 
+              title="Room Similarity by Emojis Used" similarity={this.props.roomSimilarityByEntity} />} />
         </AltContainer>
       </div>
     );

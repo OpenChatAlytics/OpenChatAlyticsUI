@@ -12,6 +12,7 @@ export default {
         trendingEmojis: '/api/web/api/v0/emojis/trending',
         trendingEntities: '/api/web/api/v0/entities/trending',
         entities: '/api/web/api/v0/entities',
-        similarities: '/api/web/api/v0/entities/similarities'
+        entitySimilarities: '/api/web/api/v0/entities/similarities',
+        emojiSimilarities: '/api/web/api/v0/emojis/similarities'
     }
 }
