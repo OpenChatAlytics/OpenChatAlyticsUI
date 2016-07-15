@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import AltContainer from 'alt-container';
+import MainStore from '../../stores/MainStore';
 
 class TwoColumnComponentFixed extends Component {
 
@@ -10,10 +12,14 @@ class TwoColumnComponentFixed extends Component {
     return (
       <div stye={{ width: '100%', height: 'auto' }}>
         <div style={{ width: this.props.leftWidth || '200px', marginRight: '0em', float: 'left' }}>
-          {this.props.left}
+          <AltContainer store={ MainStore }>
+            {this.props.left}
+          </AltContainer>
         </div>
         <div style={{ width: this.props.rightWidth || 'auto', marginLeft: '1em', overflow: 'hidden' }}>
-          {this.props.right}
+          <AltContainer store={ MainStore }>
+            {this.props.right}
+          </AltContainer>
         </div>
         <div style={{ clear: 'both' }}></div>
       </div>

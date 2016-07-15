@@ -11,7 +11,7 @@ class MainActions {
       MainSource.subscribeEvents(this.updateEvents);
     }
   }
-  
+
   updateEvents(event) {
     return event;
   }
@@ -20,7 +20,7 @@ class MainActions {
     return (dispatch) => {
       // we dispatch an event here so we can have "loading" state.
       dispatch();
-      
+
       MainSource.fetchTrendingTopics()
         .then((topics) => {
           // we can access other actions within our action through `this.actions`
@@ -29,48 +29,289 @@ class MainActions {
         .catch((errorMessage) => {
           this.trendingTopicsFailed(errorMessage);
         });
-      }
+    }
   }
 
   updateTrendingTopics(topics) {
     return topics;
   }
-  
-  fetchTrendingTopicsOverTime() {
+
+  fetchTrendingEmojis() {
+    return (dispatch) => {
+      dispatch();
+
+      MainSource.fetchTrendingEmojis()
+        .then((emojis) => {
+          this.updateTrendingEmojis(emojis);
+        })
+        .catch((errorMessage) => {
+          this.trendingEmojisFailed(errorMessage);
+        });
+    }
+  }
+
+  updateTrendingEmojis(emojis) {
+    return emojis;
+  }
+
+  updateSimilarities(similarities) {
+    return similarities;
+  }
+
+  updateUserSimilarityByEntity(similarities) {
+    return similarities;
+  }
+
+  updateRoomSimilarityByEntity(similarities) {
+    return similarities;
+  }
+
+  fetchSimilarities() {
     return (dispatch) => {
       dispatch();
       
-      // todo: fix this
-      Promise.all([
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-01-01', endtime: '2016-02-01' }), 
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-02-01', endtime: '2016-03-01' }), 
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-03-01', endtime: '2016-04-01' }),
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-04-01', endtime: '2016-05-01' }),
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-05-01', endtime: '2016-06-01' }),
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-06-01', endtime: '2016-07-01' }),
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-07-01', endtime: '2016-08-01' }),
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-08-01', endtime: '2016-09-01' }),
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-09-01', endtime: '2016-10-01' }),
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-10-01', endtime: '2016-11-01' }),
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-11-01', endtime: '2016-12-01' }),
-          MainSource.fetchTrendingTopics({ n: 15, starttime: '2016-12-01', endtime: '2017-01-01' })
-        ]).then((topics) => { 
-        this.updateTrendingTopicsOverTime({ topics: topics, times: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] });
+      MainSource.fetchUserSimilarityByEntity()
+        .then((similarities) => {
+          this.updateUserSimilarityByEntity(similarities);
+        })
+        .catch((errorMessage) => {
+          this.fetchSimilaritiesFailed(errorMessage);
+        });
+
+      MainSource.fetchRoomSimilarityByEntity()
+        .then((similarities) => {
+          this.updateRoomSimilarityByEntity(similarities);
+        })
+        .catch((errorMessage) => {
+          this.fetchSimilaritiesFailed(errorMessage);
+        });
+    }
+  }
+
+  fetchTrendingTopicsOverTime(args = {
+    startDate: moment().subtract(12, 'months').format('YYYY-MM-DD'),
+    endDate: moment().format('YYYY-MM-DD')
+  }) {
+    return (dispatch) => {
+      dispatch();
+
+      let startDate = moment(args.startDate);
+      let endDate = moment(startDate);
+      endDate.add(1, 'months');
+
+      let dates = [];
+      while (startDate < moment(args.endDate)) {
+        dates.push({
+          realDate: moment(startDate),
+          startDate: startDate.format('YYYY-MM-DD'),
+          endDate: endDate.format('YYYY-MM-DD')
+        })
+        startDate.add(1, 'months');
+        endDate.add(1, 'months');
+      }
+
+      let requests = dates.map((times) => {
+        return new Promise((resolve) => resolve(MainSource.fetchTrendingTopics({
+          n: 25,
+          starttime: times.startDate,
+          endtime: times.endDate
+        })));
+      });
+
+      let labels = dates.map(date => {
+        return date.realDate.format('MMMM')
+      })
+
+      Promise.all(requests).then((topics) => {
+        this.updateTrendingTopicsOverTime({ topics: topics, times: labels });
       }).catch((errorMessage) => {
+        console.error(errorMessage);
         this.trendingTopicsOverTimeFailed(errorMessage);
       });
     }
   }
-  
+
   updateTrendingTopicsOverTime(topicsOverTime) {
     return topicsOverTime;
+  }
+
+  fetchTrendingEmojisOverTime(args = {
+    startDate: moment().subtract(12, 'months').format('YYYY-MM-DD'),
+    endDate: moment().format('YYYY-MM-DD')
+  }) {
+    return (dispatch) => {
+      dispatch();
+
+      let startDate = moment(args.startDate);
+      let endDate = moment(startDate);
+      endDate.add(1, 'months');
+
+      let dates = [];
+      while (startDate < moment(args.endDate)) {
+        dates.push({
+          realDate: moment(startDate),
+          startDate: startDate.format('YYYY-MM-DD'),
+          endDate: endDate.format('YYYY-MM-DD')
+        })
+        startDate.add(1, 'months');
+        endDate.add(1, 'months');
+      }
+
+      let requests = dates.map((times) => {
+        return new Promise((resolve) => resolve(MainSource.fetchTrendingEmojis({
+          n: 25,
+          starttime: times.startDate,
+          endtime: times.endDate
+        })));
+      });
+
+      let labels = dates.map(date => {
+        return date.realDate.format('MMMM')
+      })
+
+      Promise.all(requests).then((emojis) => {
+        this.updateTrendingEmojisOverTime({ emojis: emojis, times: labels });
+      }).catch((errorMessage) => {
+        console.error(errorMessage);
+        this.trendingEmojisOverTimeFailed(errorMessage);
+      });
+    }
+  }
+
+  updateTrendingEmojisOverTime(emojisOverTime) {
+    return emojisOverTime;
+  }
+
+  fetchActiveEmojisByUser() {
+    return (dispatch) => {
+      dispatch();
+
+      MainSource.fetchActiveEmojisByUser()
+        .then((topics) => {
+          this.updateActiveEmojisByUser(topics);
+        })
+        .catch((errorMessage) => {
+          console.error(errorMessage);
+          this.activeEmojisByUserFailed(errorMessage);
+        });
+    }
+  }
+
+  updateActiveEmojisByUser(activeEmojisUser) {
+    return activeEmojisUser;
+  }
+
+  activeEmojisByUserFailed(errorMessage) {
+    return errorMessage;
+  }
+
+  fetchActiveEmojisByRoom() {
+    return (dispatch) => {
+      dispatch();
+
+      MainSource.fetchActiveEmojisByRoom()
+        .then((topics) => {
+          this.updateActiveEmojisByRoom(topics);
+        })
+        .catch((errorMessage) => {
+          this.activeEmojisByRoomFailed(errorMessage);
+        });
+    }
+  }
+
+  updateActiveEmojisByRoom(activeEmojisRoom) {
+    return activeEmojisRoom;
+  }
+
+  activeEmojisByRoomFailed(errorMessage) {
+    return errorMessage;
+  }
+
+  fetchAllEmojis() {
+    return (dispatch) => {
+      dispatch();
+
+      MainSource.fetchAllEmojis()
+        .then((topics) => {
+          this.updateAllEmojis(topics);
+        })
+        .catch((errorMessage) => {
+          console.error(errorMessage);
+          this.allEmojisFailed(errorMessage);
+        });
+    }
+  }
+
+  updateAllEmojis(allEmojis) {
+    return allEmojis;
+  }
+
+  allEmojisFailed(errorMessage) {
+    return errorMessage;
+  }
+
+  fetchEmojiIcons() {
+    return (dispatch) => {
+      dispatch();
+
+      MainSource.fetchEmojiIcons()
+        .then((icons) => {
+          this.updateEmojiIcons(icons);
+        })
+        .catch((errorMessage) => {
+          this.emojiIconsFailed(errorMessage);
+        });
+    }
+  }
+
+  updateEmojiIcons(icons) {
+    return icons;
+  }
+
+  emojiIconsFailed(errorMessage) {
+    return errorMessage;
+  }
+
+  fetchUserIcons() {
+    return (dispatch) => {
+      dispatch();
+
+      MainSource.fetchUserIcons()
+        .then((icons) => {
+          this.updateUserIcons(icons);
+        })
+        .catch((errorMessage) => {
+          console.error(errorMessage);
+          this.userIconsFailed(errorMessage);
+        });
+    }
+  }
+
+  updateUserIcons(icons) {
+    return icons;
+  }
+
+  userIconsFailed(errorMessage) {
+    return errorMessage;
   }
 
   trendingTopicsFailed(errorMessage) {
     return errorMessage;
   }
-  
+
+  trendingEmojisFailed(errorMessage) {
+    return errorMessage;
+  }
+
   trendingTopicsOverTimeFailed(errorMessage) {
+    return errorMessage;
+  }
+
+  trendingEmojisOverTimeFailed(errorMessage) {
+    return errorMessage;
+  }
+
+  fetchSimilaritiesFailed(errorMessage) {
     return errorMessage;
   }
 }

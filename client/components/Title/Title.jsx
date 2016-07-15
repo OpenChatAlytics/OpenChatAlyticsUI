@@ -14,8 +14,16 @@ class TitleComponent extends Component {
 
     // populates the main store which triggers renders on dependent components
     MainActions.fetchTrendingTopics();
+    MainActions.fetchTrendingEmojis();
     MainActions.fetchTrendingTopicsOverTime();
+    MainActions.fetchTrendingEmojisOverTime();
     MainActions.subscribeEvents();
+    MainActions.fetchSimilarities();
+    MainActions.fetchActiveEmojisByUser();
+    MainActions.fetchActiveEmojisByRoom();
+    MainActions.fetchAllEmojis();
+    MainActions.fetchEmojiIcons();
+    MainActions.fetchUserIcons();
 
     this.state = MainStore.getState();
 

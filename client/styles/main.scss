@@ -35,11 +35,13 @@ h2 {
 }
 
 h3 {
+  font-family: $font-heading;
   padding: 1em 0em;
   font-size: 1.5em;
 }
 
 h4 {
+  font-family: $font-heading;
   padding: 1em 0em;
   font-size: 1.2em;
 }
@@ -86,8 +88,15 @@ table {
   width: 100%;
 }
 
+blockquote {
+  margin: 0;
+  padding: 0;
+}
+
 td {
   padding-right: 1em;
+  font-family: $font-mono;
+  font-size: 0.8em;
 }
 
 th {
@@ -142,4 +151,94 @@ th {
   td {
     color: $white;
   }
+}
+
+svg {
+  width: 100%;
+  height: 100%;
+}
+
+.entity-container {
+  
+}
+
+.entity-mini {
+  min-width: 250px;
+  font-family: $font-mono;
+  font-size: 0.8em;
+  padding: 0.5em 0em;
+  margin-right: 1em;
+  float: left;
+  
+  div {
+    margin: 0.1em;
+  }
+}
+
+.entity-mini-title {
+  padding: 0em 0em 0.5em;
+}
+
+$award-size: 60px;
+.awards {
+  padding: 1.5em 0;
+  
+  h1, h2, h3 {
+    padding: 0em 0em 0.25em;
+  }
+}
+
+.awards > div {
+  width: 33%;
+}
+
+.award-one {
+  margin: 0em 1em 0em 0em;
+	border-radius: 50%;
+	width: $award-size;
+	height: $award-size; 
+  font-size: 1.5em;
+  text-align: center;
+  vertical-align: middle;
+  line-height: $award-size;
+  background: #D4AF37;
+  border: 10px solid darken(#D4AF37, 10%);
+  color: $white;
+}
+
+.award-two {
+  margin: 0em 1em;
+	border-radius: 50%;
+	width: $award-size;
+	height: $award-size;
+  font-size: 1.5em;
+  text-align: center;
+  vertical-align: middle;
+  line-height: $award-size;
+  background: #C0C0C0;
+  border: 10px solid darken(#C0C0C0, 10%);
+  color: $white;
+}
+
+.award-three {
+  margin: 0em 1em;
+	border-radius: 50%;
+	width: $award-size;
+	height: $award-size;
+  font-size: 1.5em;
+  text-align: center;
+  vertical-align: middle;
+  line-height: $award-size;
+  background: #CD7F32;
+  border: 10px solid darken(#CD7F32, 10%);
+  color: $white;
+}
+
+.emoji {
+  height: 20px;
+  margin-right: 10px;
+}
+
+.user {
+  margin-right: 10px;
 }

@@ -5,7 +5,14 @@
 export default {
     resources: {
         events: 'api/events',
-        trending: '/api/web/api/v0/entities/trending',
-        entities: '/api/web/api/v0/entities'
+        allEmojis: '/api/web/api/v0/emojis',
+        activeEmojis: '/api/web/api/v0/emojis/active',
+        emojiIcons: '/api/web/api/v0/emojis/icons',
+        userIcons: '/api/web/api/v0/users/photourls',
+        trendingEmojis: '/api/web/api/v0/emojis/trending',
+        trendingEntities: '/api/web/api/v0/entities/trending',
+        entities: '/api/web/api/v0/entities',
+        entitySimilarities: '/api/web/api/v0/entities/similarities',
+        emojiSimilarities: '/api/web/api/v0/emojis/similarities'
     }
 }
