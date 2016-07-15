@@ -319,7 +319,7 @@ class MainStore {
 }
 
 function processSimilarity(similarities) {
-  const radiusScaleFactor = 100; // scales the radius by the given factor
+  const radiusScaleFactor = 300; // scales the radius by the given factor
   let labels = similarities.labels;
   let similarityRowSums = similarities.matrix.map((row, i) => {
     row[i] = 0;
