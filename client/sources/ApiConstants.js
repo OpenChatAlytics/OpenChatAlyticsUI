@@ -13,6 +13,8 @@ export default {
         trendingEntities: '/api/web/api/v0/entities/trending',
         entities: '/api/web/api/v0/entities',
         entitySimilarities: '/api/web/api/v0/entities/similarities',
-        emojiSimilarities: '/api/web/api/v0/emojis/similarities'
+        emojiSimilarities: '/api/web/api/v0/emojis/similarities',
+        activeMessages: '/api/web/api/v0/message-summary/active',
+        totalMessages: '/api/web/api/v0/message-summary/total',
     }
 }

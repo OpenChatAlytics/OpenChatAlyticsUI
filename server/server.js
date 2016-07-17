@@ -13,9 +13,11 @@ import YamlLoader from 'yaml-config-loader';
 import request from 'request';
 import ExpressWs from 'express-ws';
 import WebSocket from 'ws';
+import NodeCache from 'node-cache';
 
 let app = express();
 let expressWs = ExpressWs(app);
+let cache = new NodeCache();
 
 process.on('uncaughtException', function (err) {
   console.error('Caught exception: ' + err);
@@ -69,14 +71,27 @@ app.ws("/api/events/", (ws, req) => {
     if (ws.readyState == 1) {
       ws.send(JSON.stringify(data));
     }
-    
+
   }).bind(this);
 });
 
 app.use("/api/web/", (req, res) => {
   let url = defaultConfig.dependencies.chatalyticswebUrl + req.url;
   if (req.method == "GET") {
-    req.pipe(request(url)).pipe(res);
+    cache.get(req.originalUrl, (err, val) => {
+      if (!err && val) {
+        res.send(val);
+      } else {
+        request(url, (err, resp, body) => {
+          if (resp.statusCode === 200) {
+            cache.set(req.originalUrl, body);
+          }
+          res.send(body);
+        });
+      }
+    });
+
+    // req.pipe(request(url)).pipe(res);
   } else {
     req.pipe(request[req.method.toLowerCase()]({ url: url, json: req.body })).pipe(res);
   }

@@ -28,6 +28,22 @@ function fetchActiveEmojis(query) {
   });
 }
 
+function fetchActiveMessages(query) {
+  return new Promise((resolve, reject) => {
+    request.get(ApiConstants.resources.activeMessages)
+      .query(query)
+      .end((err, res) => {
+        if (err) {
+          console.error(err);
+          reject(err);
+        } else {
+          console.trace(res);
+          resolve(JSON.parse(res.text));
+        }
+      });
+  });
+}
+
 function fetchEntitySimilarities(query) {
   return new Promise((resolve, reject) => {
     request.get(ApiConstants.resources.entitySimilarities)
@@ -195,6 +211,44 @@ export default {
             reject(err);
           } else {
             resolve(JSON.parse(res.text));
+          }
+        });
+    });
+  },
+
+  fetchActiveMessagesByUser(query = {
+    starttime: getDefaultStartDate(),
+    endtime: getDefaultEndDate(),
+    dimension: 'user',
+    method: 'totv',
+    n: '32',
+  }) {
+    return fetchActiveMessages(query);
+  },
+
+  fetchActiveMessagesByRoom(query = {
+    starttime: getDefaultStartDate(),
+    endtime: getDefaultEndDate(),
+    dimension: 'room',
+    method: 'totv',
+    n: '32',
+  }) {
+    return fetchActiveMessages(query);
+  },
+
+  fetchTotalMessages(query = {
+    starttime: getDefaultStartDate(),
+    endtime: getDefaultEndDate()
+  }) {
+    return new Promise((resolve, reject) => {
+      request.get(ApiConstants.resources.totalMessages)
+        .query(query)
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            reject(err);
+          } else {
+            resolve(res.text);
           }
         });
     });

@@ -28,7 +28,7 @@ h1 {
 }
 
 h2 {
-  font-size: 2.5em;
+  font-size: 2em;
   font-family: $font-heading;
   padding-bottom: 0.25em;
   text-transform: uppercase;
@@ -106,7 +106,8 @@ th {
 
 .chatalytics {
   background: $lightgray;
-  padding: 2em;
+  padding: 5em 2em;
+  border-bottom: 1px solid $gray;
 }
 
 #attribution {
@@ -159,7 +160,7 @@ svg {
 }
 
 .entity-container {
-  
+
 }
 
 .entity-mini {
@@ -169,7 +170,7 @@ svg {
   padding: 0.5em 0em;
   margin-right: 1em;
   float: left;
-  
+
   div {
     margin: 0.1em;
   }
@@ -182,7 +183,7 @@ svg {
 $award-size: 60px;
 .awards {
   padding: 1.5em 0;
-  
+
   h1, h2, h3 {
     padding: 0em 0em 0.25em;
   }
@@ -196,7 +197,7 @@ $award-size: 60px;
   margin: 0em 1em 0em 0em;
 	border-radius: 50%;
 	width: $award-size;
-	height: $award-size; 
+	height: $award-size;
   font-size: 1.5em;
   text-align: center;
   vertical-align: middle;

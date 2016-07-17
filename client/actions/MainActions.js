@@ -66,10 +66,18 @@ class MainActions {
     return similarities;
   }
 
+  updateUserSimilarityByEmoji(similarities) {
+    return similarities;
+  }
+
+  updateRoomSimilarityByEmoji(similarities) {
+    return similarities;
+  }
+
   fetchSimilarities() {
     return (dispatch) => {
       dispatch();
-      
+
       MainSource.fetchUserSimilarityByEntity()
         .then((similarities) => {
           this.updateUserSimilarityByEntity(similarities);
@@ -81,6 +89,22 @@ class MainActions {
       MainSource.fetchRoomSimilarityByEntity()
         .then((similarities) => {
           this.updateRoomSimilarityByEntity(similarities);
+        })
+        .catch((errorMessage) => {
+          this.fetchSimilaritiesFailed(errorMessage);
+        });
+
+      MainSource.fetchUserSimilarityByEmoji()
+        .then((similarities) => {
+          this.updateUserSimilarityByEmoji(similarities);
+        })
+        .catch((errorMessage) => {
+          this.fetchSimilaritiesFailed(errorMessage);
+        });
+
+      MainSource.fetchRoomSimilarityByEmoji()
+        .then((similarities) => {
+          this.updateRoomSimilarityByEmoji(similarities);
         })
         .catch((errorMessage) => {
           this.fetchSimilaritiesFailed(errorMessage);
@@ -202,6 +226,75 @@ class MainActions {
   }
 
   activeEmojisByUserFailed(errorMessage) {
+    return errorMessage;
+  }
+
+  fetchActiveMessagesByUser() {
+    return (dispatch) => {
+      dispatch();
+
+      MainSource.fetchActiveMessagesByUser()
+        .then((topics) => {
+          this.updateActiveMessagesByUser(topics);
+        })
+        .catch((errorMessage) => {
+          console.error(errorMessage);
+          this.activeMessagesByUserFailed(errorMessage);
+        });
+    }
+  }
+
+  updateActiveMessagesByUser(activeMessagesUser) {
+    return activeMessagesUser;
+  }
+
+  activeMessagesByUserFailed(errorMessage) {
+    return errorMessage;
+  }
+
+  fetchActiveMessagesByRoom() {
+    return (dispatch) => {
+      dispatch();
+
+      MainSource.fetchActiveMessagesByRoom()
+        .then((topics) => {
+          this.updateActiveMessagesByRoom(topics);
+        })
+        .catch((errorMessage) => {
+          console.error(errorMessage);
+          this.activeMessagesByRoomFailed(errorMessage);
+        });
+    }
+  }
+
+  updateActiveMessagesByRoom(activeMessagesRoom) {
+    return activeMessagesRoom;
+  }
+
+  activeMessagesByRoomFailed(errorMessage) {
+    return errorMessage;
+  }
+
+  fetchTotalMessages() {
+    return (dispatch) => {
+      dispatch();
+
+      MainSource.fetchTotalMessages()
+        .then((total) => {
+          this.updateTotalMessages(total);
+        })
+        .catch((errorMessage) => {
+          console.error(errorMessage);
+          this.totalMessagesFailed(errorMessage);
+        });
+    }
+  }
+
+  updateTotalMessages(total) {
+    return total;
+  }
+
+  totalMessagesFailed(errorMessage) {
     return errorMessage;
   }
 

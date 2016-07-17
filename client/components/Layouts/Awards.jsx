@@ -4,7 +4,7 @@ import UserComponent from './User';
 import AsyncComponent from '../Chatalytics/Async';
 
 // Constructs a top entity visualization
-// assume data in the format 
+// assume data in the format
 // [{
 //   title:
 //   subtitle:
