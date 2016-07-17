@@ -17,6 +17,9 @@ class MainStore {
       handleUpdateUserSimilarityByEntity: MainActions.UPDATE_USER_SIMILARITY_BY_ENTITY,
       handleUpdateRoomSimilarityByEntity: MainActions.UPDATE_ROOM_SIMILARITY_BY_ENTITY,
 
+      handleUpdateUserSimilarityByEmoji: MainActions.UPDATE_USER_SIMILARITY_BY_EMOJI,
+      handleUpdateRoomSimilarityByEmoji: MainActions.UPDATE_ROOM_SIMILARITY_BY_EMOJI,
+
       handleUpdateTrendingTopics: MainActions.UPDATE_TRENDING_TOPICS,
       handleFetchTrendingTopics: MainActions.FETCH_TRENDING_TOPICS,
       handleTrendingTopicsFailed: MainActions.TRENDING_TOPICS_FAILED,
@@ -40,9 +43,21 @@ class MainStore {
       handleFetchActiveEmojisByUser: MainActions.FETCH_ACTIVE_EMOJIS_BY_USER,
       handleActiveEmojisByUserFailed: MainActions.ACTIVE_EMOJIS_BY_USER_FAILED,
 
+      handleUpdateActiveMessagesByUser: MainActions.UPDATE_ACTIVE_MESSAGES_BY_USER,
+      handleFetchActiveMessagesByUser: MainActions.FETCH_ACTIVE_MESSAGES_BY_USER,
+      handleActiveMessagesByUserFailed: MainActions.ACTIVE_MESSAGES_BY_USER_FAILED,
+
       handleUpdateActiveEmojisByRoom: MainActions.UPDATE_ACTIVE_EMOJIS_BY_ROOM,
       handleFetchActiveEmojisByRoom: MainActions.FETCH_ACTIVE_EMOJIS_BY_ROOM,
       handleActiveEmojisByRoomFailed: MainActions.ACTIVE_EMOJIS_BY_ROOM_FAILED,
+
+      handleUpdateActiveMessagesByRoom: MainActions.UPDATE_ACTIVE_MESSAGES_BY_ROOM,
+      handleFetchActiveMessagesByRoom: MainActions.FETCH_ACTIVE_MESSAGES_BY_ROOM,
+      handleActiveMessagesByRoomFailed: MainActions.ACTIVE_MESSAGES_BY_ROOM_FAILED,
+
+      handleUpdateTotalMessages: MainActions.UPDATE_TOTAL_MESSAGES,
+      handleFetchTotalMessages: MainActions.FETCH_TOTAL_MESSAGES,
+      handleTotalMessagesFailed: MainActions.TOTAL_MESSAGES_FAILED,
 
       handleUpdateAllEmojis: MainActions.UPDATE_ALL_EMOJIS,
       handleFetchAllEmojis: MainActions.FETCH_ALL_EMOJIS,
@@ -98,6 +113,14 @@ class MainStore {
 
   handleUpdateRoomSimilarityByEntity(similarities) {
     this.roomSimilarityByEntity = processSimilarity(similarities);
+  }
+
+  handleUpdateUserSimilarityByEmoji(similarities) {
+    this.userSimilarityByEmoji = processSimilarity(similarities);
+  }
+
+  handleUpdateRoomSimilarityByEmoji(similarities) {
+    this.roomSimilarityByEmoji = processSimilarity(similarities);
   }
 
   handleUpdateSimilarities(similarities) {
@@ -258,6 +281,60 @@ class MainStore {
     this.errorMessage = errorMessage;
   }
 
+  handleUpdateActiveMessagesByUser(activeMessagesByUser) {
+    let data = Transforms.mapToArray(activeMessagesByUser).map(e => {
+      return {
+        title: `@${e.key}`,
+        subtitle: `${(e.value * 100).toFixed(3)}% of all messages`,
+        value: e.value,
+        key: e.key
+      }
+    });
+    this.activeMessagesByUser = data;
+    this.errorMessage = null;
+  }
+
+  handleFetchActiveMessagesByUser() {
+    this.activeMessagesByUser = null;
+  }
+
+  handleActiveMessagesByUserFailed(errorMessage) {
+    this.errorMessage = errorMessage;
+  }
+
+  handleUpdateActiveMessagesByRoom(activeMessagesByRoom) {
+    let data = Transforms.mapToArray(activeMessagesByRoom).map(e => {
+      return {
+        title: `#${e.key}`,
+        subtitle: `${(e.value * 100).toFixed(3)}% of all messages`,
+        value: e.value,
+        key: e.key
+      }
+    });
+    this.activeMessagesByRoom = data;
+    this.errorMessage = null;
+  }
+
+  handleFetchActiveMessagesByRoom() {
+    this.activeMessagesByRoom = null;
+  }
+
+  handleActiveMessagesByRoomFailed(errorMessage) {
+    this.errorMessage = errorMessage;
+  }
+
+  handleUpdateTotalMessages(total) {
+    this.totalMessages = total;
+  }
+
+  handleFetchTotalMessages() {
+    this.totalMessages = null;
+  }
+
+  handleTotalMessagesFailed() {
+    this.errorMessage = errorMessage;
+  }
+
   handleUpdateActiveEmojisByRoom(activeEmojisByRoom) {
     let data = Transforms.mapToArray(activeEmojisByRoom).map(e => {
       return {
@@ -319,12 +396,15 @@ class MainStore {
 }
 
 function processSimilarity(similarities) {
-  const radiusScaleFactor = 300; // scales the radius by the given factor
+  const radiusScaleFactor = 10; // scales the radius by the given factor
   let labels = similarities.labels;
+  var sum = 0;
   let similarityRowSums = similarities.matrix.map((row, i) => {
     row[i] = 0;
+    sum += row.reduce((a, b) => { return a + b; });
     return row.reduce((a, b) => { return a + b; }) - row[i];
   });
+  let mean = sum / (similarities.matrix.length * similarities.matrix.length);
 
   // sort the row sums and return the sorted row + the index permutation that would yield that sort
   // order is larger -> smaller
@@ -344,13 +424,13 @@ function processSimilarity(similarities) {
         return {
           x: x,
           y: y,
-          r: similarities.matrix[i][j]
+          r: Math.min(100, 0.25 * similarities.matrix[i][j] / mean)
         }
       }
     });
   })).filter(item => item);
 
-  Transforms.normalizeData(data, (e) => e.r, (e, nv) => e.r = nv * radiusScaleFactor);
+  // Transforms.normalizeData(data, (e) => e.r, (e, nv) => e.r = Math.min(100, nv * radiusScaleFactor));
   data = data.filter(item => item.r >= 1);
 
   return {

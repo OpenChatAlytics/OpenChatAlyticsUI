@@ -21,9 +21,12 @@ class TitleComponent extends Component {
     MainActions.fetchSimilarities();
     MainActions.fetchActiveEmojisByUser();
     MainActions.fetchActiveEmojisByRoom();
+    MainActions.fetchActiveMessagesByUser();
+    MainActions.fetchActiveMessagesByRoom();
     MainActions.fetchAllEmojis();
     MainActions.fetchEmojiIcons();
     MainActions.fetchUserIcons();
+    MainActions.fetchTotalMessages();
 
     this.state = MainStore.getState();
 
@@ -74,7 +77,7 @@ class TitleComponent extends Component {
 
 /*
  * Stateless component displayed on the title page rendering the real time summary of
- * analytics.  
+ * analytics.
  */
 class TitleSummary extends Component {
   constructor(props) {

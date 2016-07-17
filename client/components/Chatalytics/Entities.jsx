@@ -14,7 +14,7 @@ import AltContainer from 'alt-container';
 export default class EntitiesComponent extends Component {
   render() {
     return (
-      <div className="chatalytics" id="entities">
+      <div style={{ }} className="chatalytics" id="entities">
         <AltContainer store={ MainStore }>
           <EntitiesSummaryComponent />
           <h3>Trending</h3>
@@ -31,10 +31,10 @@ export default class EntitiesComponent extends Component {
           <p>
             The more similar two items are, the larger the bubble.  Mouse over a bubble to see which items are being compared.
           </p>
-          <TwoColumnFixed leftWidth='49%' 
-            left={<SimilarityComponent 
+          <TwoColumnFixed leftWidth='49%'
+            left={<SimilarityComponent
               title="User Similarity by Entities Mentioned" similarity={this.props.userSimilarityByEntity} />}
-            right={<SimilarityComponent 
+            right={<SimilarityComponent
               title="Room Similarity by Entities Mentioned" similarity={this.props.roomSimilarityByEntity} />} />
           </AltContainer>
       </div>

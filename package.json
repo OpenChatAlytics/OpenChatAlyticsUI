@@ -60,6 +60,7 @@
     "marked": "0.3.5",
     "morgan": "1.7.0",
     "measured": "1.1.0",
+    "node-cache": "3.2.1",
     "pm2": "1.0.2",
     "react": "15.1.0",
     "react-addons-css-transition-group": "15.1.0",

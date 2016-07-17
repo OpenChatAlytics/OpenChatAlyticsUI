@@ -31,11 +31,11 @@ export default class EmojisComponent extends Component {
           <p>These rooms are mostly emojis at this point.</p>
           <EmojisPerRoomComponent />
           <h3>Similarity</h3>
-          <TwoColumnFixed leftWidth='49%' 
-            left={<SimilarityComponent 
-              title="User Similarity by Emojis Used" similarity={this.props.userSimilarityByEntity} />}
-            right={<SimilarityComponent 
-              title="Room Similarity by Emojis Used" similarity={this.props.roomSimilarityByEntity} />} />
+          <TwoColumnFixed leftWidth='49%'
+            left={<SimilarityComponent
+              title="User Similarity by Emojis Used" similarity={this.props.userSimilarityByEmoji} />}
+            right={<SimilarityComponent
+              title="Room Similarity by Emojis Used" similarity={this.props.roomSimilarityByEmoji} />} />
         </AltContainer>
       </div>
     );
@@ -70,15 +70,15 @@ class EmojisStatisticsComponent extends Component {
             <h4>Top Emojis Past Year</h4>
             <TableComponent columns={['key', 'value']}
               aliases={['Emoji', 'Mentions']}
-              data={ (this.props.trendingEmojis || []).map(e => { 
+              data={ (this.props.trendingEmojis || []).map(e => {
                           return {
-                            key: <AltContainer store={ MainStore }><EmojiComponent name={e.key}/></AltContainer>, 
-                            value: e.value 
+                            key: <AltContainer store={ MainStore }><EmojiComponent name={e.key}/></AltContainer>,
+                            value: e.value
                           }
                         }
-                      ) 
+                      )
                     } />
-          </div>  
+          </div>
         }
       />
     );
