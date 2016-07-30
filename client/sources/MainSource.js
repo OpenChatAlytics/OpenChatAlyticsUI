@@ -1,8 +1,7 @@
-import ApiConstants from './ApiConstants.js'
+import ApiConstants from './ApiConstants.js';
 import request from 'superagent';
 import moment from 'moment';
-
-const requestTimeoutMs = 5000;
+import _ from 'lodash';
 
 function getDefaultStartDate() {
   return moment(new Date()).subtract(1, 'y').format('YYYY-MM-DD');
@@ -10,6 +9,13 @@ function getDefaultStartDate() {
 
 function getDefaultEndDate() {
   return moment(new Date()).format('YYYY-MM-DD');
+}
+
+function getDefaultTimeRange() {
+  return {
+    starttime: getDefaultStartDate(),
+    endtime: getDefaultEndDate()
+  }
 }
 
 function fetchActiveEmojis(query) {
@@ -21,7 +27,6 @@ function fetchActiveEmojis(query) {
           console.error(err);
           reject(err);
         } else {
-          console.trace(res);
           resolve(JSON.parse(res.text));
         }
       });
@@ -37,7 +42,6 @@ function fetchActiveMessages(query) {
           console.error(err);
           reject(err);
         } else {
-          console.trace(res);
           resolve(JSON.parse(res.text));
         }
       });
@@ -77,15 +81,16 @@ function fetchEmojiSimilarities(query) {
 
 export default {
 
-  fetchTrendingTopics(query = {
-    n: 15,
-    starttime: getDefaultStartDate(),
-    endtime: getDefaultEndDate()
-  }) {
+  // defaultStartDate = getDefaultStartDate(),
+  // defaultEndDate = getDefaultEndDate(),
+
+  fetchTrendingTopics(query) {
     return new Promise((resolve, reject) => {
       request
         .get(ApiConstants.resources.trendingEntities)
-        .query(query)
+        .query(_.merge({
+          n: 15
+        }, _.merge(getDefaultTimeRange(), query)))
         .end((err, res) => {
           if (err) {
             console.error(err);
@@ -97,14 +102,12 @@ export default {
     });
   },
 
-  fetchTrendingEmojis(query = {
-    n: 15,
-    starttime: getDefaultStartDate(),
-    endtime: getDefaultEndDate()
-  }) {
+  fetchTrendingEmojis(query) {
     return new Promise((resolve, reject) => {
       request.get(ApiConstants.resources.trendingEmojis)
-        .query(query)
+        .query(_.merge({
+          n: 15
+        }, _.merge(getDefaultTimeRange(), query)))
         .end((err, res) => {
           if (err) {
             console.error(err);
@@ -116,61 +119,38 @@ export default {
     });
   },
 
-  fetchUserSimilarityByEntity(query = {
-    starttime: getDefaultStartDate(),
-    endtime: getDefaultEndDate(),
-  }) {
-    return fetchEntitySimilarities({
-      starttime: (query && query.starttime) ? query.starttime : getDefaultStartDate(),
-      endtime: (query && query.endtime) ? query.endtime : getDefaultEndDate(),
+  fetchUserSimilarityByEntity(query) {
+    return fetchEntitySimilarities(_.merge({
       firstDim: 'user',
       secondDim: 'entity'
-    });
+    }, _.merge(getDefaultTimeRange(), query)));
   },
 
-  fetchRoomSimilarityByEntity(query = {
-    starttime: getDefaultStartDate(),
-    endtime: getDefaultEndDate(),
-  }) {
-    return fetchEntitySimilarities({
-      starttime: (query && query.starttime) ? query.starttime : getDefaultStartDate(),
-      endtime: (query && query.endtime) ? query.endtime : getDefaultEndDate(),
+  fetchRoomSimilarityByEntity(query) {
+    return fetchEntitySimilarities(_.merge({
       firstDim: 'room',
       secondDim: 'entity'
-    });
+    }, _.merge(getDefaultTimeRange(), query)));
   },
 
-  fetchUserSimilarityByEmoji(query = {
-    starttime: getDefaultStartDate(),
-    endtime: getDefaultEndDate(),
-  }) {
-    return fetchEmojiSimilarities({
-      starttime: (query && query.starttime) ? query.starttime : getDefaultStartDate(),
-      endtime: (query && query.endtime) ? query.endtime : getDefaultEndDate(),
+  fetchUserSimilarityByEmoji(query) {
+    return fetchEmojiSimilarities(_.merge({
       firstDim: 'user',
       secondDim: 'emoji'
-    });
+    }, _.merge(getDefaultTimeRange(), query)));
   },
 
-  fetchRoomSimilarityByEmoji(query = {
-    starttime: getDefaultStartDate(),
-    endtime: getDefaultEndDate(),
-  }) {
-    return fetchEmojiSimilarities({
-      starttime: (query && query.starttime) ? query.starttime : getDefaultStartDate(),
-      endtime: (query && query.endtime) ? query.endtime : getDefaultEndDate(),
+  fetchRoomSimilarityByEmoji(query) {
+    return fetchEmojiSimilarities(_.merge({
       firstDim: 'room',
       secondDim: 'emoji'
-    });
+    }, _.merge(getDefaultTimeRange(), query)));
   },
 
-  fetchAllEmojis(query = {
-    starttime: getDefaultStartDate(),
-    endtime: getDefaultEndDate(),
-  }) {
+  fetchAllEmojis(query) {
     return new Promise((resolve, reject) => {
       request.get(ApiConstants.resources.allEmojis)
-        .query(query)
+        .query(_.merge(getDefaultTimeRange(), query))
         .end((err, res) => {
           if (err) {
             console.error(err);
@@ -182,24 +162,20 @@ export default {
     });
   },
 
-  fetchActiveEmojisByUser(query = {
-    starttime: getDefaultStartDate(),
-    endtime: getDefaultEndDate(),
-    dimension: 'user',
-    method: 'totv',
-    n: '32',
-  }) {
-    return fetchActiveEmojis(query);
+  fetchActiveEmojisByUser(query) {
+    return fetchActiveEmojis(_.merge(_.merge({
+      dimension: 'user',
+      method: 'totv',
+      n: '32'
+    }, getDefaultTimeRange()), query));
   },
 
-  fetchActiveEmojisByRoom(query = {
-    starttime: getDefaultStartDate(),
-    endtime: getDefaultEndDate(),
-    dimension: 'room',
-    method: 'totv',
-    n: '32',
-  }) {
-    return fetchActiveEmojis(query);
+  fetchActiveEmojisByRoom(query) {
+    return fetchActiveEmojis(_.merge(_.merge({
+      dimension: 'room',
+      method: 'totv',
+      n: '32'
+    }, getDefaultTimeRange()), query));
   },
 
   fetchEmojiIcons() {
@@ -216,33 +192,28 @@ export default {
     });
   },
 
-  fetchActiveMessagesByUser(query = {
-    starttime: getDefaultStartDate(),
-    endtime: getDefaultEndDate(),
-    dimension: 'user',
-    method: 'totv',
-    n: '32',
-  }) {
-    return fetchActiveMessages(query);
+  fetchActiveMessagesByUser(query) {
+    return fetchActiveMessages(_.merge(_.merge({
+      dimension: 'user',
+      method: 'totv',
+      n: '32',
+      bot: false,
+    }, getDefaultTimeRange()), query));
   },
 
-  fetchActiveMessagesByRoom(query = {
-    starttime: getDefaultStartDate(),
-    endtime: getDefaultEndDate(),
-    dimension: 'room',
-    method: 'totv',
-    n: '32',
-  }) {
-    return fetchActiveMessages(query);
+  fetchActiveMessagesByRoom(query) {
+    return fetchActiveMessages(_.merge(_.merge({
+      dimension: 'room',
+      method: 'totv',
+      n: '32',
+      bot: false,
+    }, getDefaultTimeRange()), query));
   },
 
-  fetchTotalMessages(query = {
-    starttime: getDefaultStartDate(),
-    endtime: getDefaultEndDate()
-  }) {
+  fetchTotalMessages(query) {
     return new Promise((resolve, reject) => {
       request.get(ApiConstants.resources.totalMessages)
-        .query(query)
+        .query(_.merge(_.merge({ bot: true }, getDefaultTimeRange()), query))
         .end((err, res) => {
           if (err) {
             console.error(err);

@@ -1,6 +1,7 @@
 import alt from '../alt';
 import MainSource from '../sources/MainSource';
 import moment from 'moment';
+import _ from 'lodash';
 
 class MainActions {
 
@@ -16,12 +17,12 @@ class MainActions {
     return event;
   }
 
-  fetchTrendingTopics() {
+  fetchTrendingTopics(query) {
     return (dispatch) => {
       // we dispatch an event here so we can have "loading" state.
       dispatch();
 
-      MainSource.fetchTrendingTopics()
+      MainSource.fetchTrendingTopics(query)
         .then((topics) => {
           // we can access other actions within our action through `this.actions`
           this.updateTrendingTopics(topics);
@@ -36,11 +37,11 @@ class MainActions {
     return topics;
   }
 
-  fetchTrendingEmojis() {
+  fetchTrendingEmojis(query) {
     return (dispatch) => {
       dispatch();
 
-      MainSource.fetchTrendingEmojis()
+      MainSource.fetchTrendingEmojis(query)
         .then((emojis) => {
           this.updateTrendingEmojis(emojis);
         })
@@ -74,11 +75,10 @@ class MainActions {
     return similarities;
   }
 
-  fetchSimilarities() {
+  fetchEntitySimilarities(query) {
     return (dispatch) => {
       dispatch();
-
-      MainSource.fetchUserSimilarityByEntity()
+      MainSource.fetchUserSimilarityByEntity(query)
         .then((similarities) => {
           this.updateUserSimilarityByEntity(similarities);
         })
@@ -86,15 +86,20 @@ class MainActions {
           this.fetchSimilaritiesFailed(errorMessage);
         });
 
-      MainSource.fetchRoomSimilarityByEntity()
+      MainSource.fetchRoomSimilarityByEntity(query)
         .then((similarities) => {
           this.updateRoomSimilarityByEntity(similarities);
         })
         .catch((errorMessage) => {
           this.fetchSimilaritiesFailed(errorMessage);
         });
+    };
+  }
 
-      MainSource.fetchUserSimilarityByEmoji()
+  fetchEmojiSimilarities(query) {
+    return (dispatch) => {
+      dispatch();
+      MainSource.fetchUserSimilarityByEmoji(query)
         .then((similarities) => {
           this.updateUserSimilarityByEmoji(similarities);
         })
@@ -102,7 +107,45 @@ class MainActions {
           this.fetchSimilaritiesFailed(errorMessage);
         });
 
-      MainSource.fetchRoomSimilarityByEmoji()
+      MainSource.fetchRoomSimilarityByEmoji(query)
+        .then((similarities) => {
+          this.updateRoomSimilarityByEmoji(similarities);
+        })
+        .catch((errorMessage) => {
+          this.fetchSimilaritiesFailed(errorMessage);
+        });
+    };
+  }
+
+  fetchSimilarities(query) {
+    return (dispatch) => {
+      dispatch();
+
+      MainSource.fetchUserSimilarityByEntity(query)
+        .then((similarities) => {
+          this.updateUserSimilarityByEntity(similarities);
+        })
+        .catch((errorMessage) => {
+          this.fetchSimilaritiesFailed(errorMessage);
+        });
+
+      MainSource.fetchRoomSimilarityByEntity(query)
+        .then((similarities) => {
+          this.updateRoomSimilarityByEntity(similarities);
+        })
+        .catch((errorMessage) => {
+          this.fetchSimilaritiesFailed(errorMessage);
+        });
+
+      MainSource.fetchUserSimilarityByEmoji(query)
+        .then((similarities) => {
+          this.updateUserSimilarityByEmoji(similarities);
+        })
+        .catch((errorMessage) => {
+          this.fetchSimilaritiesFailed(errorMessage);
+        });
+
+      MainSource.fetchRoomSimilarityByEmoji(query)
         .then((similarities) => {
           this.updateRoomSimilarityByEmoji(similarities);
         })
@@ -110,6 +153,54 @@ class MainActions {
           this.fetchSimilaritiesFailed(errorMessage);
         });
     }
+  }
+
+  fetchMessagesOverTime(args = {
+    startDate: moment().subtract(12, 'months').format('YYYY-MM-DD'),
+    endDate: moment().format('YYYY-MM-DD')
+  }) {
+    return (dispatch) => {
+      let startDate = moment(args.startDate);
+      let endDate = moment(startDate);
+      endDate.add(1, 'months');
+
+      let dates = [];
+      while (startDate < moment(args.endDate)) {
+        dates.push({
+          realDate: moment(startDate),
+          startDate: startDate.format('YYYY-MM-DD'),
+          endDate: endDate.format('YYYY-MM-DD')
+        })
+        startDate.add(1, 'months');
+        endDate.add(1, 'months');
+      }
+
+      let requests = dates.map((times) => {
+        return new Promise((resolve) => resolve(MainSource.fetchTotalMessages({
+          starttime: times.startDate,
+          endtime: times.endDate
+        })));
+      });
+
+      let labels = dates.map(date => {
+        return date.realDate.format('MMMM')
+      })
+
+      Promise.all(requests).then((messages) => {
+        this.updateMessagesOverTime({ messages: messages, times: labels });
+      }).catch((errorMessage) => {
+        console.error(errorMessage);
+        this.messagesOverTimeFailed(errorMessage);
+      });
+    }
+  }
+
+  updateMessagesOverTime(messages) {
+    return messages;
+  }
+
+  messagesOverTimeFailed(errorMessage) {
+    return errorMessage;
   }
 
   fetchTrendingTopicsOverTime(args = {
@@ -206,11 +297,11 @@ class MainActions {
     return emojisOverTime;
   }
 
-  fetchActiveEmojisByUser() {
+  fetchActiveEmojisByUser(query) {
     return (dispatch) => {
       dispatch();
 
-      MainSource.fetchActiveEmojisByUser()
+      MainSource.fetchActiveEmojisByUser(query)
         .then((topics) => {
           this.updateActiveEmojisByUser(topics);
         })
@@ -229,11 +320,11 @@ class MainActions {
     return errorMessage;
   }
 
-  fetchActiveMessagesByUser() {
+  fetchActiveMessagesByUser(query) {
     return (dispatch) => {
       dispatch();
 
-      MainSource.fetchActiveMessagesByUser()
+      MainSource.fetchActiveMessagesByUser(query)
         .then((topics) => {
           this.updateActiveMessagesByUser(topics);
         })
@@ -252,11 +343,11 @@ class MainActions {
     return errorMessage;
   }
 
-  fetchActiveMessagesByRoom() {
+  fetchActiveMessagesByRoom(query) {
     return (dispatch) => {
       dispatch();
 
-      MainSource.fetchActiveMessagesByRoom()
+      MainSource.fetchActiveMessagesByRoom(query)
         .then((topics) => {
           this.updateActiveMessagesByRoom(topics);
         })
@@ -275,11 +366,11 @@ class MainActions {
     return errorMessage;
   }
 
-  fetchTotalMessages() {
+  fetchTotalMessages(query) {
     return (dispatch) => {
       dispatch();
 
-      MainSource.fetchTotalMessages()
+      MainSource.fetchTotalMessages(query)
         .then((total) => {
           this.updateTotalMessages(total);
         })
@@ -287,7 +378,20 @@ class MainActions {
           console.error(errorMessage);
           this.totalMessagesFailed(errorMessage);
         });
+
+      MainSource.fetchTotalMessages(_.merge(query, { bot: false }))
+        .then((total) => {
+          this.updateTotalHumanMessages(total);
+        })
+        .catch((errorMessage) => {
+          console.error(errorMessage);
+          this.totalMessagesFailed(errorMessage);
+        });
     }
+  }
+
+  updateTotalHumanMessages(total) {
+    return total;
   }
 
   updateTotalMessages(total) {
@@ -298,11 +402,11 @@ class MainActions {
     return errorMessage;
   }
 
-  fetchActiveEmojisByRoom() {
+  fetchActiveEmojisByRoom(query) {
     return (dispatch) => {
       dispatch();
 
-      MainSource.fetchActiveEmojisByRoom()
+      MainSource.fetchActiveEmojisByRoom(query)
         .then((topics) => {
           this.updateActiveEmojisByRoom(topics);
         })

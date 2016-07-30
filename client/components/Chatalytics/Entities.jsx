@@ -10,6 +10,7 @@ import TableComponent from './Table';
 import ChartJS, { Line } from 'react-chartjs';
 import SimilarityComponent from './Similarity';
 import AltContainer from 'alt-container';
+import DatePickerComponent from '../DatePicker';
 
 export default class EntitiesComponent extends Component {
   render() {
@@ -31,6 +32,9 @@ export default class EntitiesComponent extends Component {
           <p>
             The more similar two items are, the larger the bubble.  Mouse over a bubble to see which items are being compared.
           </p>
+          <DatePickerComponent
+            onDateChanged={(starttime, endtime) => MainActions.fetchEntitySimilarities({ starttime, endtime })}
+          />
           <TwoColumnFixed leftWidth='49%'
             left={<SimilarityComponent
               title="User Similarity by Entities Mentioned" similarity={this.props.userSimilarityByEntity} />}

@@ -24,6 +24,7 @@ export default class AwardsComponent extends Component {
 
   render() {
     return (
+      (this.state.data && this.state.data.length > 3) ?
       <div>
         <div className="awards">
           <div style={{ float: 'left' }}>
@@ -75,7 +76,8 @@ export default class AwardsComponent extends Component {
           )
         }) }
         <div style={{ clear: 'both' }} />
-      </div>
+      </div> :
+      <div />
     );
   }
 }
