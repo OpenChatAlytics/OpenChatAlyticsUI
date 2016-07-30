@@ -5,6 +5,13 @@ export default class DatePickerComponent extends Component {
 
   constructor(props) {
     super(props);
+
+    this.setAllTime = this.setAllTime.bind(this);
+    this.setYear = this.setYear.bind(this);
+    this.setHalfYear = this.setHalfYear.bind(this);
+    this.setQuarterYear = this.setQuarterYear.bind(this);
+    this.setMonth = this.setMonth.bind(this);
+    this.setWeek = this.setWeek.bind(this);
   }
 
   setAllTime() {
@@ -48,12 +55,12 @@ export default class DatePickerComponent extends Component {
       <div>
         <div className="button-group">
           <span className="button-group-label">Time Range</span>
-          <button onClick={ this.setAllTime.bind(this) }>All Time</button>
-          <button onClick={ this.setYear.bind(this) }>1 Year</button>
-          <button onClick={ this.setHalfYear.bind(this) }>6 months</button>
-          <button onClick={ this.setQuarterYear.bind(this) }>3 months</button>
-          <button onClick={ this.setMonth.bind(this) }>1 Month</button>
-          <button onClick={ this.setWeek.bind(this) }>1 Week</button>
+          <button onClick={this.setAllTime}>All Time</button>
+          <button onClick={this.setYear}>1 Year</button>
+          <button onClick={this.setHalfYear}>6 months</button>
+          <button onClick={this.setQuarterYear}>3 months</button>
+          <button onClick={this.setMonth}>1 Month</button>
+          <button onClick={this.setWeek}>1 Week</button>
         </div>
         <div style={{ clear: 'both' }} />
       </div>
