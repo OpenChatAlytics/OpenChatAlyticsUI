@@ -13,16 +13,6 @@ import DatePickerComponent from '../DatePicker';
 class MessagesComponent extends Component {
 
   render() {
-    let pieOptions = {
-      defaultFontFamily: 'PTMono',
-      defaultFontSize: 12,
-      responsive: true,
-      legend: {
-        position: 'bottom'
-      },
-      maintainAspectRatio: false
-    }
-
     let lineOptions = {
       defaultFontFamily: 'PTMono',
       defaultFontSize: 12,
@@ -62,23 +52,6 @@ class MessagesComponent extends Component {
         }]
       }
     }
-
-    var data = {
-      labels: [
-        "Red",
-        "Blue",
-        "Yellow"
-      ],
-      datasets: [
-        {
-          data: [300, 50, 100],
-          backgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56"
-          ]
-        }]
-    };
     return (
       <div className="chatalytics">
         <AltContainer store={ MainStore }>
@@ -98,7 +71,7 @@ class MessagesComponent extends Component {
               : <div />} />
           <TwoColumnFixed leftWidth='49%'
             left={<BotsVersusHumansComponent />}
-            right={<Pie ref="chart" data={ data } options={ pieOptions } height="250" />} />
+            right={<div />} />
           <h3>User</h3>
           <p>The most talkative people in chat.</p>
           <MessagesPerUserComponent />
