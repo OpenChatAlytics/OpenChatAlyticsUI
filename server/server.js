@@ -103,7 +103,7 @@ app.get('/*', (req, res) => {
   });
 });
 
-let port = Number(process.env.PORT || 3001);
+let port = Number(3001);
 app.listen(port, () => {
   console.log('server running at localhost:3001, go refresh and see magic');
 });
