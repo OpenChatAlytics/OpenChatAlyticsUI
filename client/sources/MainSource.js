@@ -48,6 +48,22 @@ function fetchActiveMessages(query) {
   });
 }
 
+function fetchActiveMessages(query) {
+  return new Promise((resolve, reject) => {
+    request.get(ApiConstants.resources.activeMessages)
+      .query(query)
+      .end((err, res) => {
+        if (err) {
+          console.error(err);
+          reject(err);
+        } else {
+          console.trace(res);
+          resolve(JSON.parse(res.text));
+        }
+      });
+  });
+}
+
 function fetchEntitySimilarities(query) {
   return new Promise((resolve, reject) => {
     request.get(ApiConstants.resources.entitySimilarities)
