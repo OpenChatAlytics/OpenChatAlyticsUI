@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import TwoColumn from '../Layouts/TwoColumn';
 import TwoColumnFixed from '../Layouts/TwoColumnFixed';
-import Highcharts from 'highcharts';
 import MainStore from '../../stores/MainStore';
 import MainActions from '../../actions/MainActions';
 import AsyncComponent from './Async';
 import TableComponent from './Table';
 import AwardsComponent from '../Layouts/Awards';
 import EmojiComponent from '../Layouts/Emoji';
-import ChartJS, { Line, Bubble, Bar } from 'react-chartjs';
+import { Line } from 'react-chartjs';
 import AltContainer from 'alt-container';
-import _ from 'lodash';
 import SimilarityComponent from './Similarity';
+import DatePickerComponent from '../DatePicker';
 
 export default class EmojisComponent extends Component {
   render() {
@@ -31,6 +28,9 @@ export default class EmojisComponent extends Component {
           <p>These rooms are mostly emojis at this point.</p>
           <EmojisPerRoomComponent />
           <h3>Similarity</h3>
+          <DatePickerComponent
+            onDateChanged={(starttime, endtime) => MainActions.fetchEmojiSimilarities({ starttime, endtime })}
+          />
           <TwoColumnFixed leftWidth='49%'
             left={<SimilarityComponent
               title="User Similarity by Emojis Used" similarity={this.props.userSimilarityByEmoji} />}
@@ -88,10 +88,15 @@ class EmojisStatisticsComponent extends Component {
 class EmojisPerUserComponent extends Component {
   render() {
     return (
-      <AsyncComponent isLoaded={ () => this.props.activeEmojisByUser != null }
-        loaded={ this.props.activeEmojisByUser ?
-          <AwardsComponent data={this.props.activeEmojisByUser } />
-          : <div />} />
+      <div>
+        <DatePickerComponent
+          onDateChanged={(starttime, endtime) => MainActions.fetchActiveEmojisByUser({ starttime, endtime })}
+        />
+        <AsyncComponent isLoaded={ () => this.props.activeEmojisByUser != null }
+          loaded={ this.props.activeEmojisByUser ?
+            <AwardsComponent data={this.props.activeEmojisByUser } />
+            : <div />} />
+      </div>
     )
   }
 }
@@ -99,10 +104,15 @@ class EmojisPerUserComponent extends Component {
 class EmojisPerRoomComponent extends Component {
   render() {
     return (
-      <AsyncComponent isLoaded={ () => this.props.activeEmojisByRoom != null }
-        loaded={ this.props.activeEmojisByRoom ?
-          <AwardsComponent data={this.props.activeEmojisByRoom } />
-          : <div />} />
+      <div>
+        <DatePickerComponent
+          onDateChanged={(starttime, endtime) => MainActions.fetchActiveEmojisByRoom({ starttime, endtime })}
+        />
+        <AsyncComponent isLoaded={ () => this.props.activeEmojisByRoom != null }
+          loaded={ this.props.activeEmojisByRoom ?
+            <AwardsComponent data={this.props.activeEmojisByRoom } />
+            : <div />} />
+      </div>
     )
   }
 }

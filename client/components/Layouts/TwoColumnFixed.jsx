@@ -11,12 +11,12 @@ class TwoColumnComponentFixed extends Component {
   render() {
     return (
       <div stye={{ width: '100%', height: 'auto' }}>
-        <div style={{ width: this.props.leftWidth || '200px', marginRight: '0em', float: 'left' }}>
+        <div style={{ width: this.props.leftWidth || '200px', marginRight: this.props.marginRight || '0em', float: 'left' }}>
           <AltContainer store={ MainStore }>
             {this.props.left}
           </AltContainer>
         </div>
-        <div style={{ width: this.props.rightWidth || 'auto', marginLeft: '1em', overflow: 'hidden' }}>
+        <div style={{ width: this.props.rightWidth || 'auto', marginLeft: this.props.marginLeft || '1em', overflow: 'hidden' }}>
           <AltContainer store={ MainStore }>
             {this.props.right}
           </AltContainer>

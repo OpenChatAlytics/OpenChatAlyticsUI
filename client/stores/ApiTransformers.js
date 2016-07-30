@@ -9,40 +9,40 @@ export default {
    * Given a set of objects transforms the set to an array of key
    * values where the key is the Object key, and the value is the objects
    * value.
-   * 
+   *
    * map: A map of keys to values
    * returns: An array of objects with key, value
-   * 
-   * For example: 
+   *
+   * For example:
    * {
    *  key1: 'val1',
-   *  key2: 'val2 
+   *  key2: 'val2
    * }
-   * 
+   *
    * Will return:
-   * 
+   *
    * [
    *  { key: 'key1', value: 'val1' },
    *  { key: 'key2', value: 'val2' },
    * ]
-   * 
+   *
    */
   mapToArray(map) {
     return (Object.keys(map)).map((key) => {
-      return { key: key, value: map[key] };
+      return { key, value: map[key] };
     });
   },
-  
+
   /**
    * Given an array of objects, transforms the array to a dictionary.
    * Expects key, value objects in the array.
-   * 
+   *
    * For example:
    * [ { key: 'key1', value: 'val1' },
    *   { key: 'key2', value: 'val2' } ]
-   * 
+   *
    * Will return:
-   * 
+   *
    * {
    *  key1: 'val1',
    *  key2: 'val2'
@@ -56,16 +56,16 @@ export default {
 
   /**
    * Normalizes an array of data.
-   * 
+   *
    * data:   An array of data in some arbitrary format
    * getter: Function which returns the value to normalize from a given piece of data
    * setter: Function which sets the value to normalize from a given piece of data
-   * 
+   *
    * Example usage:
-   * 
+   *
    * let data = [ {v: 3}, {v: 4} ];
    * normalizeData(data, (e) => e.v, (e, nv) => e.v = nv)
-   * 
+   *
    */
   normalizeData(data, getter, setter) {
     let minVal = Infinity;
@@ -94,15 +94,15 @@ export default {
    * is composed of an x coordinate, y coordinate, and r (value) of
    * the matrix at the x, y index.  (Note that x and y are zero indexed
    * and are guaranteed to be integers).
-   * 
+   *
    * mat : A 2 dimensional array (matrix)
-   * 
+   *
    * Example usage:
-   * 
-   * let mat = [ [0, 1], 
+   *
+   * let mat = [ [0, 1],
    *             [2, 3] ];
    * let arr = matrixToArray(mat);
-   * 
+   *
    * Then arr = [
    *   { x: 0, y: 0, r: 0 },
    *   { x: 0, y: 1, r: 1 },
@@ -116,7 +116,7 @@ export default {
       row.forEach((e, j) => {
         arr.push({ x: i, y: j, r: e });
       });
-    })
+    });
 
     return arr;
   },

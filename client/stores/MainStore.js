@@ -1,8 +1,7 @@
 import alt from '../alt';
 import MainActions from '../actions/MainActions';
-import Colors from './Colors'
-import Color from 'color';
-import Transforms from './ApiTransformers.js'
+import Colors from './Colors';
+import Transforms from './ApiTransformers.js';
 import _ from 'lodash';
 
 class MainStore {
@@ -27,6 +26,10 @@ class MainStore {
       handleUpdateTrendingEmojis: MainActions.UPDATE_TRENDING_EMOJIS,
       handleFetchTrendingEmojis: MainActions.FETCH_TRENDING_EMOJIS,
       handleTrendingEmojisFailed: MainActions.TRENDING_EMOJIS_FAILED,
+
+      handleUpdateMessagesOverTime: MainActions.UPDATE_MESSAGES_OVER_TIME,
+      handleFetchMessagesOverTime: MainActions.FETCH_MESSAGES_OVER_TIME,
+      handleMessagesOverTimeFailed: MainActions.MESSAGES_OVER_TIME_FAILED,
 
       handleUpdateTrendingTopicsOverTime: MainActions.UPDATE_TRENDING_TOPICS_OVER_TIME,
       handleFetchTrendingTopicsOverTime: MainActions.FETCH_TRENDING_TOPICS_OVER_TIME,
@@ -56,6 +59,7 @@ class MainStore {
       handleActiveMessagesByRoomFailed: MainActions.ACTIVE_MESSAGES_BY_ROOM_FAILED,
 
       handleUpdateTotalMessages: MainActions.UPDATE_TOTAL_MESSAGES,
+      handleUpdateTotalHumanMessages: MainActions.UPDATE_TOTAL_HUMAN_MESSAGES,
       handleFetchTotalMessages: MainActions.FETCH_TOTAL_MESSAGES,
       handleTotalMessagesFailed: MainActions.TOTAL_MESSAGES_FAILED,
 
@@ -140,6 +144,33 @@ class MainStore {
   handleFetchSimilaritiesFailed(errorMessage) {
     this.errorMessage = errorMessage;
   }
+
+  handleUpdateMessagesOverTime(data) {
+    this.messagesOverTime = {
+      clone: () => {
+        return {
+          labels: data.times,
+          datasets: [{
+            label: "Total Messages",
+            tension: 0.5,
+            borderWidth: 0,
+            backgroundColor: Colors.d3c20[0],
+            data: data.messages
+          }]
+        }
+      }
+    }
+    this.errorMessage = null;
+  }
+
+  handleFetchMessagesOverTime() {
+    this.messagesOverTime = null;
+  }
+
+  handleMessagesOverTimeFailed(errorMessage) {
+    this.errorMessage = errorMessage;
+  }
+
 
   handleUpdateTrendingTopicsOverTime(data) {
     // transform the data into one readable by charting libs
@@ -327,7 +358,12 @@ class MainStore {
     this.totalMessages = total;
   }
 
+  handleUpdateTotalHumanMessages(total) {
+    this.totalHumanMessages = total;
+  }
+
   handleFetchTotalMessages() {
+    this.totalHumanMessages = null;
     this.totalMessages = null;
   }
 

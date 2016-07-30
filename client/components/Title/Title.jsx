@@ -27,6 +27,7 @@ class TitleComponent extends Component {
     MainActions.fetchEmojiIcons();
     MainActions.fetchUserIcons();
     MainActions.fetchTotalMessages();
+    MainActions.fetchMessagesOverTime();
 
     this.state = MainStore.getState();
 
