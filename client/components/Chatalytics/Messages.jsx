@@ -71,7 +71,23 @@ class MessagesComponent extends Component {
               : <div />} />
           <TwoColumnFixed leftWidth='49%'
             left={<BotsVersusHumansComponent />}
-            right={<div />} />
+            right={
+              <div>
+                <h3>Rooms & Users</h3>
+                <TwoColumnFixed leftWidth='49%' left={
+                    <div>
+                      <p>{this.props.rooms ? Object.keys(this.props.rooms).length : ""} Rooms</p>
+                    </div>
+                  }
+                  right={
+                    <div>
+                      <p>{this.props.users ? Object.keys(this.props.users).length : ""} Users</p>
+                    </div>
+                  }
+                />
+              </div>
+            }
+          />
           <h3>User</h3>
           <p>The most talkative people in chat.</p>
           <MessagesPerUserComponent />

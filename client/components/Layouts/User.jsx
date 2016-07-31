@@ -28,9 +28,9 @@ export default class UserComponent extends Component {
   render() {
     return (
         <AsyncComponent isLoaded={this.isLoaded.bind(this) }
-          loaded={ this.state.userIcons ?
+          loaded={ this.state.userIcons && this.state.userIcons[this.props.name] ?
               <span><img className="user" src={this.state.userIcons[this.props.name]} />{this.props.title}</span>
-            : <span></span>} />
+            : <span>{this.props.title}</span>} />
     )
   }
 }

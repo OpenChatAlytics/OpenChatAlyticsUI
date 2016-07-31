@@ -28,6 +28,9 @@ class TitleComponent extends Component {
     MainActions.fetchUserIcons();
     MainActions.fetchTotalMessages();
     MainActions.fetchMessagesOverTime();
+    MainActions.fetchUsers();
+    MainActions.fetchRooms();
+
 
     this.state = MainStore.getState();
 

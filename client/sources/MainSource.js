@@ -57,7 +57,6 @@ function fetchActiveMessages(query) {
           console.error(err);
           reject(err);
         } else {
-          console.trace(res);
           resolve(JSON.parse(res.text));
         }
       });
@@ -244,6 +243,34 @@ export default {
   fetchUserIcons() {
     return new Promise((resolve, reject) => {
       request.get(ApiConstants.resources.userIcons)
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            reject(err);
+          } else {
+            resolve(JSON.parse(res.text));
+          }
+        });
+    });
+  },
+
+  fetchUsers() {
+    return new Promise((resolve, reject) => {
+      request.get(ApiConstants.resources.users)
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            reject(err);
+          } else {
+            resolve(JSON.parse(res.text));
+          }
+        });
+    });
+  },
+
+  fetchRooms() {
+    return new Promise((resolve, reject) => {
+      request.get(ApiConstants.resources.rooms)
         .end((err, res) => {
           if (err) {
             console.error(err);
