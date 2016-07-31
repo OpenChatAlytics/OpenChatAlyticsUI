@@ -275,4 +275,12 @@ $award-size: 60px;
   &:hover {
     text-decoration: underline;
   }
+
+  &:focus {
+    outline:0;
+  }
+}
+
+button.active {
+  font-weight: bold;
 }

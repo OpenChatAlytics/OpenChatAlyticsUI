@@ -74,6 +74,14 @@ class MainStore {
       handleUpdateUserIcons: MainActions.UPDATE_USER_ICONS,
       handleFetchUserIcons: MainActions.FETCH_USER_ICONS,
       handleUserIconsFailed: MainActions.USER_ICONS_FAILED,
+
+      handleUpdateUsers: MainActions.UPDATE_USERS,
+      handleFetchUsers: MainActions.FETCH_USERS,
+      handleUsersFailed: MainActions.USERS_FAILED,
+
+      handleUpdateRooms: MainActions.UPDATE_ROOMS,
+      handleFetchRooms: MainActions.FETCH_ROOMS,
+      handleRoomsFailed: MainActions.ROOMS_FAILED,
     });
   }
 
@@ -108,6 +116,32 @@ class MainStore {
   }
 
   handleTrendingTopicsFailed(errorMessage) {
+    this.errorMessage = errorMessage;
+  }
+
+  handleUpdateUsers(users) {
+    this.users = users;
+    this.errorMessage = null;
+  }
+
+  handleFetchUsers() {
+    this.users = null;
+  }
+
+  handleUsersFailed(errorMessage) {
+    this.errorMessage = errorMessage;
+  }
+
+  handleUpdateRooms(rooms) {
+    this.rooms = rooms;
+    this.errorMessage = null;
+  }
+
+  handleFetchRooms() {
+    this.rooms = null;
+  }
+
+  handleRoomsFailed(errorMessage) {
     this.errorMessage = errorMessage;
   }
 

@@ -424,6 +424,50 @@ class MainActions {
     return errorMessage;
   }
 
+  fetchUsers() {
+    return (dispatch) => {
+      dispatch();
+      MainSource.fetchUsers()
+        .then((users) => {
+          this.updateUsers(users);
+        })
+        .catch((errorMessage) => {
+          console.error(errorMessage);
+          this.usersFailed(errorMessage);
+        });
+    };
+  }
+
+  updateUsers(users) {
+    return users;
+  }
+
+  usersFailed(errorMessage) {
+    return errorMessage;
+  }
+
+  fetchRooms() {
+    return (dispatch) => {
+      dispatch();
+      MainSource.fetchRooms()
+        .then((rooms) => {
+          this.updateRooms(rooms);
+        })
+        .catch((errorMessage) => {
+          console.error(errorMessage);
+          this.roomsFailed(errorMessage);
+        });
+    };
+  }
+
+  updateRooms(rooms) {
+    return rooms;
+  }
+
+  roomsFailed(errorMessage) {
+    return errorMessage;
+  }
+
   fetchAllEmojis() {
     return (dispatch) => {
       dispatch();
