@@ -12,7 +12,7 @@ import AltContainer from 'alt-container';
 class IndexComponent extends Component {
   render() {
     return (
-      <AltContainer store={ MainStore }>
+      <AltContainer store={MainStore}>
         <Title />
         <About />
         <Messages />

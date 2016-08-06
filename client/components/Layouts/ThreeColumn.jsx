@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 
 class ThreeColumnComponent extends Component {
-
-  constructor() {
-    super();
-  }
-  
   render() {
     return (
       <div style={{ display: 'flex', flexFlow: 'row wrap' }}>
