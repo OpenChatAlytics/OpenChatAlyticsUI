@@ -72,7 +72,7 @@ class MessagesComponent extends Component {
               <Line data={this.props.messagesOverTime.clone()} options={lineOptions} height="150" />
               : <div />}
           />
-          <TwoColumnFixed leftWidth="49%"
+          { false ? <TwoColumnFixed leftWidth="49%"
             left={<BotsVersusHumansComponent />}
             right={
               <div>
@@ -91,12 +91,15 @@ class MessagesComponent extends Component {
                 />
               </div>
             }
-          />
+          /> : <div /> }
           <h3>User</h3>
-          <p>The most talkative people in chat.</p>
+          <p>
+            Out of the total {this.props.totalMessages ? humanize.numberFormat(this.props.totalMessages, 0) + " (in the past year)" : ""} chat messages,
+            these users accounted for the largest percentage of messages sent.
+          </p>
           <MessagesPerUserComponent />
           <h3>Room</h3>
-          <p>The most talkative rooms.</p>
+          <p>These rooms sent the most messages overall (only counting messages sent by humans).</p>
           <MessagesPerRoomComponent />
         </AltContainer>
       </div>

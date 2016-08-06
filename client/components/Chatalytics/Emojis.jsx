@@ -25,7 +25,7 @@ export default class EmojisComponent extends Component {
             right={<EmojisTimeChart />}
           />
           <h3>User</h3>
-          <p>The most prolific emoji users by total number of emojis used.</p>
+          <p>Out of all Emojis used, these people used the largest amount of emojis.</p>
           <EmojisPerUserComponent />
           <h3>Room</h3>
           <p>These rooms are mostly emojis at this point.</p>

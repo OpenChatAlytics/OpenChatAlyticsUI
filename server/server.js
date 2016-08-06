@@ -78,20 +78,20 @@ app.ws("/api/events/", (ws, req) => {
 app.use("/api/web/", (req, res) => {
   let url = defaultConfig.dependencies.chatalyticswebUrl + req.url;
   if (req.method == "GET") {
-    // cache.get(req.originalUrl, (err, val) => {
-    //   if (!err && val) {
-    //     res.send(val);
-    //   } else {
-    //     request(url, (err, resp, body) => {
-    //       if (resp.statusCode === 200) {
-    //         cache.set(req.originalUrl, body);
-    //       }
-    //       res.send(body);
-    //     });
-    //   }
-    // });
+    cache.get(req.originalUrl, (err, val) => {
+      if (!err && val) {
+        res.send(val);
+      } else {
+        request(url, (err, resp, body) => {
+          if (resp.statusCode === 200) {
+            cache.set(req.originalUrl, body);
+          }
+          res.send(body);
+        });
+      }
+    });
 
-    req.pipe(request(url)).pipe(res);
+    // req.pipe(request(url)).pipe(res);
   } else {
     req.pipe(request[req.method.toLowerCase()]({ url: url, json: req.body })).pipe(res);
   }

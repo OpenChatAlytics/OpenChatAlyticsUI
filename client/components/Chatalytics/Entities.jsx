@@ -22,10 +22,9 @@ export default class EntitiesComponent extends Component {
             right={<EntitiesTimeChart />}
           />
           <h3>Similarity</h3>
-          <p>Entities are similar if they were mentioned by the same user or in the same room.
-            We show this similarity as a matrix S, where entities A, B are similar if the value in row A, column B is large.  If A, B is zero, the entities are
-            completely disimilar.  We then sort the similarity matrix by the second eigenvector of the Lapacian, which has the effect of
-            grouping similar clusters of entities together.
+          <p>
+            Users or rooms can be considered similar if they talk about the same things - in other words, if two different rooms or Users
+            consistently mention the same group of entities, they are similar.  This is shown in the two matrices below.
           </p>
           <p>
             The more similar two items are, the larger the bubble.  Mouse over a bubble to see which items are being compared.
