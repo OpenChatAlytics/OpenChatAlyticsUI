@@ -185,15 +185,15 @@ class MainStore {
         return {
           labels: data.times,
           datasets: [{
-            label: "Total Messages",
+            label: 'Total Messages',
             tension: 0.5,
             borderWidth: 0,
             backgroundColor: Colors.d3c20[0],
-            data: data.messages
-          }]
-        }
-      }
-    }
+            data: data.messages,
+          }],
+        };
+      },
+    };
     this.errorMessage = null;
   }
 
@@ -217,8 +217,8 @@ class MainStore {
           datasets[dataset] = {
             label: dataset,
             data: [],
-            maxVal: timeSlice[dataset]
-          }
+            maxVal: timeSlice[dataset],
+          };
         }
       });
     });
@@ -249,11 +249,11 @@ class MainStore {
               backgroundColor: c,
               borderColor: c,
               data: datasets[key].data,
-            }
-          })
-        }
-      }
-    }
+            };
+          }),
+        };
+      },
+    };
     this.errorMessage = null;
   }
 
@@ -277,8 +277,8 @@ class MainStore {
           datasets[dataset] = {
             label: dataset,
             data: [],
-            maxVal: timeSlice[dataset]
-          }
+            maxVal: timeSlice[dataset],
+          };
         }
       });
     });
@@ -309,11 +309,11 @@ class MainStore {
               backgroundColor: c,
               borderColor: c,
               data: datasets[key].data,
-            }
-          })
-        }
-      }
-    }
+            };
+          }),
+        };
+      },
+    };
     this.errorMessage = null;
   }
 
@@ -331,8 +331,8 @@ class MainStore {
         title: `@${e.key}`,
         subtitle: `${(e.value * 100).toFixed(3)}% of all emojis`,
         value: e.value,
-        key: e.key
-      }
+        key: e.key,
+      };
     });
     this.activeEmojisByUser = data;
     this.errorMessage = null;
@@ -352,8 +352,8 @@ class MainStore {
         title: `@${e.key}`,
         subtitle: `${(e.value * 100).toFixed(3)}% of all messages`,
         value: e.value,
-        key: e.key
-      }
+        key: e.key,
+      };
     });
     this.activeMessagesByUser = data;
     this.errorMessage = null;
@@ -373,8 +373,8 @@ class MainStore {
         title: `#${e.key}`,
         subtitle: `${(e.value * 100).toFixed(3)}% of all messages`,
         value: e.value,
-        key: e.key
-      }
+        key: e.key,
+      };
     });
     this.activeMessagesByRoom = data;
     this.errorMessage = null;
@@ -410,8 +410,8 @@ class MainStore {
       return {
         title: `#${e.key}`,
         subtitle: `${(e.value * 100).toFixed(3)}% of all emojis`,
-        value: e.value
-      }
+        value: e.value,
+      };
     });
     this.activeEmojisByRoom = data;
     this.errorMessage = null;
@@ -478,7 +478,7 @@ function processSimilarity(similarities) {
 
   // sort the row sums and return the sorted row + the index permutation that would yield that sort
   // order is larger -> smaller
-  let { sorted, perm } = similarityRowSums.map((val, i) => { return { index: i, val: val } })
+  let { sorted, perm } = similarityRowSums.map((val, i) => { return { index: i, val }; })
     .sort((a, b) => { return b.val - a.val; })
     .reduce((map, obj) => {
       map.sorted.push(obj.val);
@@ -492,10 +492,10 @@ function processSimilarity(similarities) {
     return indicesToKeep.map((j, y) => {
       if (x !== y) {
         return {
-          x: x,
-          y: y,
-          r: Math.min(100, 0.25 * similarities.matrix[i][j] / mean)
-        }
+          x,
+          y,
+          r: Math.min(100, 0.25 * similarities.matrix[i][j] / mean),
+        };
       }
     });
   })).filter(item => item);
@@ -508,10 +508,10 @@ function processSimilarity(similarities) {
       return {
         labels: filteredLabels,
         datasets: [{
-          data: data
-        }]
-      }
-    }
+          data,
+        }],
+      };
+    },
   };
 }
 

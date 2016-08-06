@@ -57,20 +57,21 @@ class TitleComponent extends Component {
 
   render() {
     return (
-      <Parallax bgImage={require('images/bg3.jpg') } strength={600}>
+      <Parallax bgImage={require('images/bg3.jpg')} strength={600}>
         <div id="attribution"><a href="https://www.flickr.com/photos/28541561@N04/24974331285/in/photolist-quWXSU-qPDfC1-qLHc1S-qz6pAh-E3TYAH-yytE2e-D38Ub7-zHf1LS">Lone Tree, Lake Wanaka, New Zealand</a> by <a href="https://www.flickr.com/photos/28541561@N04/">Yani Dubin</a><br />Licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/2.0/">CC 2.0</a></div>
         <div id="title">
           <div style={{ padding: '2em', display: 'flex' }}>
             <div style={{ marginRight: '2em' }}>
-              <img src={require('images/logo.png') } style={{ width: '4.5em' }} />
+              <img src={require('images/logo.png')} style={{ width: '4.5em' }} />
             </div>
             <div>
               <div><h1>Open | ChatAlytics</h1></div>
-              <ReactHighcharts config={this.props.config} isPureConfig={true}></ReactHighcharts>
-              <p>{this.state.event ? `Since ${humanize.relativeTime(this.state.event.start_time / 1000)},` : ""}</p>
+              <ReactHighcharts config={this.props.config} isPureConfig></ReactHighcharts>
+              <p>{this.state.event ? `Since ${humanize.relativeTime(this.state.event.start_time / 1000)},` : ''}</p>
               {this.state.event ? <TitleSummary messageCount={this.state.event.message_count}
                 activeRoomCount={this.state.event.active_room_count}
-                activeUserCount={this.state.event.active_user_count} /> : ""}
+                activeUserCount={this.state.event.active_user_count}
+              /> : ''}
             </div>
           </div>
         </div>
@@ -84,10 +85,6 @@ class TitleComponent extends Component {
  * analytics.
  */
 class TitleSummary extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return (
       <table>
@@ -103,13 +100,13 @@ class TitleSummary extends Component {
           </tr>
         </tbody>
       </table>
-    )
+    );
   }
 }
 
 TitleComponent.defaultProps = {
   config: {
-    colors: ["#FAFAFA"],
+    colors: ['#FAFAFA'],
     chart: {
       type: 'line',
       height: 75,
@@ -118,10 +115,10 @@ TitleComponent.defaultProps = {
       backgroundColor: null,
       animation: Highcharts.svg, // don't animate in old IE
       events: {
-        load: function () {
+        load () {
           series = this.series[0];
-        }
-      }
+        },
+      },
     },
     title: { text: null },
     xAxis: { visible: false },
@@ -139,9 +136,9 @@ TitleComponent.defaultProps = {
           data.push({ x: time + i * 1000, y: 0 });
         }
         return data;
-      } ())
-    }]
-  }
+      }()),
+    }],
+  },
 };
 
 export default TitleComponent;

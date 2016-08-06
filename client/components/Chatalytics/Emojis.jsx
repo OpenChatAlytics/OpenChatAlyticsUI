@@ -15,14 +15,17 @@ export default class EmojisComponent extends Component {
   render() {
     return (
       <div className="chatalytics" id="emojis">
-        <AltContainer store={ MainStore }>
+        <AltContainer store={MainStore}>
           <EmojisSummaryComponent />
           <h3>Trending</h3>
           <p>The most popular emojis by usage over the past year.</p>
-          <TwoColumnFixed leftWidth='25%' left={<EmojisStatisticsComponent />}
-            right={<EmojisTimeChart />} />
+          <TwoColumnFixed
+            leftWidth="25%"
+            left={<EmojisStatisticsComponent />}
+            right={<EmojisTimeChart />}
+          />
           <h3>User</h3>
-          <p>The most prolific emoji users by total number of emojis used.</p>
+          <p>Out of all Emojis used, these people used the largest amount of emojis.</p>
           <EmojisPerUserComponent />
           <h3>Room</h3>
           <p>These rooms are mostly emojis at this point.</p>
@@ -31,11 +34,17 @@ export default class EmojisComponent extends Component {
           <DatePickerComponent
             onDateChanged={(starttime, endtime) => MainActions.fetchEmojiSimilarities({ starttime, endtime })}
           />
-          <TwoColumnFixed leftWidth='49%'
+          <TwoColumnFixed
+            leftWidth="49%"
             left={<SimilarityComponent
-              title="User Similarity by Emojis Used" similarity={this.props.userSimilarityByEmoji} />}
+              title="User Similarity by Emojis Used"
+              similarity={this.props.userSimilarityByEmoji}
+            />}
             right={<SimilarityComponent
-              title="Room Similarity by Emojis Used" similarity={this.props.roomSimilarityByEmoji} />} />
+              title="Room Similarity by Emojis Used"
+              similarity={this.props.roomSimilarityByEmoji}
+            />}
+          />
         </AltContainer>
       </div>
     );
@@ -64,20 +73,21 @@ class EmojisSummaryComponent extends Component {
 class EmojisStatisticsComponent extends Component {
   render() {
     return (
-      <AsyncComponent isLoaded={ () => this.props.trendingEmojis != null }
+      <AsyncComponent
+        isLoaded={() => this.props.trendingEmojis != null}
         loaded={
           <div>
             <h4>Top Emojis Past Year</h4>
-            <TableComponent columns={['key', 'value']}
+            <TableComponent
+              columns={['key', 'value']}
               aliases={['Emoji', 'Mentions']}
-              data={ (this.props.trendingEmojis || []).map(e => {
-                          return {
-                            key: <AltContainer store={ MainStore }><EmojiComponent name={e.key}/></AltContainer>,
-                            value: e.value
-                          }
-                        }
-                      )
-                    } />
+              data={(this.props.trendingEmojis || []).map(e => {
+                return {
+                  key: <AltContainer store={MainStore}><EmojiComponent name={e.key} /></AltContainer>,
+                  value: e.value,
+                };
+              })}
+            />
           </div>
         }
       />
@@ -90,14 +100,19 @@ class EmojisPerUserComponent extends Component {
     return (
       <div>
         <DatePickerComponent
-          onDateChanged={(starttime, endtime) => MainActions.fetchActiveEmojisByUser({ starttime, endtime })}
+          onDateChanged={(starttime, endtime) =>
+            MainActions.fetchActiveEmojisByUser({ starttime, endtime })}
         />
-        <AsyncComponent isLoaded={ () => this.props.activeEmojisByUser != null }
-          loaded={ this.props.activeEmojisByUser ?
-            <AwardsComponent data={this.props.activeEmojisByUser } />
-            : <div />} />
+        <AsyncComponent
+          isLoaded={() => this.props.activeEmojisByUser != null}
+          loaded={this.props.activeEmojisByUser ?
+            <AwardsComponent
+              data={this.props.activeEmojisByUser}
+            />
+            : <div />}
+        />
       </div>
-    )
+    );
   }
 }
 
@@ -106,14 +121,17 @@ class EmojisPerRoomComponent extends Component {
     return (
       <div>
         <DatePickerComponent
-          onDateChanged={(starttime, endtime) => MainActions.fetchActiveEmojisByRoom({ starttime, endtime })}
+          onDateChanged={(starttime, endtime) =>
+            MainActions.fetchActiveEmojisByRoom({ starttime, endtime })}
         />
-        <AsyncComponent isLoaded={ () => this.props.activeEmojisByRoom != null }
-          loaded={ this.props.activeEmojisByRoom ?
-            <AwardsComponent data={this.props.activeEmojisByRoom } />
-            : <div />} />
+        <AsyncComponent
+          isLoaded={() => this.props.activeEmojisByRoom != null}
+          loaded={this.props.activeEmojisByRoom ?
+            <AwardsComponent data={this.props.activeEmojisByRoom} />
+            : <div />}
+        />
       </div>
-    )
+    );
   }
 }
 
@@ -124,44 +142,50 @@ class EmojisTimeChart extends Component {
       defaultFontSize: 12,
       responsive: true,
       legend: {
-        position: 'bottom'
+        position: 'bottom',
       },
       maintainAspectRatio: false,
       tooltips: {
         mode: 'single',
       },
       hover: {
-        mode: 'dataset'
+        mode: 'dataset',
       },
       elements: {
         point: {
-          radius: 2
-        }
+          radius: 2,
+        },
       },
       scales: {
         xAxes: [{
           scaleLabel: {
             display: true,
-            labelString: 'Month'
-          }
+            labelString: 'Month',
+          },
         }],
         yAxes: [{
           stacked: false,
           scaleLabel: {
             display: true,
-            labelString: 'Number Mentions'
-          }
-        }]
-      }
-    }
+            labelString: 'Number Mentions',
+          },
+        }],
+      },
+    };
     return (
       <div>
         <h4>Top Emojis by Month</h4>
-        <AsyncComponent isLoaded={ () => this.props.trendingEmojisOverTime != null && this.props.trendingEmojis != null }
-          loaded={ this.props.trendingEmojisOverTime && this.props.trendingEmojis ?
-            <Line ref="chart" data={this.props.trendingEmojisOverTime.clone() }
-              options={ options } height="450" />
-            : <div />} />
+        <AsyncComponent
+          isLoaded={() => this.props.trendingEmojisOverTime != null
+                          && this.props.trendingEmojis != null}
+          loaded={this.props.trendingEmojisOverTime && this.props.trendingEmojis ?
+            <Line
+              ref="chart"
+              data={this.props.trendingEmojisOverTime.clone()}
+              options={options} height="450"
+            />
+            : <div />}
+        />
       </div>
     );
   }

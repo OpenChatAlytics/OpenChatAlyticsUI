@@ -1,15 +1,8 @@
 @font-face {
-  font-family: 'Quicksand';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Quicksand'), url(fonts/Quicksand.woff) format('woff');
-}
-
-@font-face {
   font-family: 'Monteserrat';
   font-style: normal;
   font-weight: 400;
-  src: local('monteserrat'), url(fonts/monteserrat.woff) format('woff');
+  src: local('monteserrat'), url(fonts/montserrat-light-webfont.woff) format('woff');
 }
 
 @font-face {
@@ -26,6 +19,6 @@
   src: local('raleway'), url(fonts/raleway.woff) format('woff');
 }
 
-$font-sans: 'Raleway', Helvetica, sans-serif;
-$font-heading: 'Monteserrat', Helvetica, sans-serif;
+$font-sans: 'Monteserrat', Helvetica, sans-serif;
+$font-heading: 'Raleway', Helvetica, sans-serif;
 $font-mono: 'PTMono', Consolas, monospace;

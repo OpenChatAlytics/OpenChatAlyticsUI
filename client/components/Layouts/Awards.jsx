@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import MainStore from '../../stores/MainStore';
 import UserComponent from './User';
-import AsyncComponent from '../Chatalytics/Async';
+import _ from 'lodash';
 
 // Constructs a top entity visualization
 // assume data in the format
@@ -18,7 +17,7 @@ export default class AwardsComponent extends Component {
 
     this.state = {
       data: this.props.data.sort((a, b) => { return b.value - a.value; }),
-      maxValue: _.maxBy(this.props.data, o => o.value).value
+      maxValue: _.maxBy(this.props.data, o => o.value).value,
     };
   }
 
@@ -62,19 +61,19 @@ export default class AwardsComponent extends Component {
         {this.state.data.slice(3).map((e, i) => {
           return (
             <div key={i} className="entity-mini">
-              <div style={{ float: "left" }} >
+              <div style={{ float: 'left' }} >
                 <UserComponent name={e.key} />
               </div>
-              <div style={{ float: "left" }} >
+              <div style={{ float: 'left' }} >
                 <div className="entity-mini-title">{e.title}</div>
                 <div className="entity-mini-summary">{e.summary}</div>
                 <div className="entity-mini-subtitle">{e.subtitle}</div>
                 <div style={{ width: `${e.value / this.state.maxValue * 100}%`, background: 'black', height: '5px' }} />
               </div>
-              <div style={{ clear: "both" }} />
+              <div style={{ clear: 'both' }} />
             </div>
-          )
-        }) }
+          );
+        })}
         <div style={{ clear: 'both' }} />
       </div> :
       <div />

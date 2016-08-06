@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import MainStore from '../../stores/MainStore';
-import MainActions from '../../actions/MainActions';
 import EasyTransition from 'react-easy-transition';
 import AltContainer from 'alt-container';
 
 /**
- * Component which will display a loading icon while data is being 
+ * Component which will display a loading icon while data is being
  * fetched.  Once fetched, the regular component will be displayed.
- * 
+ *
  * Users should provide this component with an isLoaded(state)
  * property function.
  */
@@ -36,12 +35,13 @@ export default class AsyncComponent extends Component {
         path={location.pathname}
         initialStyle={{ opacity: 0 }}
         transition="opacity 1s ease-in"
-        finalStyle={{ opacity: 1 }}>
-        {this.props.isLoaded(this.state) ? 
-          <AltContainer store={ MainStore }>
+        finalStyle={{ opacity: 1 }}
+      >
+        {this.props.isLoaded(this.state) ?
+          <AltContainer store={MainStore}>
             {this.props.loaded}
-          </AltContainer> : 
-          <SpinnerComponent /> 
+          </AltContainer> :
+          <SpinnerComponent />
         }
       </EasyTransition>
     );

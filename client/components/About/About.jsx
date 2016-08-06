@@ -13,10 +13,9 @@ class AboutComponent extends Component {
                 <a href="https://github.com/OpenChatAlytics">Open ChatAlytics</a> is a realtime platform for processing <a href="https://hipchat.com/">HipChat</a> and <a href="https://slack.com">Slack</a> messages using Apache Storm as the processing framework.
               </p>
               <p>
-                The Open ChatAlytics Project is split into three main components. Open ChatAlytics Compute processess and analyzes messages in real time. Open ChatAlytics Web provides an interface for web based applications to access the analyzed content.  Open ChatAlytics UI is built on top of Open ChatAlytics Web and displays the processed data.
+                 This page is a visual sample of some of the statistics and data made available from the Open Chatalytics platform.  This raw data includes information about
+                 messages, rooms, users and various derived statistics such as user and room similarity.
               </p>
-              <p>Questions? Feel free to <a href="https://gitter.im/OpenChatAlytics">join us on Gitter</a>.</p>
-              <p>Core contributors: <a href="https://github.com/gneokleo">Giannis Neokleous</a>, <a href="https://github.com/psastras">Paul Sastrasinh</a>.</p>
             </div>
           } />
       </div>
