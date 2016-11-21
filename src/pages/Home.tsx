@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Grid, Row, Button, Jumbotron, Navbar, Nav, NavItem } from 'react-bootstrap';
-import * as Actions from '../flux/actions';
+import * as Actions from 'src/flux/actions';
 import { connect } from 'react-redux';
 import './home.scss';
 

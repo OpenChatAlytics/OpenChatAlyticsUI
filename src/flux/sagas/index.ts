@@ -1,4 +1,4 @@
-import * as Actions from '../actions';
+import * as Actions from 'src/flux/actions';
 import { takeEvery } from 'redux-saga';
 import { put } from 'redux-saga/effects';
 

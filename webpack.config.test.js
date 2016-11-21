@@ -1,4 +1,5 @@
 const nodeExternals = require('webpack-node-externals');
+const path = require('path');
 
 module.exports = {
   target: 'node', // in order to ignore built-in modules like path, fs, etc.
@@ -9,7 +10,10 @@ module.exports = {
     devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]'
   },
   resolve: {
-    extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
+    extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
+    alias: {
+      src: path.join(__dirname, '/src')
+    }
   },
   module: {
     devtool: 'cheap-module-source-map',
