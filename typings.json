@@ -1,6 +1,8 @@
 {
   "dependencies": {
-    "react-dom": "registry:npm/react-dom#15.0.1+20160826174104"
+    "react-dom": "registry:npm/react-dom#15.0.1+20160826174104",
+    "react-redux": "registry:npm/react-redux#4.4.0+20160614222153",
+    "react-router": "registry:npm/react-router#2.4.0+20160915183637"
   },
   "globalDependencies": {
     "react": "registry:dt/react#0.14.0+20161024223416",
