@@ -33,8 +33,8 @@ gulp.task('compile', function() {
 })
 
 gulp.task('test', function() {
-   return watch('test/**/*.ts', function() {
-        gulp.src('test/**/*.ts', { base: '.' })
+   return watch('test/**/*.ts*', function() {
+        gulp.src('test/**/*.ts*', { base: '.' })
           .pipe(ts(tsconfig))
           .pipe(gulp.dest('dist/'))
           .pipe(mocha({ reporter: 'dot' }))

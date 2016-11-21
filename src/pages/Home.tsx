@@ -4,7 +4,7 @@ import * as Actions from '../flux/actions';
 import { connect } from 'react-redux';
 import './home.scss';
 
-class Home extends React.Component<any, any> {
+export class Home extends React.Component<any, any> {
 
   public render() {
     return (

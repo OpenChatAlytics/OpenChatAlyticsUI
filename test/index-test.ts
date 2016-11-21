@@ -5,7 +5,7 @@ import { suite, test, slow, timeout, skip, only } from 'mocha-typescript';
 import { expect } from 'chai';
 
 @suite class Hello {
-    @test 'world'() {
-        expect('hello').to.not.eq('world');
-    }
+  @test 'world'() {
+    expect('hello').to.not.eq('world');
+  }
 }
