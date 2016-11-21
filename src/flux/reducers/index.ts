@@ -4,7 +4,6 @@ function noopReducer(state = {}, action: Action) {
   if (!action) {
     return state;
   }
-  if (action.type)
   return state;
 }
 

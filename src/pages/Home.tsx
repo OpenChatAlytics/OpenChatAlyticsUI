@@ -57,7 +57,7 @@ class Home extends React.Component<any, any> {
 const mapStateToProps = (state, props) => ({});
 const mapDispatchToProps = (dispatch) => ({
     noop: (field, step) => {
-        dispatch({ type: Actions.NOOP });
+        dispatch({ type: Actions.NOOP_INIT });
     }
 });
 
