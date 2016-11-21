@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   entry: [
@@ -48,6 +49,10 @@ module.exports = {
   externals: {
     "react": "React",
     "react-dom": "ReactDOM",
-    "react-boostrap": "ReactBoostrap",
+    "react-bootstrap": "ReactBootstrap",
+    "redux": "Redux",
+    "react-redux": "ReactRedux",
+    "redux-saga": "ReduxSaga",
+    "react-router": "ReactRouter",
   },
 };
