@@ -5,23 +5,12 @@ var ts = require('gulp-typescript');
 var watch = require('gulp-watch');
 var gutil = require('gulp-util');
 var tslint = require("gulp-tslint");
-
-var tsconfig = {
-  "moduleResolution": "node",
-  "outDir": "./dist/",
-  "sourceMap": true,
-  "noImplicitAny": false,
-  "allowSyntheticDefaultImports": true,
-  "module": "commonjs",
-  "target": "es6",
-  "experimentalDecorators": true,
-  "jsx": "react"
-}
+var webpack = require('gulp-webpack');
 
 gulp.task('compile', function() {
   return watch('src/**/*.ts*', function() {
         gulp.src('src/**/*.ts*', { base: '.' })
-          .pipe(ts(tsconfig))
+          .pipe(webpack(require('./webpack.config.js')))
           .pipe(gulp.dest('dist/'))
           .on('end', function() {
             gutil.log(gutil.colors.green('Compilation finished'));
@@ -35,14 +24,23 @@ gulp.task('compile', function() {
 gulp.task('test', function() {
    return watch('test/**/*.ts*', function() {
         gulp.src('test/**/*.ts*', { base: '.' })
-          .pipe(ts(tsconfig))
-          .pipe(gulp.dest('dist/'))
-          .pipe(mocha({ reporter: 'dot' }))
+          .pipe(webpack(require('./webpack.config.test.js')))
+          .pipe(gulp.dest('dist/test/'))
           .on('error', function (err) {
             if (err.stack) gutil.log(gutil.colors.red(err.stack));
           });
    });
 });
+
+gulp.task('runTest', function() {
+ return watch('dist/test/*.js', function() {
+        gulp.src('dist/test/*.js', { base: '.' })
+          .pipe(mocha({ reporter: 'dot', require: ['jsdom-global/register'] }))
+          .on('error', function (err) {
+            if (err.stack) gutil.log(gutil.colors.red(err.stack));
+          });
+   });
+})
 
 gulp.task('lint', function() {
   return watch('src/**/*.ts', function() {
@@ -60,4 +58,4 @@ gulp.task('lint', function() {
    });
 })
 
-gulp.task('default', ['compile', 'test', 'lint']);
+gulp.task('default', ['compile', 'lint', 'test', 'runTest']);
