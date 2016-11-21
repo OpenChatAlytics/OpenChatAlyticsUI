@@ -22,7 +22,7 @@ gulp.task('compile', function() {
   return watch('src/**/*.ts*', function() {
         gulp.src('src/**/*.ts*', { base: '.' })
           .pipe(ts(tsconfig))
-          .pipe(gulp.dest('.build/'))
+          .pipe(gulp.dest('dist/'))
           .on('end', function() {
             gutil.log(gutil.colors.green('Compilation finished'));
           })
@@ -36,7 +36,7 @@ gulp.task('test', function() {
    return watch('test/**/*.ts', function() {
         gulp.src('test/**/*.ts', { base: '.' })
           .pipe(ts(tsconfig))
-          .pipe(gulp.dest('.build/'))
+          .pipe(gulp.dest('dist/'))
           .pipe(mocha({ reporter: 'dot' }))
           .on('error', function (err) {
             if (err.stack) gutil.log(gutil.colors.red(err.stack));

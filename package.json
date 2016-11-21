@@ -5,8 +5,16 @@
     "postinstall": "typings install",
     "pretest": "tsc -p .",
     "test": "mocha",
+    "posttest": "nyc mocha --reporter list",
     "watch": "gulp",
     "start": "webpack-dev-server"
+  },
+  "nyc": {
+    "exclude": [
+      "test",
+      "dist/test",
+      "node_modules"
+    ]
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -23,6 +31,7 @@
     "mocha": "^3.1.2",
     "mocha-typescript": "^1.0.11",
     "node-sass": "^3.11.3",
+    "nyc": "^9.0.1",
     "react-bootstrap": "^0.30.6",
     "react-hot-loader": "^3.0.0-beta.6",
     "react-loader": "^2.4.0",
