@@ -1,5 +1,0 @@
---colors
---webpack-config webpack.config.test.js
-test/**/*.ts*
---require source-map-support/register
---require jsdom-global/register

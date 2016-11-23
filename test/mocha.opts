@@ -1,3 +1,0 @@
---recursive
-dist/test/
---require jsdom-global/register

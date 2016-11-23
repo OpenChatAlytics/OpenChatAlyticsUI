@@ -1,11 +1,8 @@
 // tslint:disable-next-line:no-reference
 /// <reference path="../typings/index.d.ts"/>
 
-import { suite, test, slow, timeout, skip, only } from 'mocha-typescript';
-import { expect } from 'chai';
+import test from 'ava';
 
-@suite class Hello {
-  @test 'world'() {
-    expect('hello').to.not.eq('world');
-  }
-}
+test('my passing test', (t) => {
+    t.pass();
+});

@@ -1,45 +1,14 @@
-const webpack = require('webpack');
-const path = require('path');
-const nodeExternals = require('webpack-node-externals');
+const webpack = require("webpack");
+const path = require("path");
+const nodeExternals = require("webpack-node-externals");
 
 module.exports = {
-  entry: [
-    './src/index.tsx',
-    'webpack-dev-server/client?http://127.0.0.1:8080',
-    'webpack/hot/only-dev-server'
-  ],
-  output: {
-    publicPath: 'http://127.0.0.1:8080/',
-    filename: 'dist/bundle.js'
-  },
-
   // Enable sourcemaps for debugging webpack's output.
   devtool: "source-map",
-
-  resolve: {
-      // Add '.ts' and '.tsx' as resolvable extensions.
-      extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
-      alias: {
-        src: path.join(__dirname, '/src')
-      }
-  },
-
-  module: {
-      loaders: [
-        // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
-        { test: /\.tsx?$/, loaders: ["react-hot-loader/webpack", "ts-loader"] },
-        { test: /\.scss$/, loader: 'style!css!sass' },
-        { test: /\.(jpe?g|png|gif|svg|eot|woff|svg|ttf)/, loader: 'file' },
-      ],
-
-      preLoaders: [
-        // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-        { test: /\.js$/, loader: "source-map-loader" }
-      ]
-  },
-
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
+  entry: [
+    "./src/index.tsx",
+    "webpack-dev-server/client?http://127.0.0.1:8080",
+    "webpack/hot/only-dev-server",
   ],
 
   // When importing a module whose path matches one of the following, just
@@ -48,11 +17,42 @@ module.exports = {
   // dependencies, which allows browsers to cache those libraries between builds.
   externals: {
     "react": "React",
-    "react-dom": "ReactDOM",
     "react-bootstrap": "ReactBootstrap",
-    "redux": "Redux",
+    "react-dom": "ReactDOM",
     "react-redux": "ReactRedux",
-    "redux-saga": "ReduxSaga",
     "react-router": "ReactRouter",
+    "redux": "Redux",
+    "redux-saga": "ReduxSaga",
+  },
+
+  module: {
+      loaders: [
+        // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
+        { test: /\.tsx?$/, loaders: ["react-hot-loader/webpack", "ts-loader"] },
+        { test: /\.scss$/, loader: "style!css!sass" },
+        { test: /\.(jpe?g|png|gif|svg|eot|woff|svg|ttf)/, loader: "file" },
+      ],
+
+      preLoaders: [
+        // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
+        { test: /\.js$/, loader: "source-map-loader" },
+      ],
+  },
+
+  output: {
+    filename: "dist/bundle.js",
+    publicPath: "http://127.0.0.1:8080/",
+  },
+
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ],
+
+  resolve: {
+      alias: {
+        src: path.join(__dirname, "/src"),
+      },
+      // Add '.ts' and '.tsx' as resolvable extensions.
+      extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
   },
 };

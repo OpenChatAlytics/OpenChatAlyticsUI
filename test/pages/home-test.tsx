@@ -1,13 +1,10 @@
 import * as React from 'react';
-import { suite, test, slow, timeout, skip, only } from 'mocha-typescript';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
-
 import { Home } from 'src/pages/Home';
+import { expect } from 'chai';
+import test from 'ava';
 
-@suite class HomeTest {
-  @test 'it renders'() {
+test('it should render', (t) => {
     const wrapper = shallow(<Home />);
     expect(wrapper.length).to.eq(1);
-  }
-}
+});
