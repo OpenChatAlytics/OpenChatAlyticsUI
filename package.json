@@ -15,7 +15,8 @@
       ".build/test/**/*.js"
     ],
     "require": [
-      "jsdom-global/register"
+      "jsdom-global/register",
+      "source-map-support/register"
     ],
     "concurrency": 4
   },
