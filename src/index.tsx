@@ -15,5 +15,5 @@ ReactDOM.render(
       <Route path='/' component={Home} />
     </Router>
   </Provider>,
-  document.getElementById('container')
+  document.getElementById('container'),
 );
