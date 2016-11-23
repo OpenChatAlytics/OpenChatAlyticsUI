@@ -4,7 +4,7 @@ import { Home } from 'src/pages/Home';
 import { expect } from 'chai';
 import test from 'ava';
 
-test('it should render', (t) => {
+test('it should render', () => {
     const wrapper = shallow(<Home />);
     expect(wrapper.length).to.eq(1);
 });
