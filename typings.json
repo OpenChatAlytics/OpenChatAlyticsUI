@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "chai": "registry:npm/chai#3.5.0+20160723033700",
     "enzyme": "registry:npm/enzyme#2.2.0+20160322031343",
     "react-dom": "registry:npm/react-dom#15.0.1+20160826174104",
     "react-redux": "registry:npm/react-redux#4.4.0+20160614222153",
