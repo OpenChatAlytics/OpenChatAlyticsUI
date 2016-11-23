@@ -13,7 +13,7 @@ class Banner extends React.Component<any, {}> {
             <p>Open source real time chat analytics.</p>
             <p>
               <Button onClick={this.props.noop} bsStyle='primary'>
-                GitHub<i className='fa fa-github'></i>
+                GitHub <i className='fa fa-github'></i>
               </Button>
             </p>
           </Row>

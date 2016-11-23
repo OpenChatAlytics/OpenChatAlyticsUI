@@ -40,7 +40,8 @@ module.exports = {
   },
 
   output: {
-    filename: "dist/bundle.js",
+    filename: "bundle.js",
+    path: __dirname + "/dist",
     publicPath: "http://127.0.0.1:8080/",
   },
 
