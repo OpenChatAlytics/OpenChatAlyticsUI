@@ -1,3 +1,4 @@
+const webpack = require("webpack");
 const nodeExternals = require("webpack-node-externals");
 const path = require("path");
 const glob = require("glob");
@@ -5,7 +6,7 @@ const _ = require("lodash");
 
 module.exports = {
   devtool: "source-map",
-  entry: _.keyBy(glob.sync("./test/**/*.ts*"), (key) => key),
+  entry: _.keyBy(glob.sync("./test/**/*.ts*").concat(glob.sync("./integration-test/**/*.ts*")), (key) => key),
   externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
   module: {
     devtool: "cheap-module-source-map",
@@ -25,6 +26,11 @@ module.exports = {
     filename: "[name].js",
     path: __dirname + "/.build",
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      "__dirname__": JSON.stringify(__dirname),
+    }),
+  ],
   resolve: {
     alias: {
       src: path.join(__dirname, "/src")

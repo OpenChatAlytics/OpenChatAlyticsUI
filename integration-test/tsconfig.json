@@ -8,6 +8,6 @@
     "target": "es6",
     "experimentalDecorators": true,
     "jsx": "react",
-    "baseUrl": "."
+    "baseUrl": "../"
   }
 }

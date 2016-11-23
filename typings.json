@@ -3,9 +3,12 @@
     "enzyme": "registry:npm/enzyme#2.2.0+20160322031343",
     "react-dom": "registry:npm/react-dom#15.0.1+20160826174104",
     "react-redux": "registry:npm/react-redux#4.4.0+20160614222153",
-    "react-router": "registry:npm/react-router#2.4.0+20160915183637"
+    "react-router": "registry:npm/react-router#2.4.0+20160915183637",
+    "selenium-standalone": "registry:npm/selenium-standalone#5.7.2+20160929193804",
+    "webdriverio": "registry:npm/webdriverio#4.2.16+20161005232638"
   },
   "globalDependencies": {
+    "node": "registry:dt/node#6.0.0+20161110151007",
     "react": "registry:dt/react#0.14.0+20161024223416",
     "react-bootstrap": "registry:dt/react-bootstrap#0.0.0+20161107151335"
   }
