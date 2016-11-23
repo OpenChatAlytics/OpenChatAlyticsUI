@@ -13,6 +13,7 @@ module.exports = {
     loaders: [
       { test: /\.tsx?$/, loaders: ["ts-loader"] },
       { test: /\.scss$/, loader: "style!css!sass" },
+      { test: /\.css$/, loader: "style!css" },
       { test: /\.(jpe?g|png|gif|svg|eot|woff|svg|ttf)/, loader: "file" },
     ],
     preLoaders: [

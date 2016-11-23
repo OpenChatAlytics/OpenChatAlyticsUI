@@ -15,6 +15,7 @@ module.exports = {
         // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
         { test: /\.tsx?$/, loaders: ["babel-loader?presets[]=es2015&presets[]=stage-0", "ts-loader"] },
         { test: /\.scss$/, loader: ExtractTextPlugin.extract("style", "css!sass") },
+        { test: /\.css$/, loader: ExtractTextPlugin.extract("style", "css") },
         { test: /\.(jpe?g|png|gif|svg|eot|woff|svg|ttf)/, loader: "file" },
       ],
 

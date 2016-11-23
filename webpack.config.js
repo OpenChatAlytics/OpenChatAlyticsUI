@@ -30,6 +30,7 @@ module.exports = {
         // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
         { test: /\.tsx?$/, loaders: ["react-hot-loader/webpack", "ts-loader"] },
         { test: /\.scss$/, loader: "style!css!sass" },
+        { test: /\.css$/, loader: "style!css" },
         { test: /\.(jpe?g|png|gif|svg|eot|woff|svg|ttf)/, loader: "file" },
       ],
 
@@ -41,7 +42,6 @@ module.exports = {
 
   output: {
     filename: "bundle.js",
-    path: __dirname + "/dist",
     publicPath: "http://127.0.0.1:8080/",
   },
 
