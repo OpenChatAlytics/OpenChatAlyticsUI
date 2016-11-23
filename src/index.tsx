@@ -5,7 +5,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, Route, browserHistory  } from 'react-router';
-import Home from './pages/Home';
+import Home from './pages/home';
 import store from './flux';
 import './index.scss';
 
