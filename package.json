@@ -6,6 +6,7 @@
     "postinstall": "typings install",
     "pretest": "webpack --config webpack.config.test.js",
     "test": "nyc ava",
+    "posttest": "tslint --project tsconfig.json",
     "watch": "npm-run-all --parallel watch:*",
     "watch:server": "webpack-dev-server",
     "watch:test": "webpack --config webpack.config.test.js --watch",
