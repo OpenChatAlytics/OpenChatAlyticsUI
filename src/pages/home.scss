@@ -1,0 +1,30 @@
+$fa-font-path: "../../node_modules/font-awesome/fonts";
+@import "../../node_modules/font-awesome/scss/variables.scss";
+@import "../../node_modules/font-awesome/scss/mixins.scss";
+@import "../../node_modules/font-awesome/scss/path.scss";
+@import "../../node_modules/font-awesome/scss/core.scss";
+@import "../../node_modules/font-awesome/scss/icons.scss";
+
+#banner {
+  background: linear-gradient(335deg, #ECE9E6, #FFFFFF);
+  background-size: 400% 400%;
+  -webkit-animation: AnimationName 30s ease infinite;
+  -moz-animation: AnimationName 30s ease infinite;
+  animation: AnimationName 30s ease infinite;
+
+  @-webkit-keyframes AnimationName {
+      0%{background-position:27% 0%}
+      50%{background-position:74% 100%}
+      100%{background-position:27% 0%}
+  }
+  @-moz-keyframes AnimationName {
+      0%{background-position:27% 0%}
+      50%{background-position:74% 100%}
+      100%{background-position:27% 0%}
+  }
+  @keyframes AnimationName { 
+      0%{background-position:27% 0%}
+      50%{background-position:74% 100%}
+      100%{background-position:27% 0%}
+  }
+}
