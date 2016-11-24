@@ -21,5 +21,6 @@ selenium.start((err, child) => {
   test.on('close', (code) => {
     console.log(`child process exited with code ${code}`);
     child.kill();
+    process.exit(code);
   });
 });

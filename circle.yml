@@ -21,6 +21,7 @@ dependencies:
     - yarn install
 test:
   override:
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit
     - yarn citest:
         environment:
           CI_TEST_REPORT_FILE: $CIRCLE_TEST_REPORTS/junit/test-results.xml
