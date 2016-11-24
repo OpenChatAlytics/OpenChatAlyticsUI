@@ -9,7 +9,7 @@
     "test": "nyc ava",
     "precitest": "npm-run-all build:test",
     "citest": "nyc ava --tap | tap-xunit > $CI_TEST_REPORT_FILE",
-    "postcitest": "lint",
+    "postcitest": "npm-run-all lint",
     "lint": "tslint --project src/tsconfig.json",
     "preintegrationtest": "webpack --config webpack.config.test.js",
     "integrationtest:test": "ava '.build/integration-test/**/*.js' --verbose -c 1",
