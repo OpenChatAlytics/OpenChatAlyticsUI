@@ -10,6 +10,7 @@
   "globalDependencies": {
     "node": "registry:dt/node#6.0.0+20161110151007",
     "react": "registry:dt/react#0.14.0+20161024223416",
-    "react-bootstrap": "registry:dt/react-bootstrap#0.0.0+20161107151335"
+    "react-bootstrap": "registry:dt/react-bootstrap#0.0.0+20161107151335",
+    "vega": "registry:dt/vega#0.0.0+20160316155526"
   }
 }
