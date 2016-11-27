@@ -1,7 +1,7 @@
 # Open Chatalytics UI
 
-[![CircleCI](https://circleci.com/gh/openchatalytics/openchatalyticsui.svg?style=shield&circle-token=:circle-ci-badge-token)](https://circleci.com/gh/openchatalytics/openchatalyticsui/tree/master)
-[![codecov](https://codecov.io/gh/openchatalytics/openchatalyticsui/branch/master/graph/badge.svg)](https://codecov.io/gh/openchatalytics/openchatalyticsui)
+[![CircleCI](https://circleci.com/gh/OpenChatAlytics/OpenChatAlyticsUI.svg?style=shield&circle-token=:circle-ci-badge-token)](https://circleci.com/gh/OpenChatAlytics/OpenChatAlyticsUI/tree/master)
+[![codecov](https://codecov.io/gh/OpenChatAlytics/OpenChatAlyticsUI/branch/master/graph/badge.svg)](https://codecov.io/gh/OpenChatAlytics/OpenChatAlyticsUI)
 
 ## Development
 
