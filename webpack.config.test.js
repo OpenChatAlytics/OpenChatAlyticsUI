@@ -5,19 +5,28 @@ const glob = require("glob");
 const _ = require("lodash");
 
 module.exports = {
-  devtool: "source-map",
   entry: _.keyBy(glob.sync("./test/**/*.ts*").concat(glob.sync("./integration-test/**/*.ts*")), (key) => key),
   externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
   module: {
-    devtool: "cheap-module-source-map",
     loaders: [
       { test: /\.tsx?$/, loaders: ["ts-loader"] },
-      { test: /\.scss$/, loader: "style!css!sass" },
-      { test: /\.css$/, loader: "style!css" },
+      { test: /\.scss$/, loader: "css!sass" },
+      { test: /\.css$/, loader: "css" },
       { test: /\.(jpe?g|png|gif|svg|eot|woff|svg|ttf)/, loader: "file" },
     ],
+    postLoaders: [
+      {
+        include: path.resolve("src/"),
+        exclude: /(node_modules|.build|resources\/js\/vendor)/,
+        loader: "istanbul-instrumenter",
+        query: {
+          esModules: true,
+        },
+        test: /\.(js|jsx|ts|tsx)?$/,
+      },
+    ],
     preLoaders: [
-      { test: /\.js$/, loader: "source-map-loader" }
+      { test: /\.js$/, loader: "source-map-loader" },
     ],
   },
   output: {
@@ -34,7 +43,7 @@ module.exports = {
   ],
   resolve: {
     alias: {
-      src: path.join(__dirname, "/src")
+      src: path.join(__dirname, "/src"),
     },
     extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
   },
