@@ -7,6 +7,7 @@
     "webdriverio": "registry:npm/webdriverio#4.2.16+20161005232638"
   },
   "globalDependencies": {
+    "moment": "registry:dt/moment#2.11.1+20161010105546",
     "node": "registry:dt/node#6.0.0+20161110151007",
     "react": "registry:dt/react#0.14.0+20161024223416",
     "react-bootstrap": "registry:dt/react-bootstrap#0.0.0+20161107151335",
