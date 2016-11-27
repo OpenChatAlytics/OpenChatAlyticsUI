@@ -1,5 +1,8 @@
 # Open Chatalytics UI
 
+[![CircleCI](https://circleci.com/gh/openchatalytics/openchatalyticsui.svg?style=shield&circle-token=:circle-ci-badge-token)](https://circleci.com/gh/openchatalytics/openchatalyticsui/tree/master)
+[![codecov](https://codecov.io/gh/openchatalytics/openchatalyticsui/branch/master/graph/badge.svg)](https://codecov.io/gh/openchatalytics/openchatalyticsui)
+
 ## Development
 
 The preferred way to install dependencies is [Yarn](https://github.com/yarnpkg/yarn).  This repo
