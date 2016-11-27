@@ -1,4 +1,6 @@
-import { Action } from 'redux';
+import { NOTIFY_INIT } from './../actions/index';
+import { Action, combineReducers } from 'redux';
+import * as Actions from '../actions';
 
 function noopReducer(state = {}, action: Action) {
   if (!action) {
@@ -7,4 +9,21 @@ function noopReducer(state = {}, action: Action) {
   return state;
 }
 
-export default noopReducer;
+function notifyReducer(state = {}, action: Action) {
+  if (!action) {
+    return state;
+  }
+  switch (action.type) {
+    case Actions.NOTIFY_INIT:
+      return {
+        container: action['container'],
+      };
+    default:
+      return state;
+  }
+}
+
+export default combineReducers({
+  noopReducer,
+  notifyReducer,
+});
