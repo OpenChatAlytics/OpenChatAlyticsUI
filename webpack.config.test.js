@@ -5,6 +5,7 @@ const glob = require("glob");
 const _ = require("lodash");
 
 module.exports = {
+  devtool: "inline-source-map",
   entry: _.keyBy(glob.sync("./test/**/*.ts*").concat(glob.sync("./integration-test/**/*.ts*")), (key) => key),
   externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
   module: {
@@ -12,21 +13,19 @@ module.exports = {
       { test: /\.tsx?$/, loaders: ["ts-loader"] },
       { test: /\.scss$/, loader: "css!sass" },
       { test: /\.css$/, loader: "css" },
-      { test: /\.(jpe?g|png|gif|svg|eot|woff|svg|ttf)/, loader: "file" },
+      { test: /\.(jpe?g|png|gif|svg|eot|woff|svg|ttf|json)/, loader: "file" },
+      { test: /\.json$/, loader: "json-loader" },
     ],
     postLoaders: [
       {
-        include: path.resolve("src/"),
         exclude: /(node_modules|.build|resources\/js\/vendor)/,
+        include: path.resolve("src/"),
         loader: "istanbul-instrumenter",
         query: {
           esModules: true,
         },
         test: /\.(js|jsx|ts|tsx)?$/,
       },
-    ],
-    preLoaders: [
-      { test: /\.js$/, loader: "source-map-loader" },
     ],
   },
   output: {
