@@ -1,3 +1,0 @@
-dependencies:
-  chatalyticswebUrl: "http://localhost:8080"
-  chatalyticsEventUrl: "ws://localhost:8080"
