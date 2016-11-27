@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Grid, Row, Button, Jumbotron } from 'react-bootstrap';
-import * as Actions from 'src/flux/actions';
+import * as Actions from '../../../src/flux/actions';
 import { connect } from 'react-redux';
 
 class Banner extends React.Component<any, {}> {
