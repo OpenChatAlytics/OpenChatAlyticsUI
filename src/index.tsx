@@ -5,16 +5,30 @@ import * as ReactNotificationSystem from 'react-notification-system';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider, connect } from 'react-redux';
-import { Router, Route, browserHistory  } from 'react-router';
+import { Router, Route, browserHistory } from 'react-router';
 import Home from './pages/home';
+import Navbar from './pages/components/navbar';
+import Rooms from './pages/components/rooms';
+import Users from './pages/components/users';
 import * as Actions from 'src/flux/actions';
 import store from './flux';
 import './index.scss';
 
+const navbar = (component: any) => React.createClass({
+  render() {
+    return (
+      <div>
+        <Navbar />
+        {component}
+      </div>
+    );
+  },
+});
+
 class Index extends React.Component<any, any> {
 
   public readonly refs: {
-      notification_system: Element;
+    notification_system: Element;
   };
 
   public componentDidMount() {
@@ -26,7 +40,9 @@ class Index extends React.Component<any, any> {
       <div>
         <ReactNotificationSystem ref='notification_system' />
         <Router history={browserHistory}>
-          <Route path='*' component={Home} />
+          <Route path='/rooms' component={navbar(<Rooms />)} />
+          <Route path='/users' component={navbar(<Users />)} />
+          <Route path='*' component={navbar(<Home />)} />
         </Router>
       </div>
     );
