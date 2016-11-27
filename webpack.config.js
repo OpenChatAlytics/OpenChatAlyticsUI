@@ -3,6 +3,9 @@ const path = require("path");
 const nodeExternals = require("webpack-node-externals");
 
 module.exports = {
+  devServer: {
+    historyApiFallback: true,
+  },
   // Enable sourcemaps for debugging webpack's output.
   devtool: "source-map",
   entry: [
