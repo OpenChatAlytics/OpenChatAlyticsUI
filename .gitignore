@@ -8,11 +8,7 @@ selenium-debug.log
 .build/
 typings/
 .nyc_output/
-*.eot
-*.svg
-*.woff2
-*.ttf
-*.woff
 yarn-error.log
 .tmp
 .vscode
+coverage

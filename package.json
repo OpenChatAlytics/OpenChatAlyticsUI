@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "build": "webpack --config webpack.config.prod.js --progress",
-    "build:test": "webpack --config webpack.config.test.js",
+    "build:test": "rimraf .build && webpack --config webpack.config.test.js",
     "postinstall": "typings install && selenium-standalone install",
     "pretest": "npm-run-all build:test",
-    "test": "nyc ava",
+    "test": "nyc ava --verbose",
     "precitest": "npm-run-all build:test",
     "citest": "nyc ava --tap | tap-xunit > $CI_TEST_REPORT_FILE",
     "postcitest": "npm-run-all lint && nyc report --reporter=json && codecov -f coverage/*.json",
@@ -31,8 +31,8 @@
     "concurrency": 4
   },
   "nyc": {
-    "include": [
-      ".build/src/**/*.js"
+    "exclude": [
+      ".build"
     ]
   },
   "devDependencies": {
@@ -50,6 +50,7 @@
     "font-awesome": "^4.7.0",
     "glob": "^7.1.1",
     "html-webpack-plugin": "^2.24.1",
+    "istanbul-instrumenter-loader": "^1.0.0",
     "jsdom": "^9.8.3",
     "jsdom-global": "^2.1.0",
     "lodash": "^4.17.2",
