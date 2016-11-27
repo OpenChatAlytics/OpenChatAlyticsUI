@@ -19,6 +19,6 @@ test.after.always(async t => {
 });
 
 test('has a banner with appropriate text', async t => {
-    const text = await client.getText('h1')
-    t.is(text, 'Open Chatalytics');
+    const text = await client.getText('h1');
+    t.is(text[0], 'Open Chatalytics');
 });
