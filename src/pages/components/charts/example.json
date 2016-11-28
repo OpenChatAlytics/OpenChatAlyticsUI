@@ -15,5 +15,5 @@
     },
     "color": {"field":"series", "type":"nominal", "scale":{"range": "category20b"}}
   },
-  "config": {"cell": {"width": 300, "height": 200}, "mark": {"stacked": "center"}}
+  "config": { "mark": {"stacked": "center"}}
 }
