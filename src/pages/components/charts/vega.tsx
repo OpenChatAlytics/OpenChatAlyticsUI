@@ -8,7 +8,7 @@ import './vega.scss';
 
 class VegaProps {
   public notify?: NotificationSystem.System;
-  public spec?: string;
+  public spec?: Object;
   public width?: number;
   public height?: number;
 };
@@ -16,11 +16,11 @@ class VegaProps {
 export class Vega extends React.Component<VegaProps, {}> {
 
   public readonly refs: {
-    'vega_container': Element;
+    vega_container: Element;
   };
 
-  private readonly minWidth = 400;
-  private readonly minHeight = 200;
+  private readonly minWidth = 200;
+  private readonly minHeight = 50;
 
   public componentDidMount() {
     this.embedVega();
