@@ -10,11 +10,12 @@ import Navbar from './pages/components/navbar';
 import Home from './pages/home';
 import Rooms from './pages/rooms';
 import Users from './pages/users';
+import Entities from './pages/entities';
 import * as Actions from 'src/flux/actions';
 import store from './flux';
 import './index.scss';
 
-const navbar = (component: any) => React.createClass({
+const navbar = (component: JSX.Element) => React.createClass({
   render() {
     return (
       <div>
@@ -25,7 +26,7 @@ const navbar = (component: any) => React.createClass({
   },
 });
 
-class Index extends React.Component<any, any> {
+class Index extends React.Component<{ notifyInit?: (element: Element) => void }, {}> {
 
   public readonly refs: {
     notification_system: Element;
@@ -42,6 +43,7 @@ class Index extends React.Component<any, any> {
         <Router history={browserHistory}>
           <Route path='/rooms' component={navbar(<Rooms />)} />
           <Route path='/users' component={navbar(<Users />)} />
+          <Route path='/entities' component={navbar(<Entities />)} />
           <Route path='*' component={navbar(<Home />)} />
         </Router>
       </div>

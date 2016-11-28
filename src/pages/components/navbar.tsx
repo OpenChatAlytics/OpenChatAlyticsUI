@@ -21,9 +21,13 @@ export default class extends React.Component<{}, {}> {
             <LinkContainer to='/rooms'>
               <NavItem>Rooms</NavItem>
             </LinkContainer>
+            <LinkContainer to='/entities'>
+              <NavItem>Entities</NavItem>
+            </LinkContainer>
           </Nav>
           <Nav pullRight>
-            <NavItem href='https://github.com/OpenChatAlytics'>
+            <NavItem href='#'
+              onClick={ () => window.location.href = 'https://github.com/OpenChatAlytics/' }>
               GitHub <i className='fa fa-github'></i>
             </NavItem>
           </Nav>
