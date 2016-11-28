@@ -11,6 +11,7 @@ class VegaProps {
   public spec?: Object;
   public width?: number;
   public height?: number;
+  public mode?: 'vega' | 'vega-lite';
 };
 
 export class Vega extends React.Component<VegaProps, {}> {
@@ -38,7 +39,6 @@ export class Vega extends React.Component<VegaProps, {}> {
   public render() {
     return (
       <div ref='vega_container' className='vega-container'>
-        <h1>Loading</h1>
       </div>
     );
   }
@@ -47,7 +47,7 @@ export class Vega extends React.Component<VegaProps, {}> {
     const { vega_container } = this.refs;
     const embedSpec = {
       actions: false,
-      mode: 'vega-lite',
+      mode: this.props.mode || 'vega-lite',
       spec: resizeSpec(this.props.spec,
        Math.max(this.props.width || vega_container.clientWidth, this.minWidth),
        Math.max(this.props.height || vega_container.clientHeight, this.minHeight)),
@@ -79,6 +79,7 @@ function resizeSpec(spec: Object, width: number, height: number) {
 const mapStateToProps = (state, props: VegaProps) => {
   return {
     height: props.height,
+    mode: props.mode,
     notify: state.notifyReducer.container,
     spec: props.spec,
     width: props.width,
