@@ -27,7 +27,10 @@ export class Vega extends React.Component<VegaProps, {}> {
   }
 
   public componentWillReceiveProps(props: VegaProps) {
-    if (!_.isEqual(props.spec, props.spec)) {
+    if (this.props.height !== props.height ||
+        this.props.width !== props.width ||
+        !this.props ||
+        !_.isEqual(props.spec, this.props.spec)) {
       this.embedVega();
     }
   }
