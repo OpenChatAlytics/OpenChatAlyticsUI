@@ -5,3 +5,17 @@ $fa-font-path: "../node_modules/font-awesome/fonts";
 @import "../node_modules/font-awesome/scss/core.scss";
 @import "../node_modules/font-awesome/scss/icons.scss";
 @import "./assets/bootstrap.css";
+
+html {
+  height: 100%;
+}
+body {
+  position: relative;
+  margin: 0;
+  padding-bottom: 10rem;
+  min-height: 100%;
+}
+
+#container {
+  min-height: 100%;
+}

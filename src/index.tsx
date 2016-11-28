@@ -7,6 +7,7 @@ import * as ReactDOM from 'react-dom';
 import { Provider, connect } from 'react-redux';
 import { Router, Route, browserHistory } from 'react-router';
 import Navbar from './pages/components/navbar';
+import Footer from './pages/components/footer';
 import Home from './pages/home';
 import Rooms from './pages/rooms';
 import Users from './pages/users';
@@ -21,6 +22,7 @@ const navbar = (component: JSX.Element) => React.createClass({
       <div>
         <Navbar />
         {component}
+        <Footer />
       </div>
     );
   },
