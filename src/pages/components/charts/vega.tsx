@@ -38,6 +38,7 @@ export class Vega extends React.Component<VegaProps, {}> {
   public render() {
     return (
       <div ref='vega_container' className='vega-container'>
+        <h1>Loading</h1>
       </div>
     );
   }
@@ -48,8 +49,8 @@ export class Vega extends React.Component<VegaProps, {}> {
       actions: false,
       mode: 'vega-lite',
       spec: resizeSpec(this.props.spec,
-       Math.max(vega_container.clientWidth, this.minWidth),
-       Math.max(vega_container.clientHeight, this.minHeight)),
+       Math.max(this.props.width || vega_container.clientWidth, this.minWidth),
+       Math.max(this.props.height || vega_container.clientHeight, this.minHeight)),
     };
     embed(vega_container, embedSpec, (error, result) => {
       if (this.props.notify && error) {

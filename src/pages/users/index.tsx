@@ -10,7 +10,7 @@ export default class extends React.Component<{}, {}> {
       <Grid>
         <Row>
           <PageHeader>Users</PageHeader>
-          <Vega spec={example} />
+          <Vega spec={example} height={200} />
         </Row>
       </Grid>
     );
