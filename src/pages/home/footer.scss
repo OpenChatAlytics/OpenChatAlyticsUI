@@ -1,0 +1,11 @@
+@import 'src/colors.scss';
+
+#footer {
+  background: $black;
+  padding: 1em 0;
+  color: $white;
+
+  h4 {
+    color: $white;
+  }
+}
