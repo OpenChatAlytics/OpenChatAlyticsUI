@@ -9,6 +9,9 @@
     "eofline": false,
     "max-line-length": [true, 100],
     "ordered-imports": [ false ],
-    "no-string-literal": false
+    "no-string-literal": false,
+    "max-classes-per-file": [
+      false
+    ]
   }
 }

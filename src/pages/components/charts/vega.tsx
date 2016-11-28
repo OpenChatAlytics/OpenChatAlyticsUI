@@ -3,23 +3,25 @@ import { connect } from 'react-redux';
 import * as ReactNotificationSystem from 'react-notification-system';
 // tslint:disable-next-line:no-var-requires
 const embed = require('vega-embed');
-// tslint:disable-next-line:no-var-requires
-const example = require('./example.json');
 
-export class Vega extends React.Component<{ notify?: NotificationSystem.System }, {}> {
+class VegaProps {
+  public notify?: NotificationSystem.System;
+  public spec?: string;
+};
+
+export class Vega extends React.Component<VegaProps, {}> {
 
   public readonly refs: {
     'vega_container': Element;
   };
 
-  private readonly embedSpec = {
-    actions: false,
-    mode: 'vega-lite',
-    spec: example,
-  };
-
   public componentDidMount() {
-    embed(this.refs.vega_container, this.embedSpec, (error, result) => {
+    const embedSpec = {
+      actions: false,
+      mode: 'vega-lite',
+      spec: this.props.spec,
+    };
+    embed(this.refs.vega_container, embedSpec, (error, result) => {
       if (this.props.notify) {
         this.props.notify.addNotification({ title: 'Test notification', level: 'info' });
       }
@@ -41,9 +43,10 @@ export class Vega extends React.Component<{ notify?: NotificationSystem.System }
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
   return {
     notify: state.notifyReducer.container,
+    spec: props.spec,
   };
 };
 
