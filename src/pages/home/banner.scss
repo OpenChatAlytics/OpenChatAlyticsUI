@@ -3,8 +3,16 @@
 #banner {
   background: inherit;
   color: $white;
+  margin: 3em auto;
 
   h1 {
     color: $white;
+    font-weight: 700;
+  }
+
+  p {
+    margin-bottom: 15px;
+    font-size: 23px;
+    font-weight: 200;
   }
 }

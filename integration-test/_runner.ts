@@ -1,7 +1,4 @@
-// tslint:disable-next-line:no-reference
-/// <reference path="../typings/index.d.ts"/>
-
-import * as selenium from 'selenium-standalone';
+const selenium = require('selenium-standalone');
 import * as ava from 'ava';
 import * as child_process from 'child_process';
 
