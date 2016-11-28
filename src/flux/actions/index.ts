@@ -7,11 +7,3 @@ export function noop() {
     type: NOOP_INIT,
   };
 }
-
-export const NOTIFY_INIT = 'NOTIFY_INIT';
-export function notifyInit(container) {
-  return {
-    container,
-    type: NOTIFY_INIT,
-  };
-}

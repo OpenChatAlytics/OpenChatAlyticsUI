@@ -1,38 +1,41 @@
 import * as React from 'react';
-import { IndexLink } from 'react-router';
-import { IndexLinkContainer, LinkContainer } from 'react-router-bootstrap';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { IndexLink, Link } from 'react-router';
+import { connect } from 'react-redux';
+import { Menu, Icon, Affix } from 'antd';
+import './navbar.scss';
 
-export default class extends React.Component<{}, {}> {
+export class Navbar extends React.Component<any, any> {
+
   public render() {
     return (
-      <Navbar collapseOnSelect>
-        <Navbar.Header>
-          <Navbar.Brand>
-            <IndexLink to='/'>Open Chatalytics</IndexLink>
-          </Navbar.Brand>
-          <Navbar.Toggle />
-        </Navbar.Header>
-        <Navbar.Collapse>
-          <Nav>
-            <LinkContainer to='/users'>
-              <NavItem>Users</NavItem>
-            </LinkContainer>
-            <LinkContainer to='/rooms'>
-              <NavItem>Rooms</NavItem>
-            </LinkContainer>
-            <LinkContainer to='/entities'>
-              <NavItem>Entities</NavItem>
-            </LinkContainer>
-          </Nav>
-          <Nav pullRight>
-            <NavItem href='#'
-              onClick={ () => window.location.href = 'https://github.com/OpenChatAlytics/' }>
-              GitHub <i className='fa fa-github'></i>
-            </NavItem>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+      <Affix>
+        <Menu
+          selectedKeys={[this.props.path]}
+          mode='horizontal'
+          className='navbar'
+          >
+          <Menu.Item key='/'>
+            <Link to='/' style={{ textTransform: 'uppercase' }}>Open Chatalytics</Link>
+          </Menu.Item>
+          <Menu.Item key='/users'>
+            <Link to='/users'>Users</Link>
+          </Menu.Item>
+          <Menu.Item key='/rooms'>
+            <Link to='/rooms'>Rooms</Link>
+          </Menu.Item>
+          <Menu.Item key='/entities'>
+            <Link to='/entities'>Entities</Link>
+          </Menu.Item>
+        </Menu>
+      </Affix>
     );
   }
 }
+
+const mapStateToProps = (state, props) => {
+  return {
+    path: state.routing.locationBeforeTransitions.pathname,
+  };
+};
+
+export default connect(mapStateToProps)(Navbar);

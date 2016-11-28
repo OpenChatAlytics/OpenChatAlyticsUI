@@ -1,6 +1,9 @@
 const webpack = require("webpack");
 const path = require("path");
 const nodeExternals = require("webpack-node-externals");
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const extractCSS = new ExtractTextPlugin('stylesheets/[name].css');
+const extractJson = new ExtractTextPlugin('json/[name].json');
 
 module.exports = {
   devServer: {
@@ -19,14 +22,19 @@ module.exports = {
   // This is important because it allows us to avoid bundling all of our
   // dependencies, which allows browsers to cache those libraries between builds.
   externals: {
+    "antd": "antd",
+    "d3": "d3",
+    "lodash": "_",
     "moment": "moment",
     "react": "React",
-    "react-bootstrap": "ReactBootstrap",
     "react-dom": "ReactDOM",
     "react-redux": "ReactRedux",
     "react-router": "ReactRouter",
+    "react-router-redux": "ReactRouterRedux",
     "redux": "Redux",
     "redux-saga": "ReduxSaga",
+    "vega": "vg",
+    "vega-embed": "vg.embed",
     "vega-lite": "vl",
   },
 
@@ -34,8 +42,8 @@ module.exports = {
       loaders: [
         // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
         { test: /\.tsx?$/, loaders: ["react-hot-loader/webpack", "ts-loader"] },
-        { test: /\.scss$/, loader: "style!css!sass" },
-        { test: /\.css$/, loader: "style!css" },
+        { test: /\.scss$/, loader: extractCSS.extract([ "css", "sass"]) },
+        { test: /\.css$/, loader: extractCSS.extract(["css"]) },
         { test: /\.(jpe?g|png|gif|svg|eot|woff|svg|ttf)/, loader: "file" },
         { test: /\.json$/, loader: "json-loader" },
       ],
@@ -48,6 +56,7 @@ module.exports = {
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    extractCSS,
   ],
 
   resolve: {

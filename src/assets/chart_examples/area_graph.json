@@ -15,6 +15,6 @@
     },
     "color": {"value": "#000"}
   },
-  "config": {"cell": {"width": 300, "height": 200}}
+  "config": {"cell": {"width": 300, "height": 200} }
 }
 

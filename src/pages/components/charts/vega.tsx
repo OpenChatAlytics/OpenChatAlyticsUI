@@ -1,20 +1,19 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import * as ReactNotificationSystem from 'react-notification-system';
+import { message } from 'antd';
 import * as _ from 'lodash';
 // tslint:disable-next-line:no-var-requires
 const embed = require('vega-embed');
 import './vega.scss';
 
 class VegaProps {
-  public notify?: NotificationSystem.System;
   public spec?: Object;
   public width?: number;
   public height?: number;
   public mode?: 'vega' | 'vega-lite';
 };
 
-export class Vega extends React.Component<VegaProps, {}> {
+export class Vega extends React.Component<any, any> {
 
   public readonly refs: {
     vega_container: Element;
@@ -53,12 +52,15 @@ export class Vega extends React.Component<VegaProps, {}> {
        Math.max(this.props.height || vega_container.clientHeight, this.minHeight)),
     };
     embed(vega_container, embedSpec, (error, result) => {
+      if (!error) {
+        const canvas = this.refs.vega_container.firstChild.firstChild as HTMLCanvasElement;
+        // override the width and height set in style of the canvas to allow the element
+        // to scale
+        canvas.style.width = '';
+        canvas.style.height = '';
+      }
       if (this.props.notify && error) {
-        this.props.notify.addNotification({
-          level: 'error',
-          message: error,
-          title: 'Error rendering chart',
-        });
+        message.error('Error rendering chart');
       }
     });
   }
@@ -80,7 +82,6 @@ const mapStateToProps = (state, props: VegaProps) => {
   return {
     height: props.height,
     mode: props.mode,
-    notify: state.notifyReducer.container,
     spec: props.spec,
     width: props.width,
   };

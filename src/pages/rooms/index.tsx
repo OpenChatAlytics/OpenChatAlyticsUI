@@ -1,14 +1,12 @@
 import * as React from 'react';
-import { Grid, Row, PageHeader } from 'react-bootstrap';
+import { Row } from 'antd';
 
 export default class extends React.Component<{}, {}> {
   public render() {
     return (
-      <Grid>
-        <Row>
-          <PageHeader>Rooms</PageHeader>
-        </Row>
-      </Grid>
+      <Row>
+        <h1 className='page-header'>Rooms</h1>
+      </Row>
     );
   }
 }
