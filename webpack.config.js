@@ -19,6 +19,7 @@ module.exports = {
   // This is important because it allows us to avoid bundling all of our
   // dependencies, which allows browsers to cache those libraries between builds.
   externals: {
+    "moment": "moment",
     "react": "React",
     "react-bootstrap": "ReactBootstrap",
     "react-dom": "ReactDOM",
@@ -26,6 +27,7 @@ module.exports = {
     "react-router": "ReactRouter",
     "redux": "Redux",
     "redux-saga": "ReduxSaga",
+    "vega-lite": "vl",
   },
 
   module: {
