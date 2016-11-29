@@ -13,6 +13,9 @@ import Entities from './pages/entities';
 import store from './flux';
 import './index.scss';
 
+// tslint:disable-next-line
+const Animate = require('rc-animate');
+
 // these must use require to work properly
 // tslint:disable-next-line:no-var-requires
 const enUS = require('antd/lib/locale-provider/en_US');
@@ -24,7 +27,9 @@ const layout = (component: JSX.Element) => React.createClass({
     return (
       <div style={{ minHeight: '100%', position: 'relative', paddingBottom: '6rem' }}>
         <Navbar />
-        {component}
+          <Animate transitionName='fade' transitionAppear>
+            {component}
+          </Animate>
         <Footer />
       </div>
     );
