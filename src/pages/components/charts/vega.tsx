@@ -3,15 +3,17 @@ import { connect } from 'react-redux';
 import { message } from 'antd';
 import * as _ from 'lodash';
 import { State } from 'src/flux/reducers';
+import * as Actions from 'src/flux/actions';
 // tslint:disable-next-line:no-var-requires
 const embed = require('vega-embed');
 import './vega.scss';
 
 class VegaProps {
-  public spec?: Object;
+  public data?: Object;
   public width?: number;
   public height?: number;
   public mode?: 'vega' | 'vega-lite';
+  public fetch?: any;
 };
 
 export class Vega extends React.Component<VegaProps, {}> {
@@ -31,7 +33,7 @@ export class Vega extends React.Component<VegaProps, {}> {
     if (this.props.height !== props.height ||
         this.props.width !== props.width ||
         !this.props ||
-        !_.isEqual(props.spec, this.props.spec)) {
+        !_.isEqual(props.data, this.props.data)) {
       this.embedVega();
     }
   }
@@ -48,7 +50,7 @@ export class Vega extends React.Component<VegaProps, {}> {
     const embedSpec = {
       actions: false,
       mode: this.props.mode || 'vega-lite',
-      spec: resizeSpec(this.props.spec,
+      spec: resizeSpec(this.props.data,
        Math.max(this.props.width || vega_container.clientWidth, this.minWidth),
        Math.max(this.props.height || vega_container.clientHeight, this.minHeight)),
     };
@@ -90,9 +92,9 @@ const resizeSpec = (spec: Object, width: number, height: number): Object => {
 
 const mapStateToProps = (state: State, props: VegaProps): VegaProps => {
   return {
+    data: props.data,
     height: props.height,
     mode: props.mode,
-    spec: props.spec,
     width: props.width,
   };
 };

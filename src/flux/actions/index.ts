@@ -1,9 +1,9 @@
 import { Action } from 'redux';
+import { createAction } from 'redux-actions';
+import * as request from 'superagent';
+export default Action;
 
-export const NOOP_INIT = 'NOOP_INIT';
-export const NOOP_SUCCESS = 'NOOP_SUCCESS';
-export function noop() {
-  return {
-    type: NOOP_INIT,
-  };
-}
+export const fetch = createAction('FETCH', async (url: string) => {
+  const response = await request.get(url);
+  return response.text;
+}, (url: string) => ({ url }));
