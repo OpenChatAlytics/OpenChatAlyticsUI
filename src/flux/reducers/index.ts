@@ -11,7 +11,7 @@ export class State {
 }
 
 const dataReducer = handleActions({
-  ['FETCH']: (state, action: ActionMeta<string, { url: string }>) => {
+  FETCH: (state, action: ActionMeta<string, { url: string }>) => {
     if (action.error) {
       message.error(`Error fetching: ${action.meta.url}`);
     } else {

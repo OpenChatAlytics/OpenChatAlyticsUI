@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as Actions from 'src/flux/actions';
 import { connect } from 'react-redux';
+import * as NProgress from 'nprogress';
 
 interface AsyncProps {
   url?: string;
@@ -10,6 +11,7 @@ interface AsyncProps {
 }
 
 export class Async extends React.Component<AsyncProps, {}> {
+
   public componentDidMount() {
     this.props.fetch(this.props.url);
   }
