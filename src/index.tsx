@@ -13,6 +13,12 @@ import Entities from './pages/entities';
 import store from './flux';
 import './index.scss';
 
+// these must use require to work properly
+// tslint:disable-next-line:no-var-requires
+const enUS = require('antd/lib/locale-provider/en_US');
+// tslint:disable-next-line:no-var-requires
+const LocaleProvider = require('antd').LocaleProvider;
+
 const layout = (component: JSX.Element) => React.createClass({
   render() {
     return (
@@ -29,15 +35,17 @@ const history = syncHistoryWithStore(browserHistory, store);
 
 ReactDOM.render(
   <Provider store={store}>
-    <div style={{ flex: 1 }}>
-      <BackTop />
-      <Router history={history}>
-        <Route path='/rooms' component={layout(<Rooms />)} />
-        <Route path='/users' component={layout(<Users />)} />
-        <Route path='/entities' component={layout(<Entities />)} />
-        <Route path='*' component={layout(<Home />)} />
-      </Router>
-    </div>
+    <LocaleProvider locale={enUS}>
+      <div style={{ flex: 1 }}>
+        <BackTop />
+        <Router history={history}>
+          <Route path='/rooms' component={layout(<Rooms />)} />
+          <Route path='/users' component={layout(<Users />)} />
+          <Route path='/entities' component={layout(<Entities />)} />
+          <Route path='*' component={layout(<Home />)} />
+        </Router>
+      </div>
+    </LocaleProvider>
   </Provider>,
   document.getElementById('container'),
 );
