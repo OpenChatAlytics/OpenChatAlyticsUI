@@ -3,6 +3,9 @@ import * as Actions from 'src/flux/actions';
 import { connect } from 'react-redux';
 import * as NProgress from 'nprogress';
 
+// tslint:disable-next-line
+const Animate = require('rc-animate');
+
 interface AsyncProps {
   url?: string;
   fetch?: any;
@@ -26,9 +29,9 @@ export class Async extends React.Component<AsyncProps, {}> {
             data: JSON.parse(this.props.data),
           }));
     return (
-      <div>
+      <Animate transitionName='fade' transitionAppear>
         {childrenWithProps}
-      </div>
+      </Animate>
     );
   }
 }

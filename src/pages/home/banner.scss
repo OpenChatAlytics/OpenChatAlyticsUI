@@ -1,9 +1,10 @@
 @import 'src/colors.scss';
 
 #banner {
-  background: inherit;
+  background: url('../../assets/images/banner.jpg');
+  background-size: cover;
   color: $white;
-  margin: 3em auto;
+  padding: 5em 0;
 
   h1 {
     color: $white;

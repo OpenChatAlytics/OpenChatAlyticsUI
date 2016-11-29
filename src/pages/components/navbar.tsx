@@ -3,7 +3,20 @@ import { IndexLink, Link } from 'react-router';
 import { connect } from 'react-redux';
 import { Menu, Icon, Affix } from 'antd';
 import { State } from 'src/flux/reducers';
+import { DatePicker } from 'antd';
 import './navbar.scss';
+import * as moment from 'moment';
+
+const RangePicker = DatePicker.RangePicker;
+
+// tslint:disable:object-literal-sort-keys
+const ranges = {
+  'Today': [moment(), moment()],
+  'This Month': [moment().startOf('month'), moment()],
+  'This Year': [moment().startOf('year'), moment()],
+};
+// tslint:enable:object-literal-sort-keys
+const dateFormat = 'YYYY/MM/DD';
 
 class NavbarProps {
   public path?: string;
@@ -31,6 +44,12 @@ export class Navbar extends React.Component<NavbarProps, {}> {
           <Menu.Item key='/entities'>
             <Link to='/entities'>Entities</Link>
           </Menu.Item>
+          <RangePicker
+            defaultValue={[moment(moment().startOf('year'), dateFormat),
+              moment(moment(), dateFormat)] as any}
+            size='large'
+            ranges={ranges as any}
+            format={dateFormat} />
         </Menu>
       </Affix>
     );

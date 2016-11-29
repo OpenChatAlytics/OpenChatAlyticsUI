@@ -1,3 +1,13 @@
 .navbar {
   font-family: "News Cycle", "Arial Narrow Bold", sans-serif;
+
+  .ant-menu-item {
+    padding: .2em 2em;
+  }
+
+  .ant-calendar-picker {
+    margin: .1em 1em;
+    float: right;
+    padding-top: 1px;
+  }
 }
