@@ -1,15 +1,21 @@
+import { Row } from 'antd';
 import { Action, combineReducers } from 'redux';
 import * as Actions from '../actions';
 import { routerReducer } from 'react-router-redux';
 
-function noopReducer(state = {}, action: Action) {
+export class State {
+  public readonly noopReducer: {};
+  public readonly routing: any;
+}
+
+function noopReducer(state = {}, action: Action): {} {
   if (!action) {
     return state;
   }
   return state;
 }
 
-export default combineReducers({
+export default combineReducers<State>({
   noopReducer,
   routing: routerReducer,
 });

@@ -71,6 +71,10 @@
     "@types/history" "*"
     "@types/react" "*"
 
+"@types/redux-actions":
+  version "0.8.33"
+  resolved "https://registry.yarnpkg.com/@types/redux-actions/-/redux-actions-0.8.33.tgz#a59ff61d0fccc3aff536ebe7b5121809654bd896"
+
 "@types/redux@*":
   version "3.6.31"
   resolved "https://registry.yarnpkg.com/@types/redux/-/redux-3.6.31.tgz#40eafa7575db36b912ce0059b85de98c205b0708"
@@ -3891,7 +3895,7 @@ lodash@^3.5.0, lodash@3.9.3:
   version "3.9.3"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.9.3.tgz#0159e86832feffc6d61d852b12a953b99496bd32"
 
-lodash@^4.0.0, lodash@^4.14.0, lodash@^4.16.2, lodash@^4.16.4, lodash@^4.17.2, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1, lodash@^4.8.0:
+lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.16.2, lodash@^4.16.4, lodash@^4.17.2, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1, lodash@^4.8.0:
   version "4.17.2"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
 
@@ -5627,6 +5631,18 @@ reduce-function-call@^1.0.1:
   resolved "https://registry.yarnpkg.com/reduce-function-call/-/reduce-function-call-1.0.1.tgz#fa02e126e695824263cab91d3a5b0fdc1dd27a9a"
   dependencies:
     balanced-match "~0.1.0"
+
+reduce-reducers@^0.1.0:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/reduce-reducers/-/reduce-reducers-0.1.2.tgz#fa1b4718bc5292a71ddd1e5d839c9bea9770f14b"
+
+redux-actions:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/redux-actions/-/redux-actions-1.1.0.tgz#df8ec791d9e267544e58a8ba2b72fc5c30afba3b"
+  dependencies:
+    invariant "^2.2.1"
+    lodash "^4.13.1"
+    reduce-reducers "^0.1.0"
 
 redux-saga@^0.13.0:
   version "0.13.0"
