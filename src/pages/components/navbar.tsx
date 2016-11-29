@@ -2,11 +2,16 @@ import * as React from 'react';
 import { IndexLink, Link } from 'react-router';
 import { connect } from 'react-redux';
 import { Menu, Icon, Affix } from 'antd';
+import { State } from 'src/flux/reducers';
 import './navbar.scss';
 
-export class Navbar extends React.Component<any, any> {
+class NavbarProps {
+  public path?: string;
+};
 
-  public render() {
+export class Navbar extends React.Component<NavbarProps, {}> {
+
+  public render(): JSX.Element {
     return (
       <Affix>
         <Menu
@@ -32,7 +37,7 @@ export class Navbar extends React.Component<any, any> {
   }
 }
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state: State, props: NavbarProps): NavbarProps => {
   return {
     path: state.routing.locationBeforeTransitions.pathname,
   };

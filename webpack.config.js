@@ -44,8 +44,7 @@ module.exports = {
         { test: /\.tsx?$/, loaders: ["react-hot-loader/webpack", "ts-loader"] },
         { test: /\.scss$/, loader: extractCSS.extract([ "css", "sass"]) },
         { test: /\.css$/, loader: extractCSS.extract(["css"]) },
-        { test: /\.(jpe?g|png|gif|svg|eot|woff|svg|ttf)/, loader: "file" },
-        { test: /\.json$/, loader: "json-loader" },
+        { test: /\.(jpe?g|png|gif|svg|eot|woff|svg|ttf|json)/, loader: "file" },
       ],
   },
 

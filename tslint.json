@@ -12,6 +12,8 @@
     "no-string-literal": false,
     "max-classes-per-file": [
       false
-    ]
+    ],
+    "no-inferrable-types": [ true ],
+    "arrow-parens": false
   }
 }

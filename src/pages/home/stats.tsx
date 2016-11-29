@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Row } from 'antd';
 import * as moment from 'moment';
 import Vega from 'src/pages/components/charts/vega';
+import Async from 'src/pages/components/async';
 
 // tslint:disable-next-line:no-var-requires
 const example = require('src/assets/chart_examples/area_graph.json');
@@ -20,7 +21,9 @@ export default class extends React.Component<{}, {}> {
           </h2>
         </Row>
         <Row>
-          <Vega spec={example} width={1600} height={150} />
+          <Async url={example}>
+            <Vega />
+          </Async>
         </Row>
       </div>
     );
