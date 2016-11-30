@@ -3,6 +3,7 @@ const nodeExternals = require("webpack-node-externals");
 const path = require("path");
 const glob = require("glob");
 const _ = require("lodash");
+const RewirePlugin = require("rewire-webpack");
 
 module.exports = {
   devtool: "inline-source-map",

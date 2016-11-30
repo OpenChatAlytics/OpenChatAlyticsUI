@@ -11,9 +11,9 @@ window.matchMedia = window.matchMedia || (() => {
 import * as React from 'react';
 import { shallow } from 'enzyme';
 import test from 'ava';
-import Home from 'src/pages/home';
+import Users from 'src/pages/users';
 
 test('it should render', (t) => {
-    const wrapper = shallow(<Home />);
+    const wrapper = shallow(<Users />);
     t.is(wrapper.length, 1);
 });
