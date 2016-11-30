@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 // tslint:disable-next-line:no-var-requires
 const humanize = require('humanize-plus');
 // tslint:disable-next-line:no-var-requires
-import { Row, Col } from 'antd';
+import { Icon, Row, Col } from 'antd';
 
 import './pagelinks.scss';
 
@@ -20,13 +20,13 @@ export default class extends React.Component<{}, {}> {
         <Row style={{ textAlign: 'center', padding: '2.5em 0' }}>
           <Col span={12}>
             <Link to='/users'>
-              <h1><i className='fa fa-user-circle-o'></i> Users</h1>
+              <h1><Icon type='team' /> Users</h1>
               <p>Explore analytics breakdowns by users</p>
             </Link>
           </Col>
           <Col span={12}>
             <Link to='/rooms'>
-              <h1><i className='fa fa-comments-o'></i> Rooms</h1>
+              <h1><Icon type='switcher' /> Rooms</h1>
               <p>Explore analytics breakdowns by chat rooms (channels)</p>
             </Link>
           </Col>
@@ -34,7 +34,7 @@ export default class extends React.Component<{}, {}> {
         <Row style={{ textAlign: 'center', padding: '2.5em 0' }}>
           <Col span={12}>
             <Link to='/entities'>
-              <h1><i className='fa fa-coffee'></i> Entities</h1>
+              <h1><Icon type='tags' /> Entities</h1>
               <p>Explore analytics breakdowns by topics (entities)</p>
             </Link>
           </Col>

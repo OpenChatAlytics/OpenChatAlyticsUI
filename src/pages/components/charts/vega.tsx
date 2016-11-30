@@ -8,12 +8,13 @@ import * as Actions from 'src/flux/actions';
 const embed = require('vega-embed');
 import './vega.scss';
 
-class VegaProps {
-  public data?: Object;
-  public width?: number;
-  public height?: number;
-  public mode?: 'vega' | 'vega-lite';
-  public fetch?: any;
+interface VegaProps {
+  data?: Object;
+  width?: number;
+  height?: number;
+  mode?: 'vega' | 'vega-lite';
+  fetch?: any;
+  renderer?: 'svg' | 'canvas';
 };
 
 export class Vega extends React.Component<VegaProps, {}> {
@@ -50,6 +51,7 @@ export class Vega extends React.Component<VegaProps, {}> {
     const embedSpec = {
       actions: false,
       mode: this.props.mode || 'vega-lite',
+      renderer: this.props.renderer || 'canvas',
       spec: resizeSpec(this.props.data,
        Math.max(this.props.width || vega_container.clientWidth, this.minWidth),
        Math.max(this.props.height || vega_container.clientHeight, this.minHeight)),

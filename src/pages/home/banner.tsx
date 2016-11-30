@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Row, Button } from 'antd';
+import { Row, Button, Icon } from 'antd';
 import './banner.scss';
 
 export default class Banner extends React.Component<{}, {}> {
@@ -14,7 +14,7 @@ export default class Banner extends React.Component<{}, {}> {
               type='primary'
               size='large'
               onClick={ () => window.location.href = 'https://github.com/OpenChatAlytics/'}>
-              GitHub <i className='fa fa-github'></i>
+              GitHub <Icon type='github' />
             </Button>
           </p>
         </Row>
