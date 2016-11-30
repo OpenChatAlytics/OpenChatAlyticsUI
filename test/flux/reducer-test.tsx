@@ -11,15 +11,10 @@ window.matchMedia = window.matchMedia || (() => {
 import test from 'ava';
 import * as rewire from 'rewire';
 import { dateRangeReducer, dataReducer } from 'src/flux/reducers';
+import * as Actions from 'src/flux/actions';
 import * as moment from 'moment';
-
-const Actions = rewire('src/flux/actions/') as any;
-// var superAgentMock = {
-//   get: (url: string) => {
-//     return 'foo';
-//   }
-// };
-// Actions.__set__('superagent', superAgentMock);
+// tslint:disable-next-line:no-var-requires
+const ActionsInjector = require('inject!src/flux/actions/');
 
 test('date range reducer should store the start and end times from the updateDateRange action',
   (t) => {
@@ -32,9 +27,18 @@ test('date range reducer should store the start and end times from the updateDat
 
 test('data reducer should store the fetched data in a map given the fetch action',
   async t => {
+
+  const responsePayload = 'data';
+
+  const Actions = ActionsInjector({
+    superagent: {
+      get: (url: string) => { return { text: responsePayload }; },
+    },
+  });
+
   const initialState = { };
   const url = 'url';
   const mutatedState = dataReducer(initialState, Actions.fetch(url));
   const data = await mutatedState[url];
-  t.deepEqual(data, 'foo');
+  t.deepEqual(data, responsePayload);
 });
