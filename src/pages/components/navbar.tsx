@@ -6,6 +6,7 @@ import { State } from 'src/flux/reducers';
 import { DatePicker } from 'antd';
 import './navbar.scss';
 import * as moment from 'moment';
+import * as Actions from 'src/flux/actions';
 
 const RangePicker = DatePicker.RangePicker;
 
@@ -18,17 +19,26 @@ const ranges = {
 // tslint:enable:object-literal-sort-keys
 const dateFormat = 'YYYY/MM/DD';
 
-class NavbarProps {
-  public path?: string;
+interface NavbarProps {
+  path?: string;
+  updateDateRange?: any;
+  startDate?: moment.Moment;
+  endDate?: moment.Moment;
 };
 
 export class Navbar extends React.Component<NavbarProps, {}> {
 
+  public componentWillMount = () => {
+    const { startDate, endDate } = this.props;
+    this.props.updateDateRange(startDate, endDate);
+  }
+
   public render(): JSX.Element {
+    const { path, startDate, endDate } = this.props;
     return (
       <Affix>
         <Menu
-          selectedKeys={[this.props.path]}
+          selectedKeys={[path]}
           mode='horizontal'
           className='navbar'
           >
@@ -45,21 +55,36 @@ export class Navbar extends React.Component<NavbarProps, {}> {
             <Link to='/entities'>Entities</Link>
           </Menu.Item>
           <RangePicker
-            defaultValue={[moment(moment().startOf('year'), dateFormat),
-              moment(moment(), dateFormat)] as any}
+            defaultValue={[moment(startDate, dateFormat), moment(endDate, dateFormat)] as any}
             size='large'
             ranges={ranges as any}
-            format={dateFormat} />
+            format={dateFormat}
+            allowClear={false}
+            onChange={this.handleDateChange} />
         </Menu>
       </Affix>
     );
+  }
+
+  private handleDateChange = (dates: [ any, any ]): void => {
+    const [ start, end ] = dates as [moment.Moment, moment.Moment];
+    this.props.updateDateRange(start, end);
   }
 }
 
 const mapStateToProps = (state: State, props: NavbarProps): NavbarProps => {
   return {
+    endDate: state.dateRange.end || moment(),
     path: state.routing.locationBeforeTransitions.pathname,
+    startDate: state.dateRange.start || moment().startOf('year'),
   };
 };
 
-export default connect(mapStateToProps)(Navbar);
+const mapDispatchToProps = (dispatch): NavbarProps => {
+  return {
+    updateDateRange: (start: moment.Moment, end: moment.Moment) =>
+      dispatch(Actions.updateDateRange(start, end)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
