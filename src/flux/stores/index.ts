@@ -14,7 +14,6 @@ if (process.env.NODE_ENV === 'development') {
   middleware.push(createReduxLogger());
 }
 
-
 const store = createStore(
   reducers,
   applyMiddleware(...middleware),
