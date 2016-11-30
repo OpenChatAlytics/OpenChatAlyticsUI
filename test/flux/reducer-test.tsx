@@ -9,12 +9,11 @@ window.matchMedia = window.matchMedia || (() => {
 });
 
 import test from 'ava';
-import * as rewire from 'rewire';
 import { dateRangeReducer, dataReducer } from 'src/flux/reducers';
 import * as Actions from 'src/flux/actions';
 import * as moment from 'moment';
 // tslint:disable-next-line:no-var-requires
-const ActionsInjector = require('inject!src/flux/actions/');
+const ActionsInjector = require('inject!../../src/flux/actions/');
 
 test('date range reducer should store the start and end times from the updateDateRange action',
   (t) => {
