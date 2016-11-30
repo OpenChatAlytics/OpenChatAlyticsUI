@@ -1,9 +1,10 @@
 import { Action } from 'redux';
 import { createAction } from 'redux-actions';
-import * as request from 'superagent';
+import * as _request from 'superagent';
 import * as NProgress from 'nprogress';
 import * as moment from 'moment';
 export default Action;
+const request = _request;
 
 export const fetch = createAction('FETCH', async (url: string) => {
   try {

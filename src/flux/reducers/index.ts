@@ -12,7 +12,7 @@ export class State {
   public readonly routing: any;
 }
 
-const dataReducer = handleActions({
+export const dataReducer = handleActions({
   FETCH: (state, action: ActionMeta<string, { url: string }>) => {
     if (action.error) {
       message.error(`Error fetching: ${action.meta.url}`);
@@ -25,7 +25,7 @@ const dataReducer = handleActions({
   },
 }, {});
 
-const dateRangeReducer = handleActions({
+export const dateRangeReducer = handleActions({
   UPDATE_DATE_RANGE: (state,
     action: ActionMeta<{ end: moment.Moment, start: moment.Moment}, {}>) => {
     if (action.error) {
