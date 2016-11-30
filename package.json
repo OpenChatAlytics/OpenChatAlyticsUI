@@ -65,7 +65,7 @@
     "file-loader": "^0.9.0",
     "glob": "^7.1.1",
     "html-webpack-plugin": "^2.24.1",
-    "inject-loader": "^2.0.1",
+    "inject-loader": "^2.0.0",
     "istanbul-instrumenter-loader": "^1.0.0",
     "jsdom": "^9.8.3",
     "jsdom-global": "^2.1.0",
