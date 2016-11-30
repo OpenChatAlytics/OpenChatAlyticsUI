@@ -40,8 +40,8 @@ export class Stats extends React.Component<StatsProps, {}> {
 
 const mapStateToProps = (state: State, props: StatsProps): StatsProps => {
   return {
-    endDate: state.dateRange.end || moment(),
-    startDate: state.dateRange.start || moment(),
+    endDate: state.dateRange.end,
+    startDate: state.dateRange.start,
   };
 };
 

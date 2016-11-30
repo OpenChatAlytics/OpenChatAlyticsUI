@@ -34,7 +34,10 @@ const dateRangeReducer = handleActions({
       return Object.assign({}, state, action.payload);
     }
   },
-}, {});
+}, {
+  end: moment().startOf('year'),
+  start: moment(),
+});
 
 export default combineReducers<State>({
   data: dataReducer,

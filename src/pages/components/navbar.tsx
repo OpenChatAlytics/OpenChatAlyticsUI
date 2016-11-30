@@ -27,12 +27,6 @@ interface NavbarProps {
 };
 
 export class Navbar extends React.Component<NavbarProps, {}> {
-
-  public componentWillMount = () => {
-    const { startDate, endDate } = this.props;
-    this.props.updateDateRange(startDate, endDate);
-  }
-
   public render(): JSX.Element {
     const { path, startDate, endDate } = this.props;
     return (
@@ -74,9 +68,9 @@ export class Navbar extends React.Component<NavbarProps, {}> {
 
 const mapStateToProps = (state: State, props: NavbarProps): NavbarProps => {
   return {
-    endDate: state.dateRange.end || moment(),
+    endDate: state.dateRange.end,
     path: state.routing.locationBeforeTransitions.pathname,
-    startDate: state.dateRange.start || moment().startOf('year'),
+    startDate: state.dateRange.start,
   };
 };
 
