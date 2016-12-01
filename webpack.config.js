@@ -3,7 +3,6 @@ const path = require("path");
 const nodeExternals = require("webpack-node-externals");
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const extractCSS = new ExtractTextPlugin('stylesheets/[name].css');
-const extractJson = new ExtractTextPlugin('json/[name].json');
 
 module.exports = {
   devServer: {
@@ -42,9 +41,9 @@ module.exports = {
       loaders: [
         // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
         { test: /\.tsx?$/, loaders: ["react-hot-loader/webpack", "ts-loader"] },
-        { test: /\.scss$/, loader: extractCSS.extract([ "css", "sass"]) },
-        { test: /\.css$/, loader: extractCSS.extract(["css"]) },
-        { test: /\.(jpe?g|png|gif|svg|eot|woff|svg|ttf|json)/, loader: "file" },
+        { test: /\.scss$/, loader: extractCSS.extract([ "css-loader", "sass-loader"]) },
+        { test: /\.css$/, loader: extractCSS.extract(["css-loader"]) },
+        { test: /\.(jpe?g|png|gif|svg|eot|woff|svg|ttf|json)/, loader: "file-loader" },
       ],
   },
 
@@ -66,6 +65,6 @@ module.exports = {
         src: path.join(__dirname, "/src"),
       },
       // Add '.ts' and '.tsx' as resolvable extensions.
-      extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
+      extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
   },
 };
