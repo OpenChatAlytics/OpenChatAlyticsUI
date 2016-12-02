@@ -33,6 +33,12 @@ export default class extends React.Component<{}, {}> {
         </Row>
         <Row style={{ textAlign: 'center', padding: '2.5em 0' }}>
           <Col span={12}>
+            <Link to='/emojis'>
+              <h1><Icon type='smile-o' /> Emojis</h1>
+              <p>Explore analytics breakdowns by emoji usage</p>
+            </Link>
+          </Col>
+          <Col span={12}>
             <Link to='/entities'>
               <h1><Icon type='tags' /> Entities</h1>
               <p>Explore analytics breakdowns by topics (entities)</p>
