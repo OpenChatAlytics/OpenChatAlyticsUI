@@ -9,6 +9,7 @@ import Footer from './pages/components/footer';
 import Home from './pages/home';
 import Rooms from './pages/rooms';
 import Users from './pages/users';
+import Emojis from './pages/emojis';
 import Entities from './pages/entities';
 import store from './flux';
 import './index.scss';
@@ -46,6 +47,7 @@ ReactDOM.render(
         <Router history={history}>
           <Route path='/rooms' component={layout(<Rooms />)} />
           <Route path='/users' component={layout(<Users />)} />
+          <Route path='/emojis' component={layout(<Emojis />)} />
           <Route path='/entities' component={layout(<Entities />)} />
           <Route path='*' component={layout(<Home />)} />
         </Router>

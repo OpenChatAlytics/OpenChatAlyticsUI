@@ -45,6 +45,9 @@ export class Navbar extends React.Component<NavbarProps, {}> {
           <Menu.Item key='/rooms'>
             <Link to='/rooms'>Rooms</Link>
           </Menu.Item>
+          <Menu.Item key='/emojis'>
+            <Link to='/emojis'>Emojis</Link>
+          </Menu.Item>
           <Menu.Item key='/entities'>
             <Link to='/entities'>Entities</Link>
           </Menu.Item>
