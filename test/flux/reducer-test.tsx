@@ -25,7 +25,7 @@ test('date range reducer should store the start and end times from the updateDat
 });
 
 test('data reducer should store the fetched data in a map given the fetch action',
-  async t => {
+  async (t) => {
 
   const responsePayload = 'data';
 
