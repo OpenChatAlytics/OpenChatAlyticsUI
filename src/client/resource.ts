@@ -18,6 +18,7 @@ abstract class Resource {
   /**
    * Converts a JSON object to a map of string keys to V values.
    *
+   * @param V Type of the value of the map
    * @param jsonObj JSON object resulting from JSON#parse.
    * @returns A string map of keys to values
    */

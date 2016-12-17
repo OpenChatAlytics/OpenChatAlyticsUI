@@ -1,5 +1,6 @@
 import Resource from './resource';
-import User from '../model/user';
+import User from 'src/model/user';
+
 /**
  * Client for the users path of the ChatAlytics API
  */
