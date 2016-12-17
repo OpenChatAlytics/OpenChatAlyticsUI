@@ -16,7 +16,7 @@
     "integrationtest:runner": "node .build/integration-test/_runner.ts",
     "integrationtest": "npm-run-all build integrationtest:runner",
     "watch": "npm-run-all --parallel watch:*",
-    "watch:server": "webpack-dev-server",
+    "watch:server": "webpack-dev-server --port 3000",
     "watch:test": "webpack --config webpack.config.test.js --watch",
     "watch:ava": "ava --watch"
   },
