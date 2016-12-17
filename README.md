@@ -20,7 +20,7 @@ yarn watch
 ```
 
 The `watch` commands starts a webpack development server at
-[http://127.0.0.1:8080](http://127.0.0.1:8080).  It also watches test files in the `test/` test
+[http://127.0.0.1:3000](http://127.0.0.1:3000).  It also watches test files in the `test/` test
 directory for changes and runs the changed tests as necessary.  When making changes to the source
 code in `src/`, relavant tests will be run as well.
 
