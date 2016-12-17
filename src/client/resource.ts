@@ -5,7 +5,7 @@ import * as request from 'superagent';
  */
 abstract class Resource {
 
-  private static readonly API_URL = 'api/v0';
+  public static readonly API_URL = 'api/v0';
 
   protected readonly hostname: string;
   protected readonly port: number;
@@ -16,17 +16,17 @@ abstract class Resource {
   }
 
   /**
-   * Converts a JSON object to a map of string keys to string values.
+   * Converts a JSON object to a map of string keys to V values.
    *
    * @param jsonObj JSON object resulting from JSON#parse.
    * @returns A string map of keys to values
    */
-  protected jsonObjectToMap(jsonObject: Object): Map<string, string> {
+  protected jsonObjectToMap<V>(jsonObject: Object): Map<string, V> {
     return Object.keys(jsonObject)
       .reduce((map, key) => {
         map.set(key, jsonObject[key]);
         return map;
-      }, new Map<string, string>());
+      }, new Map<string, V>());
   }
 
   /**
