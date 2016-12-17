@@ -1,12 +1,12 @@
 interface Room {
-  room_id;
+  roomId;
   name;
   topic;
-  last_active_date;
-  creation_date;
-  owner_user_id;
+  lastActiveDate;
+  creationDate;
+  ownerUserId;
   archived;
-  private_room;
+  privateRoom;
 }
 
 export default Room;

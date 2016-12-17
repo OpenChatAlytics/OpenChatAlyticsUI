@@ -9,14 +9,14 @@ const [underTest, nock] = setupLocalClientMock(Rooms);
 test('get rooms map should return a map of room IDs to Room objects', async (t) => {
   const rooms = {
     scsyj: {
-      room_id: 's62f8',
+      roomId: 's62f8',
       name: 'room-scsyj',
       topic: 'random topic',
-      last_active_date: 1481991416874,
-      creation_date: 1481991416874,
-      owner_user_id: 'odk5o',
+      lastActiveDate: 1481991416874,
+      creationDate: 1481991416874,
+      ownerUserId: 'odk5o',
       archived: false,
-      private_room: false,
+      privateRoom: false,
     },
   };
 
