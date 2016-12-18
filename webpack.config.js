@@ -12,7 +12,7 @@ module.exports = {
   devtool: "source-map",
   entry: [
     "./src/index.tsx",
-    "webpack-dev-server/client?http://127.0.0.1:8080",
+    "webpack-dev-server/client?http://localhost:3000",
     "webpack/hot/only-dev-server",
   ],
 
@@ -49,7 +49,7 @@ module.exports = {
 
   output: {
     filename: "bundle.js",
-    publicPath: "http://127.0.0.1:8080/",
+    publicPath: "http://localhost:3000/",
   },
 
   plugins: [

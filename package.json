@@ -96,8 +96,8 @@
     "tslint": "^4.1.1",
     "typescript": "^2.1.4",
     "webdriverio": "^4.4.0",
-    "webpack": "^2.1.0-beta.27",
-    "webpack-dev-server": "^2.1.0-beta.12",
+    "webpack": "^2.2.0-rc.1",
+    "webpack-dev-server": "^2.2.0-rc.0",
     "webpack-node-externals": "^1.5.4"
   },
   "dependencies": {
