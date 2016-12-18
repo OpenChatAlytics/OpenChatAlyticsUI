@@ -5,8 +5,10 @@ import { routerReducer } from 'react-router-redux';
 import { handleActions, ActionMeta } from 'redux-actions';
 import * as request from 'superagent';
 import * as moment from 'moment';
+import { clientReducer, ClientState } from './client';
 
 export class State {
+  public readonly client: ClientState;
   public readonly data: Object;
   public readonly dateRange: { end: moment.Moment, start: moment.Moment};
   public readonly routing: any;
@@ -40,6 +42,7 @@ export const dateRangeReducer = handleActions({
 });
 
 export default combineReducers<State>({
+  client: clientReducer,
   data: dataReducer,
   dateRange: dateRangeReducer,
   routing: routerReducer,
